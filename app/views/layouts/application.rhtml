@@ -8,6 +8,10 @@
     <body>
         <!-- top -->
         <div id="login" style="height:50px;border:1px solid;">
+            <% if logged_in? %>
+                <%= link_to "Today", :controller => 'today', :action => 'index' %>
+                <%= link_to "Logout", :controller => 'account', :action => 'logout' %>
+            <% else %>
             <% form_tag "account/login" do -%>
             <p>
                 <label for="login">
@@ -25,6 +29,7 @@
                 <%= submit_tag 'Log in' %>
             </p>
             <% end -%>
+            <% end %>
         </div>
         <div id ="top" style="height:60px;border:1px solid;">
             广告
