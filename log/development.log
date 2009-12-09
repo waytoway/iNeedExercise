@@ -1,4 +1,3 @@
-<<<<<<< HEAD:log/development.log
 /!\ FAILSAFE /!\  Tue Dec 08 12:11:44 +0800 2009
   Status: 500 Internal Server Error
   Access denied for user 'root'@'localhost' (using password: NO)
@@ -1578,5 +1577,3 @@ Processing MainController#index (for 127.0.0.1 at 2009-12-09 15:03:33) [GET]
 Rendering template within layouts/application
 Rendering main/index
 Completed in 7ms (View: 5, DB: 0) | 200 OK [http://127.0.0.1/main]
-=======
->>>>>>> 648268b65f7c06c829903b3d4241ac9fe1518623:log/development.log
