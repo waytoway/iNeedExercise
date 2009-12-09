@@ -41,4 +41,8 @@ class AccountController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(:controller => '/account', :action => 'index')
   end
+  
+  def modify_pwd
+    
+  end
 end
