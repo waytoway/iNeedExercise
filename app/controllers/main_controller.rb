@@ -5,6 +5,7 @@ class MainController < ApplicationController
   before_filter :login_from_cookie
 
   def index
-    
+    @item = TCardType.find(:first)
+    puts @item
   end
 end
