@@ -7,24 +7,33 @@
     </head>
     <body>
         <!-- top -->
-		<div id="login" style="height:30px;border:1px solid;">
-			登录
-		</div>
+        <div id="login" style="height:30px;border:1px solid;">
+            登录
+        </div>
         <div id ="top" style="height:60px;border:1px solid;">
-        	广告
+            广告
         </div>
         <!-- body -->
         <div id="body">
-        	<table width="100%" height="40px" border="solid 1px">
-        		<tr>
-        			<td width="300px" border="solid 1px">天气</td>
-					<td border="solid 1px">导航</td>
-        		</tr>
-        	</table>
+            <table width="100%" height="40px" border="solid 1px">
+                <tr>
+                    <td width="300px" border="solid 1px">
+                        天气
+                    </td>
+                    <td border="solid 1px">
+                        导航<%= link_to "首页",:controller => :main,:action=>"index" %>
+                        <%= link_to "注册",:controller => :account,:action=>"signup" %>
+                        <%= link_to "关于我们",:controller => :about,:action=>"index" %>
+                        <%= link_to "联系我们",:controller => :contact,:action=>"index" %>
+                        <%= link_to "帮助中心",:controller => :help,:action=>"index" %>
+                        <%= link_to "我的锻炼",:controller => :account,:action=>"index" %>
+                    </td>
+                </tr>
+            </table>
         </div>
-		<div>
-			<%=yield%>
-		</div>
+        <div>
+            <%=yield %>
+        </div>
         <!-- bottom -->
         <div id="bottom">
         </div>

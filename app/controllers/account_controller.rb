@@ -7,6 +7,7 @@ class AccountController < ApplicationController
   # say something nice, you goof!  something sweet.
   def index
     #redirect_to(:action => 'signup') unless logged_in? || User.count > 0
+    
   end
 
   def login
