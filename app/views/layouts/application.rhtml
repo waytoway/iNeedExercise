@@ -7,8 +7,24 @@
     </head>
     <body>
         <!-- top -->
-        <div id="login" style="height:30px;border:1px solid;">
-            登录
+        <div id="login" style="height:50px;border:1px solid;">
+            <% form_tag "account/login" do -%>
+            <p>
+                <label for="login">
+                    Login
+                </label>
+                <%= text_field_tag 'login' %>
+                <label for="password">
+                    Password
+                </label>
+                <%= password_field_tag 'password' %>
+                <label for="remember_me">
+                    Remember me:
+                </label>
+                <%= check_box_tag 'remember_me' %>
+                <%= submit_tag 'Log in' %>
+            </p>
+            <% end -%>
         </div>
         <div id ="top" style="height:60px;border:1px solid;">
             广告

@@ -21,8 +21,8 @@ development:
   database: exercise-test
   pool: 5
   username: root
-  password: 
-  host: localhost
+  password: andy
+  host: 172.16.166.82
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
