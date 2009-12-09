@@ -39,8 +39,6 @@ ActiveRecord::Schema.define(:version => 20091209074810) do
     t.datetime "updated_at"
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
-    t.string   "cell",                      :limit => 13
-    t.boolean  "is_admin"
   end
 
 end
