@@ -1,4 +1,4 @@
-class AccountController < ApplicationController
+class AboutController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
   # If you want "remember me" functionality, add this before_filter to Application Controller
@@ -7,7 +7,6 @@ class AccountController < ApplicationController
   # say something nice, you goof!  something sweet.
   def index
     #redirect_to(:action => 'signup') unless logged_in? || User.count > 0
-    
   end
 
   def login
