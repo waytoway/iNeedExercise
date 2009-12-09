@@ -7,12 +7,8 @@ class MainController < ApplicationController
   
 
   def index
-    @item = TCardType.find(:first)
-    puts @item
-  end
-  
-  def login
-    puts 'hello'
+    #@item = TCardType.find(:first)
+    #puts @item
   end
   
 end
