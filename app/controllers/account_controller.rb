@@ -53,5 +53,9 @@ class AccountController < ApplicationController
     redirect_back_or_default(:controller => 'main', :action => 'index')
   end
   
+  def forget_pwd
+    return unless request.post?
+    redirect_back_or_default(:controller => 'account', :action => 'senPwdToEmail')
+  end
   
 end
