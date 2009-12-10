@@ -12,13 +12,15 @@ class User < ActiveRecord::Base
   PASSWORD_MIN_LENGTH = 4 
   PASSWORD_MAX_LENGTH = 40 
   EMAIL_MAX_LENGTH = 50 
+  CELL_MAX_LENGTH = 40
   SCREEN_NAME_RANGE = SCREEN_NAME_MIN_LENGTH..SCREEN_NAME_MAX_LENGTH 
   PASSWORD_RANGE = PASSWORD_MIN_LENGTH..PASSWORD_MAX_LENGTH 
 
   # Text box sizes for display in the views 
   SCREEN_NAME_SIZE = 20 
   PASSWORD_SIZE = 10 
-  EMAIL_SIZE = 30
+  EMAIL_SIZE = 20
+  CELL_SIZE = 15
 
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
@@ -28,7 +30,7 @@ class User < ActiveRecord::Base
   validates_length_of       :login,    :within => 3..40
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :login, :email, :case_sensitive => false
-  validates_length_of       :cell,     :within => 11..40
+  validates_length_of       :cell,     :within => 7..40
   before_save :encrypt_password
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
