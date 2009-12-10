@@ -12,9 +12,9 @@ class AccountController < ApplicationController
   
   def login
     return unless request.post?
-      self.current_user = User.authenticate(params[:login], params[:password])
+    self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
-   #   @user=User.new(params[:login])
+      #   @user=User.new(params[:login])
       session[:user_id]=self.current_user.id
       if params[:remember_me] == "1"
         self.current_user.remember_me
@@ -22,6 +22,9 @@ class AccountController < ApplicationController
       end
       redirect_back_or_default(:controller => 'main', :action => 'index')
       flash[:notice] = "Logged in successfully"
+    else
+    #  redirect_to request.request_uri
+      redirect_to(:controller => 'account', :action => 'login')
     end
   end
   
@@ -48,7 +51,7 @@ class AccountController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(:controller => 'main', :action => 'index')
   end
-
+  
   def modify_pwd
     @user = User.find(session[:user_id])
     if request.post?
