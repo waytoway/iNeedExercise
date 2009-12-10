@@ -12,5 +12,7 @@ class ApplicationController < ActionController::Base
     puts 'hello1'
   end
   
-  
+  def param_posted?(symbol)
+    request.post? and params[symbol]
+  end
 end

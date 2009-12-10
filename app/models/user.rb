@@ -3,6 +3,20 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
   attr_accessor :current_password
+  
+  # Max & min lengths for all fields 
+  SCREEN_NAME_MIN_LENGTH = 4 
+  SCREEN_NAME_MAX_LENGTH = 20 
+  PASSWORD_MIN_LENGTH = 4 
+  PASSWORD_MAX_LENGTH = 40 
+  EMAIL_MAX_LENGTH = 50 
+  SCREEN_NAME_RANGE = SCREEN_NAME_MIN_LENGTH..SCREEN_NAME_MAX_LENGTH 
+  PASSWORD_RANGE = PASSWORD_MIN_LENGTH..PASSWORD_MAX_LENGTH 
+
+  # Text box sizes for display in the views 
+  SCREEN_NAME_SIZE = 20 
+  PASSWORD_SIZE = 10 
+  EMAIL_SIZE = 30
 
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
@@ -31,6 +45,11 @@ class User < ActiveRecord::Base
   end
 
   def authenticated?(password)
+    
+    puts encrypt(password)
+    puts password
+    puts salt
+    puts crypted_password
     crypted_password == encrypt(password)
   end
 
@@ -59,14 +78,21 @@ class User < ActiveRecord::Base
   
   def correct_password?(params)
     current_password = params[:user][:current_password]
-    password == current_password
+    password = params[:user][:password]
+    password_confirmation = params[:user][:password_confirmation]
+    crypted_password == encrypt(current_password) 
   end
 
   def password_errors(params)
+    puts "ddddddddddddddddddddd currentpassword wrong"
     self.password = params[:user][:password]
     self.password_confirmation = params[:user][:password_confirmation]
     valid?
-    errors.add(:current_password, "is incorrect")
+    if(correct_password?(params))
+      return
+    else
+      errors.add(:current_password, "is incorrect")
+    end
   end
 
   protected

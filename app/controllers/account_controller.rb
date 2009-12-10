@@ -31,8 +31,6 @@ class AccountController < ApplicationController
     @user.save!
     self.current_user = @user
     session[:user_id]=self.current_user.id
-    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    puts session[:user_id]
     redirect_back_or_default(:controller => '/account', :action => 'index')
     flash[:notice] = "Thanks for signing up!"
   rescue ActiveRecord::RecordInvalid
@@ -50,9 +48,18 @@ class AccountController < ApplicationController
   
   def modify_pwd
     @user = User.find(session[:user_id])
-    if param_posted?(:user)
+    if request.post?
       if @user.correct_password?(params)
-        try_to_update @user
+        puts "aaaaaaaaaaaaaaa change password"
+        puts params[:password]
+        puts @user.encrypt(@user.password)
+        unless params[:user][:password] == params[:user][:password_confirmation]
+          @user.password_errors(params) 
+          return
+        end
+        @user.update_attributes(:crypted_password => @user.encrypt(params[:user][:password]))
+        redirect_to :action => "index"
+        #try_to_update @user
       else
         @user.password_errors(params)
       end
@@ -64,9 +71,9 @@ class AccountController < ApplicationController
     
   end
   
-  def try_to_update(user)
-    if user.update_attributes(params[:user])
-      redirect_to :action => "index"
-    end
-  end
+  #def try_to_update(user)
+    #if user.update_attributes(params[:user])
+      #redirect_to :action => "index"
+    #end
+  #end
 end
