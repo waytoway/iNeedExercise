@@ -45,21 +45,17 @@ class AccountController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(:controller => '/account', :action => 'index')
   end
-  
+
   def modify_pwd
     @user = User.find(session[:user_id])
     if request.post?
       if @user.correct_password?(params)
-        puts "aaaaaaaaaaaaaaa change password"
-        puts params[:password]
-        puts @user.encrypt(@user.password)
         unless params[:user][:password] == params[:user][:password_confirmation]
           @user.password_errors(params) 
           return
         end
         @user.update_attributes(:crypted_password => @user.encrypt(params[:user][:password]))
         redirect_to :action => "index"
-        #try_to_update @user
       else
         @user.password_errors(params)
       end
@@ -70,10 +66,4 @@ class AccountController < ApplicationController
   def login_infor
     
   end
-  
-  #def try_to_update(user)
-    #if user.update_attributes(params[:user])
-      #redirect_to :action => "index"
-    #end
-  #end
 end
