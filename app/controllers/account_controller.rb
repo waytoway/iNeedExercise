@@ -43,6 +43,24 @@ class AccountController < ApplicationController
   end
   
   def modify_pwd
+    @user = User.find(session[:user_id])
+    if param_posted?(:user)
+      if @user.correct_password?(params)
+        try_to_update @user
+      else
+        @user.password_errors(params)
+      end
+    end
+    @user.clear_password!
+  end
+  
+  def login_infor
     
+  end
+  
+  def try_to_update(user)
+    if user.update_attributes(params[:user])
+      redirect_to :action => "index"
+    end
   end
 end

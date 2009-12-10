@@ -2,6 +2,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
+  attr_accessor :current_password
 
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
@@ -48,6 +49,24 @@ class User < ActiveRecord::Base
     self.remember_token_expires_at = nil
     self.remember_token            = nil
     save(false)
+  end
+  
+  def clear_password!
+    self.password = nil
+    self.password_confirmation = nil
+    self.current_password = nil
+  end
+  
+  def correct_password?(params)
+    current_password = params[:user][:current_password]
+    password == current_password
+  end
+
+  def password_errors(params)
+    self.password = params[:user][:password]
+    self.password_confirmation = params[:user][:password_confirmation]
+    valid?
+    errors.add(:current_password, "is incorrect")
   end
 
   protected
