@@ -2,10 +2,10 @@
     运动记录
     <ul>
         <li>
-            <a>本月锻炼<a/>
+            <%= link_to("个人锻炼",{ :controller => :user,:action=>"my_exe"}) %>
         </li>
         <li>
-            <a>会员卡管理<a/>
+            <%= link_to("会员卡管理",{ :controller => :user,:action=>"card_manage"}) %>
         </li>
         <li>
             <a>当前预定<a/>
