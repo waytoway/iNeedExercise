@@ -53,25 +53,5 @@ class AccountController < ApplicationController
     redirect_back_or_default(:controller => 'main', :action => 'index')
   end
   
-  def modify_pwd
-    @user = User.find(session[:user_id])
-    if request.post?
-      attribute = params[:attribute]
-      if @user.correct_password?(params)
-        unless params[:user][:password] == params[:user][:password_confirmation]
-          @user.password_errors(params) 
-          return
-        end
-        @user.update_attributes(:crypted_password => @user.encrypt(params[:user][:password]))
-        redirect_to :action => "index"
-      else
-        @user.password_errors(params)
-      end
-    end
-    @user.clear_password!
-  end
   
-  def login_infor
-    
-  end
 end

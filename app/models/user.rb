@@ -53,6 +53,10 @@ class User < ActiveRecord::Base
     
     crypted_password == encrypt(password)
   end
+  
+  def email_equal?(new_email)
+    email == new_email
+  end
 
   def remember_token?
     remember_token_expires_at && Time.now.utc < remember_token_expires_at 
