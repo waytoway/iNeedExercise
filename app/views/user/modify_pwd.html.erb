@@ -60,7 +60,7 @@
   <legend>密码保护问题</legend> 
   <%= hidden_field_tag "attribute", "pwd_protect", :id => nil%>
   <div class="form_row">
-    	选择保护问题：<%= form.select :question, ["你的家乡在哪里？","你的第一位老师的名字？"], :prompt=>"选择问题" %>
+    	选择保护问题：<%= form.select :question, @questions, :prompt=>"选择问题" %>
   </div>
 
   <div class="form_row">

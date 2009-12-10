@@ -67,5 +67,6 @@ class UserController < ApplicationController
   protected
   def find_user
     @user = User.find(session[:user_id])
+    @questions = ["你的家乡在哪里？","你的第一位老师的名字？"]
   end
 end
