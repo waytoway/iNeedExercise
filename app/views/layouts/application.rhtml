@@ -9,7 +9,8 @@
         <!-- top -->
         <div id="login" style="height:50px;border:1px solid;">
             <% if logged_in? %>
-                <%= link_to "您好!#{$useraccount}", :controller => 'account', :action => 'index' %>
+			<%@user=User.find(session[:user_id])%>
+                <%= link_to "您好!#{@user.login}", :controller => 'account', :action => 'index' %>
                 <%= link_to "Logout", :controller => 'account', :action => 'logout' %>
             <% else %>
             <% form_tag "account/login" do -%>
