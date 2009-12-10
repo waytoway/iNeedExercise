@@ -11,8 +11,4 @@ class ApplicationController < ActionController::Base
   def index
     puts 'hello1'
   end
-  
-  def param_posted?(symbol)
-    request.post? and params[symbol]
-  end
 end
