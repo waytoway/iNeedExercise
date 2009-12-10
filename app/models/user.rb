@@ -3,8 +3,7 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
   attr_accessor :current_password
-  attr_accessor :protect_question
-  attr_accessor :answer
+  attr_accessor :question
   
   # Max & min lengths for all fields 
   SCREEN_NAME_MIN_LENGTH = 4 
