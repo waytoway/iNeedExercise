@@ -35,16 +35,15 @@ class UserController < ApplicationController
         end
       when "pwd_protect"
         if @user.authenticated?(params[:user][:password]) && @user.email_equal?(params[:user][:email])
-          puts "jin ru xiu gai mi ma mo kuai"
-          #@user.update_attributes!(:crypted_password => @user.encrypt(params[:user][:password]))
           @protect_question = params[:user][:question]
-          @question = Question.find(:first, :conditions => "question = '#{protect_question}'")
+          puts @protect_question
+          @question = ProtectQuestion.find_by_question(@protect_question)
+          puts @question
           @user.update_attributes({:question_id => @question.id, :answer => params[:user][:answer]})
 
           redirect_to :action => "index"
         else
           puts "mi ma chu cuo"
-          #@user.update_attributes!(:crypted_password => @user.encrypt(params[:user][:password]))
           redirect_to :action => "index"
         end
       end
@@ -67,6 +66,13 @@ class UserController < ApplicationController
   protected
   def find_user
     @user = User.find(session[:user_id])
-    @questions = ["你的家乡在哪里？","你的第一位老师的名字？"]
+    #@questions = ["where is your home?","what is your first teacher name?"]
+    @questions = ProtectQuestion.find(:all)
+    @question_items = Array.new
+    @questions.each do |f|   
+        @question_items.push(f.question)
+    end 
+    puts @question_items
+    #@question_items = 
   end
 end
