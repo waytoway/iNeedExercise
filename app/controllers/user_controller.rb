@@ -18,9 +18,6 @@ class UserController < ApplicationController
     puts @user.email
     if request.post?
       attribute = params[:attribute]
-      puts "aaaaaaaaaaaaaaaaaaaaaaaaaa"
-      puts attribute
-      puts params
       case attribute
       when "modify_pwd"
         if @user.correct_password?(params)
@@ -43,7 +40,7 @@ class UserController < ApplicationController
 
           redirect_to :action => "index"
         else
-          puts "mi ma chu cuo"
+          flash[:notice] = "Email or password is wrong!"
           redirect_to :action => "index"
         end
       end
@@ -73,6 +70,5 @@ class UserController < ApplicationController
         @question_items.push(f.question)
     end 
     puts @question_items
-    #@question_items = 
   end
 end
