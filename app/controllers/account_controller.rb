@@ -29,6 +29,9 @@ class AccountController < ApplicationController
   end
   
   def signup
+    if logged_in?
+      logout
+    end
     @user = User.new(params[:user])
     return unless request.post?
     @user.save!
@@ -46,12 +49,13 @@ class AccountController < ApplicationController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(:controller => '/account', :action => 'index')
+    redirect_back_or_default(:controller => 'main', :action => 'index')
   end
   
   def modify_pwd
     @user = User.find(session[:user_id])
     if request.post?
+      attribute = params[:attribute]
       if @user.correct_password?(params)
         unless params[:user][:password] == params[:user][:password_confirmation]
           @user.password_errors(params) 
