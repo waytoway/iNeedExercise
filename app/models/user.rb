@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   validates_length_of       :login,    :within => 3..40
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :login, :email, :case_sensitive => false
+  validates_length_of       :cell,     :within => 11..40
   before_save :encrypt_password
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
@@ -48,10 +49,6 @@ class User < ActiveRecord::Base
 
   def authenticated?(password)
     
-    puts encrypt(password)
-    puts password
-    puts salt
-    puts crypted_password
     crypted_password == encrypt(password)
   end
 
