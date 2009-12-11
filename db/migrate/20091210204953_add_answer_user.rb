@@ -5,7 +5,7 @@ class AddAnswerUser < ActiveRecord::Migration
   end
   
   def self.down
-    remove_column :user, :question_id
+    remove_column :users, :question_id
     remove_column :users, :answer
     
   end
