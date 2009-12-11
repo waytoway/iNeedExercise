@@ -6,20 +6,23 @@ class UserController < ApplicationController
   
   def index
     #redirect_to(:action => 'signup') unless logged_in? || User.count > 0
+    #    @users = User.paginate  :page => params[:page],
+    #                                  :per_page => 5
+   @member_cards = User.paginate :page => params[:page]||1, :per_page => 2
     
   end
-
+  
   def modify_pwd
     
   end
-    
+  
   def modify  
     @user = User.find(session[:user])
     puts @user.email
     if request.post?
       attribute = params[:attribute]
       case attribute
-      when "modify_pwd"
+        when "modify_pwd"
         if @user.correct_password?(params)
           unless params[:user][:password] == params[:user][:password_confirmation]
             @user.password_errors(params) 
@@ -30,14 +33,14 @@ class UserController < ApplicationController
         else
           @user.password_errors(params)
         end
-      when "pwd_protect"
+        when "pwd_protect"
         if @user.authenticated?(params[:user][:password]) && @user.email_equal?(params[:user][:email])
           @protect_question = params[:user][:question]
           puts @protect_question
           @question = ProtectQuestion.find_by_question(@protect_question)
           puts @question
           @user.update_attributes({:question_id => @question.id, :answer => params[:user][:answer]})
-
+          
           redirect_to :action => "index"
         else
           flash[:notice] = "Email or password is wrong!"
@@ -47,17 +50,17 @@ class UserController < ApplicationController
     end
     @user.clear_password!
   end
-
+  
   def login_infor
     return unless request.post?
-        puts params[:user][:email]
-        unless @user.update_attributes!(:email => params[:user][:email])
-          flash[:notice] = "Email can't be blank or is too short!"
-        end
-        unless @user.update_attributes!(:cell => params[:user][:cell])
-          flash[:notice] = "Cell can't be blank or is too short!"
-        end
-        redirect_to :action => "index"
+    puts params[:user][:email]
+    unless @user.update_attributes!(:email => params[:user][:email])
+      flash[:notice] = "Email can't be blank or is too short!"
+    end
+    unless @user.update_attributes!(:cell => params[:user][:cell])
+      flash[:notice] = "Cell can't be blank or is too short!"
+    end
+    redirect_to :action => "index"
   end
   
   protected
@@ -67,7 +70,7 @@ class UserController < ApplicationController
     @questions = ProtectQuestion.find(:all)
     @question_items = Array.new
     @questions.each do |f|   
-        @question_items.push(f.question)
+      @question_items.push(f.question)
     end 
   end
 end
