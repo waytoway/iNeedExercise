@@ -4,12 +4,20 @@
         <%= link_to "注册",:controller => :account,:action=>"signup" %>
     </div>
 </div>
+
 <div id="select" style="border:1px solid">
     <table width="100%">
         查询模块
         <tr height="80px" border="1px solid">
             <td style="border:1px solid;width:30%">
-                选择地域
+               <div> 
+			   选择地域
+			   </div>
+			   <% form_for :city do |f| -%>
+			   <div> 
+			   <%= f.select :city_and_region_name, @question_items %>
+			   </div>
+			   <% end -%>
             </td>
             <td style="border:1px solid;width:30%">
                 选择项目
@@ -35,3 +43,4 @@
         </tr>
     </table>
 </div>
+
