@@ -3,6 +3,7 @@ class AccountController < ApplicationController
   include AuthenticatedSystem
   # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie 
+  before_filter :find_user
   
   # say something nice, you goof!  something sweet.
   def index
@@ -14,9 +15,12 @@ class AccountController < ApplicationController
   def login
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
+    @tmp_user = session[:user]
+    puts "ddddddddddddddddddddddd"
+    puts @tmp_user
+    puts self.current_user.id
     if logged_in?
-      #   @user=User.new(params[:login])
-      session[:user_id]=self.current_user.id
+      session[:user]=self.current_user.id
       if params[:remember_me] == "1"
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
@@ -35,9 +39,13 @@ class AccountController < ApplicationController
     end
     @user = User.new(params[:user])
     return unless request.post?
+    puts "jin ru sign up"
+    @protect_question = params[:user][:question]
+    @question = ProtectQuestion.find_by_question(@protect_question)
+    @user.question_id = @question.id
     @user.save!
     self.current_user = @user
-    session[:user_id]=self.current_user.id
+    session[:user]=self.current_user.id
     redirect_back_or_default(:controller => '/account', :action => 'index')
     flash[:notice] = "Thanks for signing up!"
   rescue ActiveRecord::RecordInvalid
@@ -46,7 +54,7 @@ class AccountController < ApplicationController
   
   def logout
     self.current_user.forget_me if logged_in?
-    session[:user_id]=nil
+    session[:user]=nil
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
@@ -56,6 +64,15 @@ class AccountController < ApplicationController
   def forget_pwd
     return unless request.post?
     redirect_back_or_default(:controller => 'account', :action => 'senPwdToEmail')
+  end
+  
+  protected
+  def find_user
+    @questions = ProtectQuestion.find(:all)
+    @question_items = Array.new
+    @questions.each do |f|   
+        @question_items.push(f.question)
+    end 
   end
   
 end
