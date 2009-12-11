@@ -5,8 +5,8 @@
 			alert('必须同意注册条款才可以注册！');
 			return false;
 		}
-		else {alert('ghjghj！');
-			document.forms[1].submit();
+		else {
+			document.forms[0].submit();
 		}
 	}
 </script>
@@ -47,7 +47,17 @@
     <br/>
     <%= f.password_field :password_confirmation %>
 </p>
-
+<div class="form_row">
+            选择保护问题：<%= f.select :question, @question_items %>
+</div>
+<div class="form_row">
+    <label for="answer">
+        问题答案:
+    </label>
+    <%= f.text_field :answer,
+    :size =>      User::PASSWORD_SIZE,
+    :maxlength => User::PASSWORD_MAX_LENGTH %>
+</div>
 <p>
     <label for="agree_protocol">
         注册条款：
