@@ -15,43 +15,43 @@
     </ul>
 </div>
 <div>
-    帐号管理
-    <ul>
-        <li>
-            <%= link_to("密码管理",{ :controller => :user,:action=>"modify_pwd"}) %>
-        </li>
-        <li>
-            <%= link_to("登录信息管理",{ :controller => :user,:action=>"login_infor"}) %>
-        </li>
-    </ul>
+    帐号管理<%= render :partial => "framework" %>
 </div>
 <div style="height:600px;width:600px;border:1px solid;position:absolute;left:200px;top:200px;">
     <%= error_messages_for :user %>
     <% form_for :user do |form| %>
     <fieldset>
+        <legend>
+            修改邮箱和手机信息
+        </legend>
+        <%= hidden_field_tag "attribute", "login_infor", :id => nil %>
         <div class="form_row">
-            <label for="member">
-                会员:
+            <label for="old_email">
+                当前邮箱:
             </label>
-            <%= form.password_field :member,
-            :size =>      User::PASSWORD_SIZE,
-            :maxlength => User::PASSWORD_MAX_LENGTH %>
+            <%= @user.email %>
         </div>
         <div class="form_row">
-            <label for="email">
-                邮箱:
+            <label for="new_email">
+                新的邮箱:
             </label>
-            <%= form.password_field :email,
-            :size =>      User::PASSWORD_SIZE,
-            :maxlength => User::PASSWORD_MAX_LENGTH %>
+            <%= form.text_field :email,
+            :size => User::EMAIL_SIZE,
+            :maxlength => User::EMAIL_MAX_LENGTH %>
         </div>
         <div class="form_row">
-            <label for="password_confirmation">
-                确认密码:
+            <label for="ole_cell">
+                当前手机号:
             </label>
-            <%= form.password_field :password_confirmation,
-            :size =>      User::PASSWORD_SIZE,
-            :maxlength => User::PASSWORD_MAX_LENGTH %>
+            <%= @user.cell %>
+        </div>
+        <div class="form_row">
+            <label for="new_cell">
+                新的手机号:
+            </label>
+            <%= form.text_field :cell,
+            :size => User::CELL_SIZE,
+            :maxlength => User::CELL_MAX_LENGTH %>
         </div>
         <%= submit_tag "提交", :class => "submit" %>
     </fieldset>

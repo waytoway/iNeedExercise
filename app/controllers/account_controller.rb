@@ -2,7 +2,8 @@ class AccountController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
   # If you want "remember me" functionality, add this before_filter to Application Controller
-  before_filter :login_from_cookie
+  before_filter :login_from_cookie 
+  
   # say something nice, you goof!  something sweet.
   def index
     #redirect_to(:action => 'signup') unless logged_in? || User.count > 0
@@ -52,25 +53,9 @@ class AccountController < ApplicationController
     redirect_back_or_default(:controller => 'main', :action => 'index')
   end
   
-  def modify_pwd
-    @user = User.find(session[:user_id])
-    if request.post?
-      attribute = params[:attribute]
-      if @user.correct_password?(params)
-        unless params[:user][:password] == params[:user][:password_confirmation]
-          @user.password_errors(params) 
-          return
-        end
-        @user.update_attributes(:crypted_password => @user.encrypt(params[:user][:password]))
-        redirect_to :action => "index"
-      else
-        @user.password_errors(params)
-      end
-    end
-    @user.clear_password!
+  def forget_pwd
+    return unless request.post?
+    redirect_back_or_default(:controller => 'account', :action => 'senPwdToEmail')
   end
   
-  def login_infor
-    
-  end
 end

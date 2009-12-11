@@ -2,23 +2,23 @@
     <% form_tag do -%>
     <p>
         <label for="login">
-            Login
+            用户名：
         </label>
         <%= text_field_tag 'login' %>
     </p>
     <p>
         <label for="password">
-            Password
+            密码：
         </label>
         <%= password_field_tag 'password' %>
+		<%= link_to '忘记密码?点击此处', :action => 'forget_pwd' %> 
     </p>
-    
+   
     <p>
-        <%= submit_tag 'Log in' %>
+        <%= submit_tag '登陆' %>
+		<%= link_to '没有注册?点此处注册', :action => 'signup' %> 
     </p>
-	<p>Not a member yet?
-		<%= link_to 'Click Here', :action => 'signup' %> to join today!
-	</p>
+
     <% end -%>
 </div>
 
