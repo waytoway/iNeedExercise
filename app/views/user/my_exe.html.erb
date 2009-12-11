@@ -1,0 +1,34 @@
+<div style="width:200px">
+    运动记录
+    <ul>
+        <li>
+            <%= link_to("个人锻炼",{ :controller => :user,:action=>"my_exe"}) %>
+        </li>
+        <li>
+            <%= link_to("会员卡管理",{ :controller => :user,:action=>"card_manage"}) %>
+        </li>
+        <li>
+            <a>
+            当前预定<a/>
+        </li>
+    </ul>
+</div>
+<div>
+    帐号管理
+    <ul>
+        <li>
+            <%= link_to("密码管理",{ :controller => :user,:action=>"modify_pwd"}) %>
+        </li>
+        <li>
+            <%= link_to("登录信息管理",{ :controller => :user,:action=>"login_infor"}) %>
+        </li>
+    </ul>
+</div>
+<div style="height:600px;width:600px;border:1px solid;position:absolute;left:200px;top:200px;">
+    <%= error_messages_for :user %>
+    <% form_for :user do |form| %>
+    <fieldset>
+  
+    </fieldset>
+    <% end %>
+</div>

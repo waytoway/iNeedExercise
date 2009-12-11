@@ -9,7 +9,6 @@
 			document.forms[1].submit();
 		}
 	}
-	
 </script>
 <%= error_messages_for :user %>
 <% form_for :user do |f| -%>
@@ -55,7 +54,7 @@
     </label>
     <input type="checkbox" name="agree" id="agree_Protocol" value="agree"/>
     <label for="agree_Protocol">
-        我已仔细阅读并接受CSDN的注册条款。
+        我已仔细阅读并接受注册条款。
     </label>
     <%= link_to "iNeedExercise注册条款",:controller => :account,:action=>"protocol" %>
 </p>

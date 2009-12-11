@@ -1,5 +1,6 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
+  has_many :t_member_cards,:class_name=>"TMemberCard",:foreign_key=>"NAME",:primary_key=>"login"
   # Virtual attribute for the unencrypted password
   attr_accessor :password
   attr_accessor :current_password

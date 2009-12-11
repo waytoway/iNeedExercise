@@ -2,12 +2,11 @@
     运动记录
     <ul>
         <li>
-            <a>
-            本月锻炼<a/>
+            <%= link_to("个人锻炼",{ :controller => :user,:action=>"my_exe"}) %>
         </li>
         <li>
             <a>
-            会员卡管理<a/>
+            <%= link_to("会员卡管理",{ :controller => :user,:action=>"card_manage"}) %>
         </li>
         <li>
             <a>
@@ -16,8 +15,7 @@
     </ul>
 </div>
 <div>
-    帐号管理
-    <%= render :partial => "framework" %>
+    帐号管理<%= render :partial => "framework" %>
 </div>
 <div style="height:600px;width:600px;border:1px solid;position:absolute;left:200px;top:200px;">
     <%= error_messages_for :user %>
@@ -38,11 +36,10 @@
                 新的邮箱:
             </label>
             <%= form.text_field :email,
-            :size =>      User::EMAIL_SIZE,
+            :size => User::EMAIL_SIZE,
             :maxlength => User::EMAIL_MAX_LENGTH %>
         </div>
-        
-		<div class="form_row">
+        <div class="form_row">
             <label for="ole_cell">
                 当前手机号:
             </label>
@@ -53,7 +50,7 @@
                 新的手机号:
             </label>
             <%= form.text_field :cell,
-            :size =>      User::CELL_SIZE,
+            :size => User::CELL_SIZE,
             :maxlength => User::CELL_MAX_LENGTH %>
         </div>
         <%= submit_tag "提交", :class => "submit" %>
