@@ -17,7 +17,7 @@ class UserController < ApplicationController
   end
   
   def modify  
-    @user = User.find(session[:user_id])
+    @user = User.find(session[:user])
     puts @user.email
     if request.post?
       attribute = params[:attribute]
@@ -65,13 +65,12 @@ class UserController < ApplicationController
   
   protected
   def find_user
-    @user = User.find(session[:user_id])
+    @user = User.find(session[:user])
     #@questions = ["where is your home?","what is your first teacher name?"]
     @questions = ProtectQuestion.find(:all)
     @question_items = Array.new
     @questions.each do |f|   
       @question_items.push(f.question)
     end 
-    puts @question_items
   end
 end
