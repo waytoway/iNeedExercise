@@ -26,33 +26,31 @@
 </div>
 <div style="height:600px;width:600px;border:1px solid;position:absolute;left:200px;top:200px;">
     <%= error_messages_for :user %>
-    <% form_for :user do |form| %>
-    <fieldset>
-        <div class="form_row">
-            <label for="member">
-                会员:
-            </label>
-            <%= form.password_field :member,
-            :size =>      User::PASSWORD_SIZE,
-            :maxlength => User::PASSWORD_MAX_LENGTH %>
-        </div>
-        <div class="form_row">
-            <label for="email">
-                邮箱:
-            </label>
-            <%= form.password_field :email,
-            :size =>      User::PASSWORD_SIZE,
-            :maxlength => User::PASSWORD_MAX_LENGTH %>
-        </div>
-        <div class="form_row">
-            <label for="password_confirmation">
-                确认密码:
-            </label>
-            <%= form.password_field :password_confirmation,
-            :size =>      User::PASSWORD_SIZE,
-            :maxlength => User::PASSWORD_MAX_LENGTH %>
-        </div>
-        <%= submit_tag "提交", :class => "submit" %>
-    </fieldset>
-    <% end %>
+    <table width="354" border="1">
+        <tr>
+            <td width="85">
+                卡号
+            </td>
+            <td width="100">
+                场馆
+            </td>
+            <td width="70">
+                余额
+            </td>
+        </tr>
+        <% for users in @users %>
+        <tr>
+            <td>
+                <%=h users.id %>
+            </td>
+            <td>
+                <%=h users.login %>
+            </td>
+        </tr>
+        <% end %>
+    </table>
+    <p>
+        &nbsp;
+    </p>
+    <%= will_paginate @users %>
 </div>
