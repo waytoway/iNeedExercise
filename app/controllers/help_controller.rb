@@ -12,5 +12,9 @@ class HelpController < ApplicationController
 #    a=TMemberCard.find(1)
 #    puts "aaaaaaaaaaaaaaaa"
 #    puts a.t_card_usage_records[0][:card_no]
+#@user = User.paginate :page => params[:page], :per_page => 5
+@user = User.paginate :page => params[:page], :order => 'id ASC'
+puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+puts @user[0][:login]
   end
 end
