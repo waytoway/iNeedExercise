@@ -38,19 +38,28 @@
                 余额
             </td>
         </tr>
-        <% for users in @users %>
+        <%if @users_cards!=nil|| @users_cards.size!=0 %>
+        <% for users_card in @users_cards %>
         <tr>
             <td>
-                <%=h users.id %>
+                <%=users_card.t_member_card[:CARD_NUMBER] %>
             </td>
             <td>
-                <%=h users.login %>
+                <%tvi=TVenueInfo.find(users_card.t_member_card[:VENUE_ID]) %>
+                <%=tvi[:VENUE_NAME] %>
+            </td>
+            <td>
+                <%=users_card.t_member_card[:BALANCE] %>
             </td>
         </tr>
         <% end %>
+        <%end %>
+        <%if @users_cards.size==0 %>
+        <%="无会员卡记录" %>
+        <%end %>
     </table>
     <p>
         &nbsp;
     </p>
-    <%= will_paginate @users %>
+    <%= will_paginate @users_cards %>
 </div>
