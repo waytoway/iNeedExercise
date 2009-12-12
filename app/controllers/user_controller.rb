@@ -9,11 +9,18 @@ class UserController < ApplicationController
   
   #this is the card manage loader
   def card_manage
+    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 2,:conditions=>"user_id=#{session[:user]}"
-    render :update do |page|        
+    
+    #    respond_to do |format|
+    #      format.html # index.html.erb
+    #      format.js do
+    render :update do |page|
       page.replace_html 'content' , :partial => 'card_manage'
     end
-  end 
+  end
+  #    end
+  #  end 
   
   #this is the my records loader    
   def my_records

@@ -1,5 +1,4 @@
-<div id="content">
-<table width="354" border="1">
+<table id="content" width="354" border="1">
     <tr>
         <td width="85">
             卡号
@@ -20,7 +19,7 @@
         <td>
         </td>
         <td>
-            <%=users_card.t_member_card[:BALANCE] %>
+            <%=users_card.t_member_card[:ADDRESS] %>
         </td>
     </tr>
     <% end %>
@@ -28,9 +27,5 @@
     <%if @users_cards.size==0 %>
     <%="无会员卡记录" %>
     <%end %>
+    <%= will_paginate @users_cards, :renderer => 'RemoteLinkRenderer' , :previous_label => "上一页", :next_label => "下一页" %>
 </table>
-<p>
-    &nbsp;
-</p>
-<%= will_paginate @users_cards, :renderer => 'RemoteLinkRenderer' , :remote => {:update =>'content'} %>
-</div>
