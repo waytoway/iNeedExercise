@@ -1,0 +1,36 @@
+<div id="content">
+<table width="354" border="1">
+    <tr>
+        <td width="85">
+            卡号
+        </td>
+        <td width="100">
+            场馆
+        </td>
+        <td width="70">
+            余额
+        </td>
+    </tr>
+    <%if @users_cards!=nil && @users_cards.size!=0 %>
+    <% for users_card in @users_cards %>
+    <tr>
+        <td>
+            <%=users_card.t_member_card[:NAME] %>
+        </td>
+        <td>
+        </td>
+        <td>
+            <%=users_card.t_member_card[:BALANCE] %>
+        </td>
+    </tr>
+    <% end %>
+    <%end %>
+    <%if @users_cards.size==0 %>
+    <%="无会员卡记录" %>
+    <%end %>
+</table>
+<p>
+    &nbsp;
+</p>
+<%= will_paginate @users_cards, :renderer => 'RemoteLinkRenderer' , :remote => {:update =>'content'} %>
+</div>

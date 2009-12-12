@@ -1,42 +1,36 @@
-<div style="width:200px">
-    运动记录
-    <ul>
-        <li>
-            <a>
-            本月锻炼<a/>
-        </li>
-        <li>
-            <a>
-            会员卡管理<a/>
-        </li>
-        <li>
-            <a>
-            当前预定<a/>
-        </li>
-    </ul>
-</div>
-<div>
-    帐号管理<%= render :partial => "framework" %>
-</div>
-<div style="height:600px;width:600px;border:1px solid;position:absolute;left:200px;top:200px;">
-    <% form_for :user do |form| %>
-    <div class="form_row">
-        <label for="userName">
-            用户名:
-        </label>
-        <%= @user.login %>
-    </div>
-    <div class="form_row">
-        <label for="email">
-            用户邮箱:
-        </label>
-        <%= @user.email %>
-    </div>
-    <div class="form_row">
-        <label for="ole_cell">
-            手机号:
-        </label>
-        <%= @user.cell %>
-    </div>
-    <% end %>
+<div style="margin-left:20px;margin-top:50px">
+    <table width="100%">
+        <tr>
+            <td width="200px" valign="top">
+                <b>运动记录</b>
+                <ul>
+                    <li>
+                        <%=link_to_remote '个人锻炼',  :url=>{:action=>"my_records"} %>
+                    </li>
+                    <li>
+                        <%=link_to_remote '会员卡管理',  :url=>{:action=>"card_manage"} %>
+                    </li>
+                    <li>
+                        <%=link_to_remote '当前预定',  :url=>{:action=>"order_now"} %>
+                    </li>
+                </ul>
+                <br>
+                <b>个人管理</b>
+                <ul>
+                    <li>
+                        <%=link_to_remote '个人信息',  :url=>{:action=>"user_info"} %>
+                    </li>
+                    <li>
+                        <%=link_to_remote '密码管理',  :url=>{:action=>"modify_pwd"} %>
+                    </li>
+                    <li>
+                        <%=link_to_remote '登录信息管理',  :url=>{:action=>"login_infor"} %>
+                    </li>
+                </ul>
+            </td>
+            <td id="content">
+                <%= render :partial => "user_info" %>
+            </td>
+        </tr>
+    </table>
 </div>

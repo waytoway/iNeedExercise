@@ -32,10 +32,11 @@ module WillPaginate
       :params         => nil,
       :renderer       => 'WillPaginate::LinkRenderer',
       :page_links     => true,
-      :container      => true
+      :container      => true,
+      :update         => nil 
     }
     mattr_reader :pagination_options
-
+    
     # Renders Digg/Flickr-style pagination for a WillPaginate::Collection
     # object. Nil is returned if there is only one page in total; no point in
     # rendering the pagination in that case...
@@ -105,9 +106,9 @@ module WillPaginate
       
       # get the renderer instance
       renderer = case options[:renderer]
-      when String
+        when String
         options[:renderer].to_s.constantize.new
-      when Class
+        when Class
         options[:renderer].new
       else
         options[:renderer]
@@ -151,7 +152,7 @@ module WillPaginate
         concat(content, block.binding)
       end
     end
-
+    
     # Renders a helpful message with numbers of displayed vs. total entries.
     # You can use this as a blueprint for your own, similar helpers.
     #
@@ -166,23 +167,23 @@ module WillPaginate
     #   #-> Displaying items 6 - 10 of 26 in total
     def page_entries_info(collection, options = {})
       entry_name = options[:entry_name] ||
-        (collection.empty?? 'entry' : collection.first.class.name.underscore.sub('_', ' '))
+       (collection.empty?? 'entry' : collection.first.class.name.underscore.sub('_', ' '))
       
       if collection.total_pages < 2
         case collection.size
-        when 0; "No #{entry_name.pluralize} found"
-        when 1; "Displaying <b>1</b> #{entry_name}"
-        else;   "Displaying <b>all #{collection.size}</b> #{entry_name.pluralize}"
+          when 0; "No #{entry_name.pluralize} found"
+          when 1; "Displaying <b>1</b> #{entry_name}"
+          else;   "Displaying <b>all #{collection.size}</b> #{entry_name.pluralize}"
         end
       else
         %{Displaying #{entry_name.pluralize} <b>%d&nbsp;-&nbsp;%d</b> of <b>%d</b> in total} % [
-          collection.offset + 1,
-          collection.offset + collection.length,
-          collection.total_entries
+        collection.offset + 1,
+        collection.offset + collection.length,
+        collection.total_entries
         ]
       end
     end
-
+    
     def self.total_pages_for_collection(collection) #:nodoc:
       if collection.respond_to?('page_count') and !collection.respond_to?('total_pages')
         WillPaginate::Deprecation.warn %{
@@ -197,11 +198,11 @@ module WillPaginate
       collection.total_pages
     end
   end
-
+  
   # This class does the heavy lifting of actually building the pagination
   # links. It is used by the <tt>will_paginate</tt> helper internally.
   class LinkRenderer
-
+    
     # The gap in page links is represented by:
     #
     #   <span class="gap">&hellip;</span>
@@ -219,11 +220,11 @@ module WillPaginate
       @collection = collection
       @options    = options
       @template   = template
-
+      
       # reset values in case we're re-using this instance
       @total_pages = @param_name = @url_string = nil
     end
-
+    
     # Process it! This method returns the complete HTML string which contains
     # pagination links. Feel free to subclass LinkRenderer and change this
     # method as you see fit.
@@ -236,7 +237,7 @@ module WillPaginate
       html = links.join(@options[:separator])
       @options[:container] ? @template.content_tag(:div, html, html_attributes) : html
     end
-
+    
     # Returns the subset of +options+ this instance was initialized with that
     # represent HTML attributes for the container element of pagination links.
     def html_attributes
@@ -249,12 +250,12 @@ module WillPaginate
       @html_attributes
     end
     
-  protected
-
+    protected
+    
     # Collects link items for visible page numbers.
     def windowed_links
       prev = nil
-
+      
       visible_page_numbers.inject [] do |links, n|
         # detect gaps:
         links << gap_marker if prev and n > prev + 1
@@ -263,7 +264,7 @@ module WillPaginate
         links
       end
     end
-
+    
     # Calculates visible page numbers using the <tt>:inner_window</tt> and
     # <tt>:outer_window</tt> options.
     def visible_page_numbers
@@ -287,7 +288,7 @@ module WillPaginate
       right_gap = (window_to + 1)...(total_pages - outer_window)
       visible  -= left_gap.to_a  if left_gap.last - left_gap.first > 1
       visible  -= right_gap.to_a if right_gap.last - right_gap.first > 1
-
+      
       visible
     end
     
@@ -301,15 +302,15 @@ module WillPaginate
         page_span page, text, :class => span_class
       end
     end
-
+    
     def page_link(page, text, attributes = {})
       @template.link_to text, url_for(page), attributes
     end
-
+    
     def page_span(page, text, attributes = {})
       @template.content_tag :span, text, attributes
     end
-
+    
     # Returns URL params for +page_link_or_span+, taking the current GET params
     # and <tt>:params</tt> option into account.
     def url_for(page)
@@ -327,7 +328,7 @@ module WillPaginate
         else
           @url_params[param_name] = page_one ? 1 : 2
         end
-
+        
         url = @template.url_for(@url_params)
         return url if page_one
         
@@ -348,35 +349,35 @@ module WillPaginate
       # finally!
       @url_string.sub "\0", page.to_s
     end
-
-  private
-
+    
+    private
+    
     def rel_value(page)
       case page
-      when @collection.previous_page; 'prev' + (page == 1 ? ' start' : '')
-      when @collection.next_page; 'next'
-      when 1; 'start'
+        when @collection.previous_page; 'prev' + (page == 1 ? ' start' : '')
+        when @collection.next_page; 'next'
+        when 1; 'start'
       end
     end
-
+    
     def current_page
       @collection.current_page
     end
-
+    
     def total_pages
       @total_pages ||= WillPaginate::ViewHelpers.total_pages_for_collection(@collection)
     end
-
+    
     def param_name
       @param_name ||= @options[:param_name].to_s
     end
-
+    
     # Recursively merge into target hash by using stringified keys from the other one
     def stringified_merge(target, other)
       other.each do |key, value|
         key = key.to_s # this line is what it's all about!
         existing = target[key]
-
+        
         if value.is_a?(Hash) and (existing.is_a?(Hash) or existing.nil?)
           stringified_merge(existing || (target[key] = {}), value)
         else
@@ -384,7 +385,7 @@ module WillPaginate
         end
       end
     end
-
+    
     def parse_query_parameters(params)
       if defined? Rack::Utils
         # For Rails > 2.3
