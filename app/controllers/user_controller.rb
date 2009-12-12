@@ -2,7 +2,7 @@ class UserController < ApplicationController
   before_filter :login_required
   include AuthenticatedSystem
   before_filter :login_from_cookie
-  before_filter :find_user
+  before_filter :get_user
   
   def index
     #redirect_to(:action => 'signup') unless logged_in? || User.count > 0
@@ -64,7 +64,7 @@ class UserController < ApplicationController
   end
   
   protected
-  def find_user
+  def get_user
     @user = User.find(session[:user])
     #@questions = ["where is your home?","what is your first teacher name?"]
     @questions = ProtectQuestion.find(:all)
