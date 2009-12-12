@@ -8,8 +8,15 @@ class UserController < ApplicationController
     #redirect_to(:action => 'signup') unless logged_in? || User.count > 0
     #    @users = User.paginate  :page => params[:page],
     #                                  :per_page => 5
-   @member_cards = User.paginate :page => params[:page]||1, :per_page => 2
     
+  end
+  
+  def card_manage
+    @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 2,:conditions=>"user_id=#{session[:user]}"
+    
+    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    puts session[:user]
+    puts @users_cards.size
   end
   
   def modify_pwd
