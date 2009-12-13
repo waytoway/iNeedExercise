@@ -8,16 +8,34 @@
         <tr height="80px" border="1px solid">
             <td style="border:1px solid;width:30%">
                <div> 
-			   选择地域
+				选择地域
 			   </div>
 			   <% form_for :city do |f| -%>
-			   <div> 
-			   <%= f.select :city_and_region_name, @cities_and_regions %>
-			   </div>
+				   <div> 
+				   <%= f.select :city_and_region_name, @cities_and_regions %>
+				   </div>
 			   <% end -%>
             </td>
             <td style="border:1px solid;width:30%">
-                选择项目
+			<div>
+				选择项目
+			</div>
+				<% form_for :sport_type do |f| -%>
+				   <div> 
+				   <%= f.select :sport_type, @sport_types %>
+				   </div>
+			   <% end -%>
+			<div>
+				OR
+			</div>
+			<div>
+				<% form_for :t_venue_info do |f| -%>
+				   <%= f.text_field :venue_name,
+            		:size =>      User::PASSWORD_SIZE,
+            		:maxlength => User::PASSWORD_MAX_LENGTH %>
+			   <% end -%>
+				
+			</div>
             </td>
             <td style="border:1px solid;width:40%">
                 选择时间

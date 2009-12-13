@@ -3,4 +3,5 @@ class City < ActiveRecord::Base
   
     
   attr_accessor :city_and_region_name
+  
 end

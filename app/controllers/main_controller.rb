@@ -5,6 +5,7 @@ class MainController < ApplicationController
   # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie  
   before_filter :get_regions_full_name
+  before_filter :get_sport_type
 
   def index
     #@item = TCardType.find(:first)
@@ -24,6 +25,14 @@ class MainController < ApplicationController
         @cities_and_region = @city_name + " " + g.name
         @cities_and_regions.push(@cities_and_region)
       end
+    end
+  end
+  
+  def get_sport_type
+    @sports = SportType.find(:all)
+    @sport_types = Array.new
+    @sports.each do |f|   
+      @sport_types.push(f.sport_type)
     end
   end
 end
