@@ -1,0 +1,31 @@
+<table id="content" width="354" border="1">
+    <tr>
+        <td width="85">
+            卡号
+        </td>
+        <td width="100">
+            场馆
+        </td>
+        <td width="70">
+            余额
+        </td>
+    </tr>
+    <%if @users_cards!=nil && @users_cards.size!=0 %>
+    <% for users_card in @users_cards %>
+    <tr>
+        <td>
+            <%=users_card.t_member_card[:NAME] %>
+        </td>
+        <td>
+        </td>
+        <td>
+            <%=users_card.t_member_card[:ADDRESS] %>
+        </td>
+    </tr>
+    <% end %>
+    <%end %>
+    <%if @users_cards.size==0 %>
+    <%="无会员卡记录" %>
+    <%end %>
+    <%= will_paginate @users_cards, :renderer => 'RemoteLinkRenderer' , :previous_label => "上一页", :next_label => "下一页" %>
+</table>

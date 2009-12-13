@@ -5,22 +5,46 @@ class UserController < ApplicationController
   before_filter :get_user
   
   def index
-    #redirect_to(:action => 'signup') unless logged_in? || User.count > 0
-    #    @users = User.paginate  :page => params[:page],
-    #                                  :per_page => 5
-    
   end
   
+  #this is the card manage loader
   def card_manage
+    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 2,:conditions=>"user_id=#{session[:user]}"
     
-    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    puts session[:user]
-    puts @users_cards.size
+    #    respond_to do |format|
+    #      format.html # index.html.erb
+    #      format.js do
+    render :update do |page|
+      page.replace_html 'content' , :partial => 'card_manage'
+    end
+  end
+  #    end
+  #  end 
+  
+  #this is the my records loader    
+  def my_records
+    render :update do |page|        
+      page.replace_html 'content' , :partial => 'my_records'
+    end
   end
   
-  def modify_pwd
+  #this is the order now loader      
+  def order_now
+    render :update do |page|        
+      page.replace_html 'content' , :partial => 'order_now'
+    end
+  end
+  
+  def modify_order_now
     
+  end
+  
+  #this is the pwd  loader    
+  def modify_pwd
+    render :update do |page|        
+      page.replace_html 'content' , :partial => 'modify_pwd'
+    end
   end
   
   def modify  
@@ -58,16 +82,29 @@ class UserController < ApplicationController
     @user.clear_password!
   end
   
+  #this is the login information loader    
   def login_infor
-    return unless request.post?
-    puts params[:user][:email]
-    unless @user.update_attributes!(:email => params[:user][:email])
-      flash[:notice] = "Email can't be blank or is too short!"
+    render :update do |page|        
+      page.replace_html 'content' , :partial => 'login_infor'
+    end 
+  end
+  
+  def modify_login_infor
+    render :text=>"" unless request.post?
+    unless @user.update_attributes!(:email => params[:email])
+      render :text=>"too short"
     end
-    unless @user.update_attributes!(:cell => params[:user][:cell])
-      flash[:notice] = "Cell can't be blank or is too short!"
+    unless @user.update_attributes!(:cell => params[:cell])
+      render :text=>"tooooo short"
     end
-    redirect_to :action => "index"
+    render :text=>"success" 
+  end
+  
+  #this is the user information loader    
+  def user_info
+    render :update do |page|        
+      page.replace_html 'content' , :partial => 'user_info'
+    end 
   end
   
   protected

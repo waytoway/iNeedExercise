@@ -1,0 +1,37 @@
+<div>
+    <fieldset id="field">
+        <%form_remote_tag :update=>"info",:url=>{:action=>:modify_login_infor} do %>
+        <div>
+            <label>
+                当前邮箱:
+            </label>
+            <label>
+                <%=@user.email %>
+            </label>
+            <br>
+            <label>
+                新的邮箱:
+            </label>
+            <%=text_field_tag :email,"",:size => User::EMAIL_SIZE,
+            :maxlength => User::EMAIL_MAX_LENGTH %>
+        </div>
+        <div>
+            <label>
+                当前手机号:
+            </label>
+            <label>
+                <%=@user.cell %>
+            </label>
+            <br>
+            <label>
+                新的手机号:
+            </label>
+            <%=text_field_tag :cell,"",:size => User::CELL_SIZE,
+            :maxlength => User::CELL_MAX_LENGTH %>
+        </div>
+        <%=submit_tag "提交" %>
+        <%end %>
+    </fieldset>
+    <div id="info">
+    </div>
+</div>
