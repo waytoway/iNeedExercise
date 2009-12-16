@@ -91,13 +91,19 @@ class UserController < ApplicationController
   
   def modify_login_infor
     render :text=>"" unless request.post?
-    unless @user.update_attributes!(:email => params[:email])
-      render :text=>"too short"
+    if params[:email]=="" || params[:email].to_s.size < 3 || params[:cell]=="" || params[:cell].to_s.size < 7
+      render :text=>"新邮箱或手机号输入不正确，更新失败！" 
+      #redirect_to :action => "index"
+    else
+      unless @user.update_attributes!(:email => params[:email])
+        puts "aaaaaaaaaaaaa"
+        render :text=>"too short"
+      end
+      unless @user.update_attributes!(:cell => params[:cell])
+        render :text=>"tooooo short"
+      end
+      render :text=>"邮箱和手机号更新成功！" 
     end
-    unless @user.update_attributes!(:cell => params[:cell])
-      render :text=>"tooooo short"
-    end
-    render :text=>"success" 
   end
   
   #this is the user information loader    
