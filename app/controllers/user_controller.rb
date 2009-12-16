@@ -57,10 +57,9 @@ class UserController < ApplicationController
         if @user.correct_password?(params)
           unless params[:user][:password] == params[:user][:password_confirmation]
             @user.password_errors(params) 
-            return
           end
           @user.update_attributes(:crypted_password => @user.encrypt(params[:user][:password]))
-          redirect_to :action => "index"
+          render :partial => "modify_pwd"
         else
           @user.password_errors(params)
         end

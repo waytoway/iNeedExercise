@@ -11,4 +11,8 @@ class SearchController < ApplicationController
   def detail
     
   end
+  
+  def recommend
+    
+  end
 end

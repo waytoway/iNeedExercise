@@ -8,5 +8,6 @@ class TVenueInfo < ActiveRecord::Base
   has_many :t_field_badmintoon_weekend_price, :class_name=>"TFieldBadmintoonWeekendPrice",:foreign_key=>"VENUE_ID",:primary_key=>"ID"
   
   attr_accessor :venue_name
+  attr_accessor :selected_time
   
 end

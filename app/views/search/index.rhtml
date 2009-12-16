@@ -1,12 +1,37 @@
-<div id ="navi" style="height:30px;border:1px solid;">
-    导航
+<div height = "20px">
+    <%= link_to "首页",:controller => :main,:action=>"index" %>
+    <span>></span>
+    <%= link_to "查询",:controller => :search,:action=>"index" %>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 </div>
-<div id="searchbar" style="width:100px;height:40px;border:1px solid;">
-    搜索栏
-</div>
-<div id="noti" style="border:1px solid;height:500px">
-    查询反馈区
-</div>
-<div id="recom" style="border:1px solid">
-    我来推荐
+<div style = "height:30px">
+	<p>
+		修改查询
+	</p>
+</p>
+<div>
+<div style = "height:770px">
+	<table width = "100%">
+		<tr width = "100%">
+			<td width = "80%">
+				<div style = "height:100px" >
+					已协议场馆
+				</div>
+				<div style = "height:100px">
+					未协议场馆
+				</div>
+				<div style = "height:100px">
+					本地区其他场馆
+				</div>
+			</td>
+			<td width = "20%">
+				<div>
+					网站描述
+				</div>
+				<div>
+					<%= link_to image_tag("tui.jpg"),:controller => :search, :action=>"recommend" %>
+				</div>
+			</td>
+		</tr>
+	</table>
 </div>

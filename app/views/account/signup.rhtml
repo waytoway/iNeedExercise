@@ -6,12 +6,12 @@
 			return false;
 		}
 		else {
-			document.forms[0].submit();
+		    document.getElementById("commit").submit();	
 		}
 	}
 </script>
 <%= error_messages_for :user %>
-<% form_for :user do |f| -%>
+<% form_for :user, :html => {:id => 'commit'} do |f| -%>
 <p>
     <label for="login">
         Login
@@ -72,4 +72,4 @@
     <!--<%= submit_tag 'Sign up' %>-->
 </p>
 <% end -%>
-<button onclick="javascript:agree_onclick()">Sign up</button>
+<button id="commit" onclick="javascript:agree_onclick()">Sign up</button>

@@ -6,6 +6,9 @@
         <%= javascript_include_tag :defaults %>
 		<%=javascript_include_tag "prototype"%>  
 		<%= javascript_include_tag 'lowpro' %>
+		<script language="JavaScript" type="text/javascript" src="/DatePicker/WdatePicker.js"></script>
+
+		
         <style type="text/css">        
         <!--
         /*****************************************************************
@@ -13,6 +16,9 @@
          大背景和大框 中间内容框(固定)
          ******************************************************************
          *****************************************************************/
+		img {
+			border-width:0;
+		}
         body {
             margin: 0px;
             padding: 0px;
@@ -558,15 +564,15 @@
                     </div>
                     <div id="dao2">
                         <%= link_to "首页",:controller => :main,:action=>"index" %>
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>&nbsp</span>
                         <%= link_to "注册",:controller => :account,:action=>"signup" %>
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>&nbsp</span>
                         <%= link_to "关于我们",:controller => :about,:action=>"index" %>
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>&nbsp</span>
                         <%= link_to "联系我们",:controller => :contact,:action=>"index" %>
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>&nbsp</span>
                         <%= link_to "帮助中心",:controller => :help,:action=>"index" %>
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>&nbsp</span>
                         <%= link_to "我的锻炼",:controller => :user,:action=>"index" %>
                     </div>
                 </div>
