@@ -1,0 +1,6 @@
+<div>
+	<% for @region_name in @regions_name%>
+		<%= link_to_remote @region_name, :update => "cur_city", :url => {:action => "save_selected_region", :name => @region_name}, :html => {:id => 'region_select'}%>
+		<br/>
+	<% end %>
+</div>

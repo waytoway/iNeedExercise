@@ -1,0 +1,18 @@
+<div style="border:1px solid;background-color:white;position:absolute;left:135px;top:315px;width:300px;height:300px">
+	<div style="margin : 10px;border: 1px solid;height:30%">
+	<% for @city_name in @city_names%>
+		<%= link_to_remote @city_name, :update => "regions", :url => {:action => "show_regions", :name => @city_name}%>
+		<br/>
+	<% end %>
+	</div>
+	<hr>
+	<div id = "regions" style="margin : 10px;border: 1px solid;">
+	<% for @region_name in @regions_name%>
+		<%= link_to_remote @region_name, :update => "cur_city", :url => {:action => "save_selected_region", :name => @region_name}%>
+		<br/>
+	<% end %>
+	</div>
+	
+</div>
+
+
