@@ -42,7 +42,13 @@ class UserController < ApplicationController
   
   #this is the pwd  loader    
   def modify_pwd
-    
+    @user = User.find(session[:user])
+    #@questions = ["where is your home?","what is your first teacher name?"]
+    @questions = ProtectQuestion.find(:all)
+    @question_items = Array.new
+    @questions.each do |f|   
+      @question_items.push(f.question)
+    end 
     render :update do |page|        
       page.replace_html 'content' , :partial => 'modify_pwd'
     end
