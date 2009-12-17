@@ -1,1 +1,4 @@
-<%= select(:region, :name, @regions_name) %>
+<%=select(:region, :name, @regions_name, { :include_blank => false }, :onchange => remote_function(:update => "jump_for_sub_item",
+:method => "get",
+:with => "'region_name=' + value",
+:url => { :controller => :main, :action => :jump_for_sub_item})) -%>

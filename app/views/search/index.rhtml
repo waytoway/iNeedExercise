@@ -1,6 +1,41 @@
+<style>
+	#city_name{
+		width:100px;
+        height:20px;
+	}
+	#xiu22{
+		width:100px;
+	    height:22px;
+	    float:left;
+	    margin-top:20px;
+	    margin-left:32px;
+	    display:inline;
+	}
+	#region_name{
+		width:100px;
+        height:20px;
+	}
+	#sport_name{
+		width:136px;
+        height:20px;
+	}
+	#time{
+		width:75px;
+        height:20px;
+	}
+	#t_venue_info_selected_time{
+		width:58px;
+        height:16px;
+        text-align:center;
+        padding-top:2px;
+        position: relative;
+        border:#cde06c 1px solid;
+	}
+	img { border-width:0; }
+</style>
 <div id="cha">
-    <a href="#">首页</a>
-    　 >　 <a href="#">查询</a>
+    <%= link_to "首页",:controller => :main,:action=>"index" %>
+    　 >　 <%= link_to "查询",:controller => :search,:action=>"index" %>
 </div>
 <div id="xiu">
     <div id="xiu1">
@@ -12,29 +47,52 @@
 		       :with => "'city_name=' + value",   
 		       :url => { :controller => :search, :action => :get_sub_items})    
 		       %>   
+		
+    </div>
+	<div id="xiu22">
 		<div id="sub_items">   
 		  <%= select(:region, :name, @regions_name, { :include_blank => false }) %>
 		</div>
-    </div>
+		<div id="jump_for_sub_item">
+			&nbsp;
+		</div>
+	</div>
     <div id="xiu3">
-        <select name="" id="xl2">
-            <option>运动项目</option>
-            <option>足球</option>
-            <option>篮球</option>
-        </select>
+        <%= select(:sport, :name, @sport_type_names, { :include_blank => false }) %>
     </div>
     <div id="xiu4">
-        <input name="" type="text" id="ai" value="09/09/30" />
+        <%= text_field :t_venue_info, :selected_time, :onClick => "WdatePicker()", :size=>10, :value=>"" %>
     </div>
     <div id="xiu5">
-        <select id="xl3">
+    	<%= select_tag :time, 
+        	"<option>1:00AM</option>
+        	<option>2:00AM</option>
+            <option>3:00AM</option>
+            <option>4:00AM</option>
+			<option>5:00AM</option>
+        	<option>6:00AM</option>
+            <option>7:00AM</option>
+            <option>8:00AM</option>
+			<option>9:00AM</option>
+            <option>10:00AM</option>
+            <option>11:00AM</option>
             <option>12:00AM</option>
-            <option>13:00AM</option>
-            <option>14:00AM</option>
-        </select>
+            <option>1:00PM</option>
+        	<option>2:00PM</option>
+            <option>3:00PM</option>
+            <option>4:00PM</option>
+			<option>5:00PM</option>
+        	<option>6:00PM</option>
+            <option>7:00PM</option>
+            <option>8:00PM</option>
+			<option>9:00PM</option>
+            <option>10:00PM</option>
+            <option>11:00PM</option>
+            <option>12:00PM</option>"
+		%>
     </div>
     <div id="xiu6">
-        <input name="" type="button" border="0" id="bi"/>
+		<%= image_submit_tag("t6.jpg")%>
     </div>
 </div>
 <div id="nei">
@@ -532,7 +590,7 @@
         <br/>
         <img src="images/j1.jpg"/>
         <br/>
-        <input name="Input" type="button" border="0" id="tui"/>
+        <%= link_to image_tag("tui.jpg"),:controller => :search, :action=>"recommend" %>
         <br/>
     </div>
 </div>

@@ -1,127 +1,3 @@
-<script type="text/javascript">
-    function wValDisp(sts, idx){
-        if (getObject("sbArea_" + sts + "").style.display == "none") {
-            getObject("sbArea_" + sts + "").style.display = "";
-        }
-        else {
-            getObject("sbArea_" + sts + "").style.display = "none";
-        }
-    }
-    
-    function getObject(objectId){
-        // checkW3C DOM, then MSIE 4, then NN 4. 
-        if (document.getElementById && document.getElementById(objectId)) {
-            return document.getElementById(objectId);
-        }
-        else 
-            if (document.all && document.all(objectId)) {
-                return document.all(objectId); // IE4,5.0 
-            }
-            else 
-                if (document.layers && document.layers[objectId]) {
-                    return document.layers[objectId]; // Netscape 4.x 
-                }
-                else {
-                    return false;
-                }
-    }
-    
-    function wValChg(idx, sts){
-        if (idx == "1") 
-            getObject("wn_" + sts + "").innerHTML = "1:00AM";
-			document.getElementById("sel_time").value = "1:00AM";
-        if (idx == "2") 
-            getObject("wn_" + sts + "").innerHTML = "2:00AM";
-			document.getElementById("sel_time").value = "2:00AM";
-        if (idx == "3") 
-            getObject("wn_" + sts + "").innerHTML = "3:00AM";
-        if (idx == "4") 
-            getObject("wn_" + sts + "").innerHTML = "4:00AM";
-        if (idx == "5") 
-            getObject("wn_" + sts + "").innerHTML = "5:00AM";
-        if (idx == "6") 
-            getObject("wn_" + sts + "").innerHTML = "6:00AM";
-        if (idx == "7") 
-            getObject("wn_" + sts + "").innerHTML = "7:00AM";
-        if (idx == "8") 
-            getObject("wn_" + sts + "").innerHTML = "8:00AM";
-        if (idx == "9") 
-            getObject("wn_" + sts + "").innerHTML = "9:00AM";
-        if (idx == "10") 
-            getObject("wn_" + sts + "").innerHTML = "10:00AM";
-        if (idx == "11") 
-            getObject("wn_" + sts + "").innerHTML = "11:00AM";
-        if (idx == "12") 
-            getObject("wn_" + sts + "").innerHTML = "12:00AM";
-        if (idx == "13") 
-            getObject("wn_" + sts + "").innerHTML = "1:00PM";
-        if (idx == "14") 
-            getObject("wn_" + sts + "").innerHTML = "2:00PM";
-        if (idx == "15") 
-            getObject("wn_" + sts + "").innerHTML = "3:00PM";
-        if (idx == "16") 
-            getObject("wn_" + sts + "").innerHTML = "4:00PM";
-        if (idx == "17") 
-            getObject("wn_" + sts + "").innerHTML = "5:00PM";
-        if (idx == "18") 
-            getObject("wn_" + sts + "").innerHTML = "6:00PM";
-        if (idx == "19") 
-            getObject("wn_" + sts + "").innerHTML = "7:00PM";
-        if (idx == "20") 
-            getObject("wn_" + sts + "").innerHTML = "8:00PM";
-        if (idx == "21") 
-            getObject("wn_" + sts + "").innerHTML = "9:00PM";
-        if (idx == "22") 
-            getObject("wn_" + sts + "").innerHTML = "10:00PM";
-        if (idx == "23") 
-            getObject("wn_" + sts + "").innerHTML = "11:00PM";
-        if (idx == "24") 
-            getObject("wn_" + sts + "").innerHTML = "12:00PM";
-        getObject("sbArea_" + sts + "").style.display = "none";
-    }
-    
-    function getNavigatorType(){
-        if (navigator.appName == "Microsoft Internet Explorer") 
-            return 1;
-        else 
-            if (navigator.appName == "Netscape") 
-                return 2;
-            else 
-                return 0;
-    }
-    
-    function setSelBox(event){
-        var _event;
-        switch (getNavigatorType()) {
-            case 1: // IE
-                _event = window.event;
-                node = _event.srcElement;
-                nodeName = _event.srcElement.className;
-                break;
-            case 2: // Netscape
-                _event = event;
-                node = _event.target;
-                nodeName = _event.target.className;
-                break;
-            default:
-                nodeName = "None";
-                break;
-        }
-        if (nodeName == "dselObj") {
-        
-        }
-        else {
-            try {
-                document.getElementById("sbArea_h").style.display = "none";
-            } 
-            catch (e) {
-            }
-        }
-    }
-    
-    document.onmousedown = setSelBox;
-</script>
-
 <style type="text/css">
     
     .search {
@@ -180,6 +56,13 @@
         -padding: 3px 0 0 5px;
         cursor: pointer;
     }
+	
+	#jump_for_sub_item{
+		position:absolute;
+		overflow: hidden;	
+	}
+	
+
 </style>
 
 <div>
@@ -196,28 +79,35 @@
                 <div>
                     选择地域
                 </div>
-                <%= link_to_remote image_tag("t2.jpg"), :update =>"cities",
-                :url => { :action => "show_cities"},:id=> "city_img", :html => {:id => 'city_select'} %>
-                <div id = "cur_city" style ="position:absolute;top:285px;left:90px">
-                    选择地域
-                </div>
-                <div id = "cities">
-                </div>
+                    <div id="xiu2">
+				        <%= javascript_include_tag :defaults %>   
+						<%= select :city, :name,  @city_names, { :include_blank => false }, :onchange => remote_function(:update => "sub_items",   
+						       :method => "get",   
+						       :with => "'city_name=' + value",   
+						       :url => { :controller => :main, :action => :get_sub_items})    
+						       %>   
+						
+				    </div>
+					<div id="xiu22">
+						<div id="sub_items">   
+						  <%= select :region, :name, @regions_name, { :include_blank => false }, :onchange => remote_function(:update => "jump_for_sub_item",   
+						       :method => "get",   
+						       :with => "'region_name=' + value",   
+						       :url => { :controller => :main, :action => :jump_for_sub_item}) %>
+						</div>
+						<div id="jump_for_sub_item">
+							&nbsp;
+						</div>
+					</div>
             </td>
             <td style="border:1px solid;width:30%;height:120px">
                 <div>
                     选择项目
                 </div>
-                <%= link_to_remote image_tag("t3.jpg"), :update =>"sport_types",
-                :url => { :action => "show_sport_types"} %>
-                <div id = "cur_sport" style ="position:absolute;top:265px;left:350px">
-                    选择项目
+                <div id="xiu5">
+			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false }) %>
                 </div>
-                <div id = "sport_types">
-                </div>
-                <div>
-                    OR
-                </div>
+				OR
                 <div>
                     <div id = "venue_edit_box">
                         <%= text_field_tag :venue_name, "输入运动场馆名称" %>
@@ -235,141 +125,40 @@
                 <table width="100%">
                     <tr>
                         <td style="width:30%">
-                            <%= text_field :t_venue_info, :selected_time, :onClick => "WdatePicker()", :size=>10, :value=>"" %>
+                            <div id="xiu4">
+						        <%= text_field :t_venue_info, :selected_time, :onClick => "WdatePicker()", :size=>10, :value=>"" %>
+						    </div>
                         </td>
                         <td>
-                            <img src="/images/t5.jpg"/>
-                            <div class="search" style ="position:absolute;top:265px;left:700px">
-                                <div class="sel">
-                                    <input type="hidden" name="w" value="h"/>
-									<%= text_field_tag("sel_time")%>
-                                    <div class="option" onClick="wValDisp('h','web');">
-                                        <span id="wn_h">12:00AM</span>
-                                    </div>
-                                    <div id="sbArea_h" style="display:none;">
-                                        <a target="_self" href="javascript:wValChg('1','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                1:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('2','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                2:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('3','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_1">
-                                                3:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('4','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_2">
-                                                4:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('5','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                5:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('6','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                6:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('7','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_1">
-                                                7:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('8','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_2">
-                                                8:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('9','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                9:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('10','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                10:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('11','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_1">
-                                                11:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('12','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_2">
-                                                12:00AM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('13','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                1:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('14','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                2:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('15','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_1">
-                                                3:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('16','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_2">
-                                                4:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('17','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                5:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('18','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                6:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('19','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_1">
-                                                7:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('20','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_2">
-                                                8:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('21','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                9:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('22','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_0">
-                                                10:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('23','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_1">
-                                                11:00PM
-                                            </div>
-                                        </a>
-                                        <a target="_self" href="javascript:wValChg('24','h');" onFocus="blur();">
-                                            <div class="dselObj" id="wv_h_2">
-                                                12:00PM
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                                <div id="xiu5">
+							       <%= select_tag :time, 
+							        	"<option>1:00AM</option>
+							        	<option>2:00AM</option>
+							            <option>3:00AM</option>
+							            <option>4:00AM</option>
+										<option>5:00AM</option>
+							        	<option>6:00AM</option>
+							            <option>7:00AM</option>
+							            <option>8:00AM</option>
+										<option>9:00AM</option>
+							            <option>10:00AM</option>
+							            <option>11:00AM</option>
+							            <option>12:00AM</option>
+							            <option>1:00PM</option>
+							        	<option>2:00PM</option>
+							            <option>3:00PM</option>
+							            <option>4:00PM</option>
+										<option>5:00PM</option>
+							        	<option>6:00PM</option>
+							            <option>7:00PM</option>
+							            <option>8:00PM</option>
+										<option>9:00PM</option>
+							            <option>10:00PM</option>
+							            <option>11:00PM</option>
+							            <option>12:00PM</option>"
+									%>
+							    </div>
+							    </div>
                         </td>
                     </tr>
                     <tr>
