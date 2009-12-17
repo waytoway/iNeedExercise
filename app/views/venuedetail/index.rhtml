@@ -34,18 +34,21 @@
                 <div>
                     地图：		点击查看大图<%= link_to image_tag(@venue[:PHOTO_URL], :border=>0,:size => "100x100"), :action => 'show_map',:url=>@venue[:PHOTO_URL] %>
                 </div>
-                <hr>
+				<hr>
                 <div>
                     最新信息：<%=@venue[:INTRADUCTION] %>
                 </div>
             </div>
         </td>
         <td style="width:500px">
-            <% tabs_tag do |tab| %>
-            <%= tab.home       'Homepage', 'a' %>
-            <%= tab.dashboard  'Dashboard', 'b' %>
-            <%= tab.account    'Account', 'c' %>
-            <% end %>
+            <b><%=@venue[:VENUE_NAME] %>
+            </b>
+            <br>
+            <div>
+                <%=@venue[:INTRADUCTION] %>
+            </div>
+			<br><br><br>
+			<%=link_to "返回查询结果", :action=>"return_to_results"%>
         </td>
         <td style="width:150px">
             我来推荐

@@ -84,16 +84,15 @@ class User < ActiveRecord::Base
   end
   
   def correct_password?(params)
-    current_password = params[:user][:current_password]
-    password = params[:user][:password]
-    password_confirmation = params[:user][:password_confirmation]
+    current_password = params[:current_password]
+    password = params[:password]
+    password_confirmation = params[:password_confirmation]
     crypted_password == encrypt(current_password) 
   end
 
   def password_errors(params)
-    puts "ddddddddddddddddddddd currentpassword wrong"
-    self.password = params[:user][:password]
-    self.password_confirmation = params[:user][:password_confirmation]
+    self.password = params[:password]
+    self.password_confirmation = params[:password_confirmation]
     valid?
     if(correct_password?(params))
       return

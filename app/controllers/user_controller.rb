@@ -42,40 +42,39 @@ class UserController < ApplicationController
   
   #this is the pwd  loader    
   def modify_pwd
+    
     render :update do |page|        
       page.replace_html 'content' , :partial => 'modify_pwd'
     end
   end
   
-  def modify  
+  def modify 
     @user = User.find(session[:user])
-    puts @user.email
     if request.post?
       attribute = params[:attribute]
       case attribute
         when "modify_pwd"
         if @user.correct_password?(params)
-          unless params[:user][:password] == params[:user][:password_confirmation]
-            @user.password_errors(params) 
+          if params[:password] != params[:password_confirmation]
+            render :text=>"两次密码输入不同"
+          else
+            @user.update_attributes(:crypted_password => @user.encrypt(params[:password]))
+            render :text=>"修改成功"
           end
-          @user.update_attributes(:crypted_password => @user.encrypt(params[:user][:password]))
-          render :partial => "modify_pwd"
         else
-          @user.password_errors(params)
+          render :text=>"输入密码错误"
         end
         when "pwd_protect"
-        if @user.authenticated?(params[:user][:password]) && @user.email_equal?(params[:user][:email])
-          @protect_question = params[:user][:question]
-          puts @protect_question
+        if @user.authenticated?(params[:password]) && @user.email_equal?(params[:email])
+          @protect_question = params[:question]
           @question = ProtectQuestion.find_by_question(@protect_question)
-          puts @question
-          @user.update_attributes({:question_id => @question.id, :answer => params[:user][:answer]})
-          
-          redirect_to :action => "index"
+          @user.update_attributes({:question_id => @question.id, :answer => params[:answer]})
+          render :text => "成功发送"
         else
-          flash[:notice] = "Email or password is wrong!"
-          redirect_to :action => "index"
+          render :text => "Email或者密码错误!"
         end
+      else
+        render :text=>"无修改"
       end
     end
     @user.clear_password!
@@ -95,7 +94,6 @@ class UserController < ApplicationController
       #redirect_to :action => "index"
     else
       unless @user.update_attributes!(:email => params[:email])
-        puts "aaaaaaaaaaaaa"
         render :text=>"too short"
       end
       unless @user.update_attributes!(:cell => params[:cell])
