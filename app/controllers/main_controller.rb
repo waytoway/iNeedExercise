@@ -5,65 +5,40 @@ class MainController < ApplicationController
   # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie  
   before_filter :get_regions_full_name
-  before_filter :get_sport_type
+  before_filter :get_initial_cities
+  before_filter :get_initial_regions
+  before_filter :get_initial_sports
   
   def index
-    if request.post?
-        redirect_to :controller => "search", :action => "index", :city_name => session[:city_name], :region_name => session[:region_name], 
-        :sport_type_name => session[:sport_type_name], :venue_name => session[:venue_name]
-    end
-  end
 
-    
-  def show_cities
-    @cities = City.find(:all)
-    @city_names = Array.new
-    @cities.each do |f|
-      @city_names.push(f.name)
+    if request.post?
+#          puts params[:city][:name]
+#    puts session[:region_name]
+#    puts params[:sport][:name]
+#    puts session[:venue_name]
+      redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region], 
+      :sport_type_name => params[:sport][:name], :venue_name => session[:venue_name]
     end
-    
-    @city = City.find(:first)
-    @regions_name = Array.new
-    @regions = @city.regions
-    @regions.each do |f|
-      @regions_name.push(f.name)
-    end
-    
-    render :partial => "show_cities"
   end
-   
-  def show_regions 
-    session[:city_name] = params[:name]
+  
+  def get_sub_items   
+    session[:city_name] = params[:city_name]
     @city = City.find(:first,:conditions => {:name => session[:city_name]})
     @regions_name = Array.new
     @regions = @city.regions
+    @regions_name.push("选择区域")
     @regions.each do |f|
       @regions_name.push(f.name)
-    end
-    render :partial => "show_regions"
-  end
+    end 
+       
+    render :partial => "select"   
+  end 
   
-  def save_selected_region
-    session[:region_name] = params[:name]
-    @local_region_name = session[:region_name]
-    render :partial => "update_regions"
+  def jump_for_sub_item
+    session[:region_name] = params[:region_name]
+    render :text => ""
   end
-  
-  def show_sport_types
-    @sports = SportType.find(:all)
-    @sport_type_names = Array.new
-    @sports.each do |f|   
-      @sport_type_names.push(f.sport_type)
-    end
-    render :partial => "show_sport_types"
-  end
-  
-  def save_selected_sport
-    session[:sport_type_name] = params[:name]
-    @local_sport_name = session[:sport_type_name]
-    render :partial => "update_sports"
-  end
-  
+
   def show_all_venues
     @venues = TVenueInfo.find(:all)
     @venue_names = Array.new
@@ -78,11 +53,7 @@ class MainController < ApplicationController
     @lacal_venue_name = session[:venue_name]
     render :partial => "update_venues"
   end
-  
-  def before_search
-    redirect_to :controller => "search", :action => "index", :fun => "good"
-  end
-  
+
   protected
   def get_regions_full_name
     @cities_and_regions = Array.new
@@ -98,11 +69,27 @@ class MainController < ApplicationController
     end
   end
   
-  def get_sport_type
+  def get_initial_cities
+    @cities = City.find(:all)
+    @city_names = Array.new
+    @city_names.push("选择城市")
+    @cities.each do |f|
+      @city_names.push(f.name)
+    end
+  end
+  
+  def get_initial_regions
+    @regions_name = Array.new
+    @regions_name.push("选择区域")
+    @regions_name.push("2222")
+  end
+  
+  def get_initial_sports
     @sports = SportType.find(:all)
-    @sport_types = Array.new
+    @sport_type_names = Array.new
+    @sport_type_names.push("运动项目")
     @sports.each do |f|   
-      @sport_types.push(f.sport_type)
+      @sport_type_names.push(f.sport_type)
     end
   end
 

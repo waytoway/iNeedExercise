@@ -4,17 +4,16 @@ class SearchController < ApplicationController
   # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie
   before_filter :get_user_cards
-  before_filter :get_initial_and_regions
+  before_filter :get_initial_cities
+  before_filter :get_initial_regions
+  before_filter :get_initial_sports
 
   def index
-    @cities = City.find(:all)
-    @city_names = Array.new
-    @city_names.push("选择城市")
-    @cities.each do |f|
-      @city_names.push(f.name)
-    end
+    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
+    @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 6,:conditions=>"user_id=#{session[:user]}"
+    @users_cards2 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
+    @users_cards3 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
 
-    puts @city_names
   end  
      
   def get_sub_items   
@@ -29,6 +28,11 @@ class SearchController < ApplicationController
        
     render :partial => "select"   
   end 
+  
+  def jump_for_sub_item
+    session[:region_name] = params[:region_name]
+    render :text => ""
+  end
   
   def detail
     
@@ -75,14 +79,29 @@ class SearchController < ApplicationController
   def get_user_cards
     @users_cards = UsersCard.find(:all, :conditions => {:user_id => session[:user]})
     @page_count = @users_cards.size/6
-    puts "bbbbbbbbbbbbbbbb"
-    puts @users_cards.size
-    puts @page_count
   end
   
-  def get_initial_and_regions
+  def get_initial_cities
+    @cities = City.find(:all)
+    @city_names = Array.new
+    @city_names.push("选择城市")
+    @cities.each do |f|
+      @city_names.push(f.name)
+    end
+  end
+  
+  def get_initial_regions
     @regions_name = Array.new
     @regions_name.push("选择区域")
+  end
+  
+  def get_initial_sports
+    @sports = SportType.find(:all)
+    @sport_type_names = Array.new
+    @sport_type_names.push("运动项目")
+    @sports.each do |f|   
+      @sport_type_names.push(f.sport_type)
+    end
   end
   
 end
