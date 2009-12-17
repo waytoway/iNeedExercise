@@ -1,12 +1,13 @@
 <table id="content" width="354" border="1">
+
     <tr>
-        <td width="185">
+        <td width="85">
             卡号
         </td>
         <td width="100">
             场馆
         </td>
-        <td width="170">
+        <td width="70">
             余额
         </td>
     </tr>
@@ -25,10 +26,12 @@
     <% end %>
     <%end %>
     <%if @users_cards.size==0 %>
-    <%="无会员卡记录" %>
+	<tr>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+	</tr>
+
     <%end %>
     <%= will_paginate @users_cards, :renderer => 'RemoteLinkRenderer' , :previous_label => "上一页", :next_label => "下一页" %>
 </table>
-<div>
-	test the rest
-</div>

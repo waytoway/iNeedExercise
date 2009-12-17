@@ -6,16 +6,11 @@ class MainController < ApplicationController
   before_filter :login_from_cookie  
   before_filter :get_regions_full_name
   before_filter :get_sport_type
-  before_filter :set_time
-
-  @@city_name = ""
-  @@region_name = ""
-  @@sport_type_name = ""
-  @@venue_name = ""
   
   def index
     if request.post?
-        redirect_to :controller => "search", :action => "index", :fun => "good"
+        redirect_to :controller => "search", :action => "index", :city_name => session[:city_name], :region_name => session[:region_name], 
+        :sport_type_name => session[:sport_type_name], :venue_name => session[:venue_name]
     end
   end
 
@@ -28,7 +23,6 @@ class MainController < ApplicationController
     end
     
     @city = City.find(:first)
-    @@city_name = @city.name
     @regions_name = Array.new
     @regions = @city.regions
     @regions.each do |f|
@@ -39,8 +33,8 @@ class MainController < ApplicationController
   end
    
   def show_regions 
-    @@city_name = params[:name]
-    @city = City.find(:first,:conditions => {:name => @@city_name})
+    session[:city_name] = params[:name]
+    @city = City.find(:first,:conditions => {:name => session[:city_name]})
     @regions_name = Array.new
     @regions = @city.regions
     @regions.each do |f|
@@ -50,8 +44,8 @@ class MainController < ApplicationController
   end
   
   def save_selected_region
-    @@region_name = params[:name]
-    @local_region_name = @@region_name
+    session[:region_name] = params[:name]
+    @local_region_name = session[:region_name]
     render :partial => "update_regions"
   end
   
@@ -65,8 +59,8 @@ class MainController < ApplicationController
   end
   
   def save_selected_sport
-    @@sport_type_name = params[:name]
-    @local_sport_name = @@sport_type_name
+    session[:sport_type_name] = params[:name]
+    @local_sport_name = session[:sport_type_name]
     render :partial => "update_sports"
   end
   
@@ -80,8 +74,8 @@ class MainController < ApplicationController
   end
   
   def save_selected_venue
-    @@venue_name = params[:name]
-    @lacal_venue_name = @@venue_name
+    session[:venue_name] = params[:name]
+    @lacal_venue_name = session[:venue_name]
     render :partial => "update_venues"
   end
   
@@ -110,10 +104,6 @@ class MainController < ApplicationController
     @sports.each do |f|   
       @sport_types.push(f.sport_type)
     end
-  end
-  
-  def set_time
-    @time = ""
   end
 
 end

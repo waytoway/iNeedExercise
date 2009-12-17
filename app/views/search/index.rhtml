@@ -1,37 +1,538 @@
-<div height = "20px">
-    <%= link_to "首页",:controller => :main,:action=>"index" %>
-    <span>></span>
-    <%= link_to "查询",:controller => :search,:action=>"index" %>
-    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<div id="cha">
+    <a href="#">首页</a>
+    　 >　 <a href="#">查询</a>
 </div>
-<div style = "height:30px">
-	<p>
-		修改查询
-	</p>
-</p>
-<div>
-<div style = "height:770px">
-	<table width = "100%">
-		<tr width = "100%">
-			<td width = "80%">
-				<div style = "height:100px" >
-					已协议场馆
-				</div>
-				<div style = "height:100px">
-					未协议场馆
-				</div>
-				<div style = "height:100px">
-					本地区其他场馆
-				</div>
-			</td>
-			<td width = "20%">
-				<div>
-					网站描述
-				</div>
-				<div>
-					<%= link_to image_tag("tui.jpg"),:controller => :search, :action=>"recommend" %>
-				</div>
-			</td>
-		</tr>
-	</table>
+<div id="xiu">
+    <div id="xiu1">
+    </div>
+    <div id="xiu2">
+        <%= javascript_include_tag :defaults %>   
+		<%= select :city, :name,  @city_names, { :include_blank => false }, :onchange => remote_function(:update => "sub_items",   
+		       :method => "get",   
+		       :with => "'city_name=' + value",   
+		       :url => { :controller => :search, :action => :get_sub_items})    
+		       %>   
+		<div id="sub_items">   
+		  <%= select(:region, :name, @regions_name, { :include_blank => false }) %>
+		</div>
+    </div>
+    <div id="xiu3">
+        <select name="" id="xl2">
+            <option>运动项目</option>
+            <option>足球</option>
+            <option>篮球</option>
+        </select>
+    </div>
+    <div id="xiu4">
+        <input name="" type="text" id="ai" value="09/09/30" />
+    </div>
+    <div id="xiu5">
+        <select id="xl3">
+            <option>12:00AM</option>
+            <option>13:00AM</option>
+            <option>14:00AM</option>
+        </select>
+    </div>
+    <div id="xiu6">
+        <input name="" type="button" border="0" id="bi"/>
+    </div>
+</div>
+<div id="nei">
+    <div id="nei1">
+        <table width="693" border="0" cellspacing="0" cellpadding="0" class="zaq">
+            <tr bgcolor="#ffefb3">
+                <td width="133" height="26" class="zaq2">
+                    场馆
+                </td>
+                <td width="133" class="zaq2">
+                    日期
+                </td>
+                <td width="133" class="zaq2">
+                    价格
+                </td>
+                <td width="294">
+                    符合要求的可能的时间
+                    <br/>
+                    <a>7:00　　　　 　　8:00　 　　　　　9:00</a>
+                </td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td height="26" class="zaq5">
+                    > <a href="#">华师大体育馆</a>
+                </td>
+                <td>
+                    09/30
+                </td>
+                <td>
+                    30
+                </td>
+                <td>
+                    <table width="293" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="97" height="26">
+                                已预定
+                            </td>
+                            <td width="97">
+                                <img src="images/yu.jpg" />
+                            </td>
+                            <td width="97">
+                                <img src="images/yu.jpg" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr bgcolor="#cedfcc">
+                <td height="26" class="zaq5">
+                    > <a href="#">B体育馆</a>
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    <table width="293" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="97" height="26">
+                                <img src="images/yu.jpg" />
+                            </td>
+                            <td width="97">
+                                已预定
+                            </td>
+                            <td width="97">
+                                已预定
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    <table width="293" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="97" height="26">
+                                已预定
+                            </td>
+                            <td width="97">
+                                <img src="images/yu.jpg" />
+                            </td>
+                            <td width="97">
+                                已预定
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr bgcolor="#cedfcc">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#cedfcc">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#cedfcc">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+        <div id="guang">
+            <div id="guangz">
+                另外有XX家场馆符合您所在地域,
+                <br/>
+                并能查看这些场馆未来场地预订情况
+            </div>
+            <div id="guangy">
+                <input name="" type="button" border="0" id="q5"/>
+            </div>
+        </div>
+        <table width="693" border="0" cellspacing="0" cellpadding="0" class="zaq">
+            <tr bgcolor="#ffefb3">
+                <td width="133" height="26" class="zaq2">
+                    场馆
+                </td>
+                <td width="133" class="zaq2">
+                    日期
+                </td>
+                <td width="133" class="zaq2">
+                    价格
+                </td>
+                <td width="294" class="zaq3">
+                    可预订的运动时间
+                </td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td height="26" class="zaq5">
+                    > <a href="#">上海大学体育馆</a>
+                    <img src="images/t4.jpg" />
+                </td>
+                <td>
+                    09/30
+                </td>
+                <td>
+                    30-45
+                </td>
+                <td>
+                    <table width="293" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="58" height="26" class="zaq6">
+                                <a href="#">13:00</a>
+                            </td>
+                            <td width="58" class="zaq6">
+                                <a href="#">15:00</a>
+                            </td>
+                            <td width="58">
+                                &nbsp;
+                            </td>
+                            <td width="58">
+                                &nbsp;
+                            </td>
+                            <td width="58">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr bgcolor="#cedfcc">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#cedfcc">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#cedfcc">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+        <div id="d2">
+            该地域其他场馆
+        </div>
+        <table width="693" border="0" cellspacing="0" cellpadding="0" class="zaq1">
+            <tr bgcolor="#ffefb3">
+                <td width="133" height="26" class="zaq2">
+                    场馆
+                </td>
+                <td width="133" class="zaq2">
+                    日期
+                </td>
+                <td width="133" class="zaq2">
+                    符合的场地时间
+                </td>
+                <td width="294" bgcolor="#fff5d2" class="zaq4">
+                    我来推荐该场馆加入www.51duanlian.com
+                </td>
+            </tr>
+            <tr bgcolor="#b5c5ba">
+                <td height="26" class="zaq5">
+                    > <a href="#">E体育馆</a>
+                </td>
+                <td>
+                    09/30
+                </td>
+                <td>
+                    不明
+                </td>
+                <td bgcolor="#d0dcd2">
+                    <table width="293" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="115" height="26">
+                                &nbsp;
+                            </td>
+                            <td>
+                                <img src="images/xx1.gif" />
+                            </td>
+                            <td class="zaq7">
+                                <a href="#">我来推荐</a>
+                            </td>
+                            <td width="115">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr bgcolor="#e3dfc6">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td bgcolor="#edecda">
+                    <table width="293" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="115" height="26">
+                                &nbsp;
+                            </td>
+                            <td>
+                                <img src="images/xx1.gif" />
+                            </td>
+                            <td class="zaq7">
+                                <a href="#">我来推荐</a>
+                            </td>
+                            <td width="115">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr bgcolor="#b5c5ba">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td bgcolor="#d0dcd2">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#e3dfc6">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td bgcolor="#edecda">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#b5c5ba">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td bgcolor="#d0dcd2">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#e3dfc6">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td bgcolor="#edecda">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#b5c5ba">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td bgcolor="#d0dcd2">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr bgcolor="#e3dfc6">
+                <td height="26">
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td bgcolor="#edecda">
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="nei2">
+        我要锻炼网
+        <br/>
+        是一个免费的运动
+        <br/>
+        场地管理系统现在
+        <br/>
+        您只需注册登陆就
+        <br/>
+        可以在网上预定适
+        <br/>
+        合您是运动场地.
+        <br/>
+        <br/>
+        预定成功即有温馨
+        <br/>
+        短信提示,并告知
+        <br/>
+        您现场验证码.
+        <br/>
+        <br/>
+        如果您熟悉的运动
+        <br/>
+        场管还不在我们的
+        <br/>
+        管理系统内,您还
+        <br/>
+        可以推荐他们加入
+        <br/>
+        我们,具体实施办
+        <br/>
+        法请参看
+        <br/>
+        <br/>
+        <img src="images/j1.jpg"/>
+        <br/>
+        <input name="Input" type="button" border="0" id="tui"/>
+        <br/>
+    </div>
 </div>
