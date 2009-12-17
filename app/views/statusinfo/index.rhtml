@@ -1,12 +1,54 @@
-<div id ="navi" style="height:50px;border:1px solid;">
+<div style="width:100%">
     导航
 </div>
-<div id="searchbar" style="height:200px;border:1px solid;">
-   左侧信息栏，包括地址，地图等
-</div>
-<div id="noti" style="border:1px solid;height:500px">
-   中间详细信息栏
-</div>
-<div id="recom" style="border:1px solid">
-    我来推荐
-</div>
+<table border=1px>
+    <tr>
+        <td style="width:200px">
+            <div>
+                <p>
+                    ><%=@venue[:VENUE_NAME] %>
+                </p>
+                <ul>
+                    <%if @venue[:OPEN_TIME]!=nil or @venue[:CLOSE_TIME]!=nil %>
+                    <li>
+                        营业时间：<%=@venue[:OPEN_TIME].to_s+"——"+@venue[:CLOSE_TIME].to_s %>
+                    </li>
+                    <%end %>
+                    <%if @venue[:PHONE]!=nil %>
+                    <li>
+                        电话预订：<%=@venue[:PHONE] %>
+                    </li>
+                    <%end %>
+                    <%if @venue[:EMAIL]!=nil %>
+                    <li>
+                        Email：<%=@venue[:EMAIL] %>
+                    </li>
+                    <%end %>
+                    <%if @venue[:ADRESS]!=nil %>
+                    <li>
+                        地址：<%=@venue[:ADRESS] %>
+                    </li>
+                    <%end %>
+                </ul>
+                <hr>
+                <div>
+                    地图：		点击查看大图<%= link_to image_tag(@venue[:PHOTO_URL], :border=>0,:size => "100x100"), :action => 'show_map',:url=>@venue[:PHOTO_URL] %>
+                </div>
+                <hr>
+                <div>
+                    最新信息：<%=@venue[:INTRADUCTION] %>
+                </div>
+            </div>
+        </td>
+        <td style="width:500px">
+            <% tabs_tag do |tab| %>
+            <%= tab.home       'Homepage', 'a' %>
+            <%= tab.dashboard  'Dashboard', 'b' %>
+            <%= tab.account    'Account', 'c' %>
+            <% end %>
+        </td>
+        <td style="width:150px">
+            我来推荐
+        </td>
+    </tr>
+</table>

@@ -1,71 +1,55 @@
-<%= error_messages_for :user %>
-<% form_for :user,:update=>"info",:url => { :action => :modify } do |form| %>
 <fieldset>
-    <legend>
-        修改密码
-    </legend>
-    <%= hidden_field_tag "attribute", "modify_pwd", :id => nil %>
-    <div class="form_row">
-        <label for="current_password">
+    <%form_remote_tag :update=>"info1",:html => {:id => 'commit'}, :url=>{:action=>:modify} do %>
+    <div>
+        修改密码<%= hidden_field_tag "attribute", "modify_pwd", :id => nil %>
+        <br>
+        <label>
             当前密码:
         </label>
-        <%= form.password_field :current_password,
-        :size =>      User::PASSWORD_SIZE,
-        :maxlength => User::PASSWORD_MAX_LENGTH %>
-    </div>
-    <div class="form_row">
-        <label for="password">
-            新密码:
+        <%=text_field_tag :current_password,"",:size =>User::PASSWORD_SIZE,:maxlength => User::PASSWORD_MAX_LENGTH %>
+        <br>
+        <label>
+            新的密码:
         </label>
-        <%= form.password_field :password,
-        :size =>      User::PASSWORD_SIZE,
-        :maxlength => User::PASSWORD_MAX_LENGTH %>
-    </div>
-    <div class="form_row">
-        <label for="password_confirmation">
-            确认密码:
+        <%= text_field_tag :password,"",:size =>User::PASSWORD_SIZE,:maxlength =>User::PASSWORD_MAX_LENGTH %>
+        <br>
+        <label>
+            重复输入:
         </label>
-        <%= form.password_field :password_confirmation,
-        :size =>      User::PASSWORD_SIZE,
-        :maxlength => User::PASSWORD_MAX_LENGTH %>
+        <%= text_field_tag :password_confirmation,"",:size =>User::PASSWORD_SIZE,:maxlength => User::PASSWORD_MAX_LENGTH %>
     </div>
-    <%= submit_tag "提交", :class => "submit" %>
+    <%=submit_tag "提交" %>
+    <%end %>
 </fieldset>
-<% end %>
-<% form_for :user, :url => { :action => :modify } do |form| %>
+<div id="info1">
+</div>
 <fieldset>
-    <legend>
-        密码保护问题
-    </legend>
-    <%= hidden_field_tag "attribute", "pwd_protect", :id => nil %>
-    <div class="form_row">
-        选择保护问题：<%= form.select :question, @question_items %>
-    </div>
-    <div class="form_row">
-        <label for="answer">
+    <%form_remote_tag :update=>"info2",:html => {:id => 'commit'}, :url=>{:action=>:modify} do %>
+    <div>
+        密码保护问题<%= hidden_field_tag "attribute", "pwd_protect", :id => nil %>
+	
+        选择保护问题：<%= select(:question, "", @question_items, { :include_blank => false }) %>
+        <br>
+        <label>
             问题答案:
         </label>
-        <%= form.text_field :answer,
-        :size =>      User::PASSWORD_SIZE,
-        :maxlength => User::PASSWORD_MAX_LENGTH %>
-    </div>
-    <div class="form_row">
-        <label for="email">
+        <br>
+        <%= text_field_tag :answer,"",:size =>User::PASSWORD_SIZE,:maxlength => User::PASSWORD_MAX_LENGTH %>
+        <br>
+        <label>
             安全邮箱:
         </label>
-        <%= form.text_field :email,
-        :size =>      User::PASSWORD_SIZE,
-        :maxlength => User::PASSWORD_MAX_LENGTH %>
-    </div>
-    <div class="form_row">
-        <label for="password">
+        <br>
+        <%= text_field_tag :email,"",:size =>User::EMAIL_SIZE,:maxlength => User::EMAIL_MAX_LENGTH %>
+        <br>
+        <label>
             密码:
         </label>
-        <%= form.password_field :password,
-        :size =>      User::PASSWORD_SIZE,
-        :maxlength => User::PASSWORD_MAX_LENGTH %>
+        <br>
+        <%= text_field_tag :password,"",:size =>User::PASSWORD_SIZE,:maxlength => User::PASSWORD_MAX_LENGTH %>
     </div>
-    <%= submit_tag "提交", :class => "submit" %>
+    <%=submit_tag "提交" %>
+    <%end %>
 </fieldset>
-<% end %>
+<div id = "info2">
 </div>

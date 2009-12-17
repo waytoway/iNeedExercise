@@ -1,0 +1,6 @@
+<div style="border:1px solid;background-color:white;position:absolute;left:405px;top:315px;width:300px;height:300px">
+	<% for @sport_type_name in @sport_type_names%>
+		<%= link_to_remote @sport_type_name, :update => "cur_sport", :url => {:action => "save_selected_sport", :name => @sport_type_name}%>
+		<br/>
+	<% end %>
+</div>

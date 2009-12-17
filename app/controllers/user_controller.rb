@@ -2,7 +2,7 @@ class UserController < ApplicationController
   before_filter :login_required
   include AuthenticatedSystem
   before_filter :login_from_cookie
-  before_filter :find_user
+  before_filter :get_user
   
   def index
   end
@@ -58,41 +58,45 @@ class UserController < ApplicationController
   
   #this is the pwd  loader    
   def modify_pwd
+    @user = User.find(session[:user])
+    #@questions = ["where is your home?","what is your first teacher name?"]
+    @questions = ProtectQuestion.find(:all)
+    @question_items = Array.new
+    @questions.each do |f|   
+      @question_items.push(f.question)
+    end 
     render :update do |page|        
       page.replace_html 'content' , :partial => 'modify_pwd'
     end
   end
   
-  def modify  
+  def modify 
     @user = User.find(session[:user])
-    puts @user.email
     if request.post?
       attribute = params[:attribute]
       case attribute
         when "modify_pwd"
         if @user.correct_password?(params)
-          unless params[:user][:password] == params[:user][:password_confirmation]
-            @user.password_errors(params) 
-            return
+          if params[:password] != params[:password_confirmation]
+            render :text=>"两次密码输入不同"
+          else
+            @user.update_attributes(:crypted_password => @user.encrypt(params[:password]))
+            render :text=>"修改成功"
           end
-          @user.update_attributes(:crypted_password => @user.encrypt(params[:user][:password]))
-          redirect_to :action => "index"
         else
-          @user.password_errors(params)
+          render :text=>"输入密码错误"
         end
         when "pwd_protect"
-        if @user.authenticated?(params[:user][:password]) && @user.email_equal?(params[:user][:email])
-          @protect_question = params[:user][:question]
-          puts @protect_question
+        if @user.authenticated?(params[:password]) && @user.email_equal?(params[:email])
+          @protect_question = params[:question]
           @question = ProtectQuestion.find_by_question(@protect_question)
-          puts @question
-          @user.update_attributes({:question_id => @question.id, :answer => params[:user][:answer]})
-          
-          redirect_to :action => "index"
+          @user.update_attributes({:question_id => @question.id, :answer => params[:answer]})
+          render :text => "成功发送"
         else
-          flash[:notice] = "Email or password is wrong!"
-          redirect_to :action => "index"
+          render :text => "Email或者密码错误!"
         end
+      else
+        render :text=>"无修改"
       end
     end
     @user.clear_password!
@@ -129,7 +133,7 @@ class UserController < ApplicationController
   end
   
   protected
-  def find_user
+  def get_user
     @user = User.find(session[:user])
     #@questions = ["where is your home?","what is your first teacher name?"]
     @questions = ProtectQuestion.find(:all)
