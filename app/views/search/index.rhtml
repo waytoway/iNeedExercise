@@ -1,20 +1,18 @@
 <div id="cha">
-    <a href="#">首页</a>
-    　 >　 <a href="#">查询</a>
+    <a href="#">首页</a>><a href="#">查询</a>
 </div>
 <div id="xiu">
     <div id="xiu1">
     </div>
     <div id="xiu2">
-        <%= javascript_include_tag :defaults %>   
-		<%= select :city, :name,  @city_names, { :include_blank => false }, :onchange => remote_function(:update => "sub_items",   
-		       :method => "get",   
-		       :with => "'city_name=' + value",   
-		       :url => { :controller => :search, :action => :get_sub_items})    
-		       %>   
-		<div id="sub_items">   
-		  <%= select(:region, :name, @regions_name, { :include_blank => false }) %>
-		</div>
+        <%= javascript_include_tag :defaults %>
+        <%= select :city, :name,  @city_names, { :include_blank => false }, :onchange => remote_function(:update => "sub_items",
+        :method => "get",
+        :with => "'city_name=' + value",
+        :url => { :controller => :search, :action => :get_sub_items}) %>
+        <div id="sub_items">
+            <%= select(:region, :name, @regions_name, { :include_blank => false }) %>
+        </div>
     </div>
     <div id="xiu3">
         <select name="" id="xl2">

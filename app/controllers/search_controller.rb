@@ -14,7 +14,6 @@ class SearchController < ApplicationController
       @city_names.push(f.name)
     end
 
-    puts "ccccccccccccccccccc"
     puts @city_names
   end  
      

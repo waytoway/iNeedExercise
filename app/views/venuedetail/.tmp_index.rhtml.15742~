@@ -32,20 +32,15 @@
                 </ul>
                 <hr>
                 <div>
-                    地图：		点击查看大图<%= link_to image_tag(@venue[:PHOTO_URL], :border=>0,:size => "100x100"), :action => 'show_map',:url=>@venue[:PHOTO_URL] %>
+                    地图：		点击查看大图<%= link_to image_tag(@venue[:PHOTO_URL], :border=>0,:size => "100x100"), :action => 'show' %>
                 </div>
-                <hr>
                 <div>
                     最新信息：<%=@venue[:INTRADUCTION] %>
                 </div>
             </div>
         </td>
         <td style="width:500px">
-            <% tabs_tag do |tab| %>
-            <%= tab.home       'Homepage', 'a' %>
-            <%= tab.dashboard  'Dashboard', 'b' %>
-            <%= tab.account    'Account', 'c' %>
-            <% end %>
+            中间详细信息栏
         </td>
         <td style="width:150px">
             我来推荐
