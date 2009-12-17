@@ -7,4 +7,14 @@ class OrderController < ApplicationController
   def index
     
   end
+  
+  def create
+    
+  end
+  
+  def payThisOrder
+    
+  end
+  
+  
 end
