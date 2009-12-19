@@ -81,7 +81,7 @@
                 </div>
                     <div id="xiu2">
 				        <%= javascript_include_tag :defaults %>   
-						<%= select :city, :name,  @city_names, { :include_blank => false }, :onchange => remote_function(:update => "sub_items",   
+						<%= select :city, :name,  @city_names, { :include_blank => false, :selected => session[:city] }, :onchange => remote_function(:update => "sub_items",   
 						       :method => "get",   
 						       :with => "'city_name=' + value",   
 						       :url => { :controller => :main, :action => :get_sub_items})    
@@ -90,7 +90,7 @@
 				    </div>
 					<div id="xiu22">
 						<div id="sub_items">   
-						  <%= select :region, :name, @regions_name, { :include_blank => false }, :onchange => remote_function(:update => "jump_for_sub_item",   
+						  <%= select :region, :name, @regions_name, { :include_blank => false, :selected => session[:region] }, :onchange => remote_function(:update => "jump_for_sub_item",   
 						       :method => "get",   
 						       :with => "'region_name=' + value",   
 						       :url => { :controller => :main, :action => :jump_for_sub_item}) %>
@@ -105,7 +105,7 @@
                     选择项目
                 </div>
                 <div id="xiu5">
-			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false }) %>
+			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false, :selected => session[:sport]  }) %>
                 </div>
 				OR
                 <div>
