@@ -22,5 +22,33 @@
             验证码
         </td>
     </tr>
-	
+    <%if @query_records!=nil %>
+    <%i=1 %>
+    <%@query_records.each do |record| %>
+    <tr>
+        <td>
+            <%=i %>
+        </td>
+        <td>
+            <%=record[:FIELD_ID] %>
+        </td>
+        <td>
+            <%=record[:PERIOD] %>
+        </td>
+        <td>
+            <%=record[:PRICE] %>
+        </td>
+        <td>
+            <%=record[:USABLE_DATE] %>
+        </td>
+        <td>
+            预订情况
+        </td>
+        <td>
+            验证码
+        </td>
+    </tr>
+    <%i=i+1 %>
+    <%end %>
+    <%end %>
 </table>
