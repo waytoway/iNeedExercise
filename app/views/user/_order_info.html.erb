@@ -1,0 +1,48 @@
+<div id ="content">
+	<%form_remote_tag :id => 'content', :url=>{:action=>:paymentFun} do %>
+<div class="form_row">
+    <label for="venueName">
+        场馆:
+    </label>
+    <%=hidden_field_tag "venue_name", @venue_name%>  
+    <%= @venue_name %>
+</div>
+<div class="form_row">
+    <label for="fieldName">
+        场地:
+    </label>
+	<%=hidden_field_tag "field_name", @field_name%>  
+    <%= @field_name %>
+</div>
+<div class="form_row">
+    <label for="user_phone">
+        手机号:
+    </label>
+	<%=hidden_field_tag "user_phone", @order[0].PHONE%>  
+    <%= @order[0].PHONE %>
+</div>
+<div class="form_row">
+    <label for="book_time">
+        预定时间:
+    </label>
+	<%=hidden_field_tag "book_time", @order[0].BOOK_TIME%>  
+    <%= @order[0].BOOK_TIME %>
+</div>
+<div class="form_row">
+    <label for="standard_price">
+        标准价格:
+    </label>
+	<%=hidden_field_tag "standard_price", @order[0].STANDARD_PRICE%>  
+    <%= @order[0].STANDARD_PRICE %>
+</div>
+<div class="form_row">
+    <label for="payment_sum">
+        应支付的金额:
+    </label>
+	<%=hidden_field_tag "payment_sum", @order[0].PAYMENT_SUM%>  
+    <%= @order[0].PAYMENT_SUM %>
+</div>
+<%=submit_tag "提交" %>
+<% end %>
+
+</div>
