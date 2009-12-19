@@ -9,6 +9,7 @@ class SearchController < ApplicationController
   before_filter :get_initial_sports
   
   def index
+
     
     if request.post?
       session[:city] = params[:city][:name]

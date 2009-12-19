@@ -10,21 +10,15 @@ class MainController < ApplicationController
   before_filter :get_initial_sports
   
   def index
-    session[:city] = "选择城市"
-      session[:sport] = "运动项目"
-      session[:region] = "选择区域"
-      session[:search_date] = ""
-      session[:search_time] = "1:00AM"
 
     if request.post?
-#          puts params[:city][:name]
-#    puts session[:region_name]
-#    puts params[:sport][:name]
-#    puts session[:venue_name]
+    
+
       session[:city] = params[:city][:name]
       session[:sport] = params[:sport][:name]
       session[:search_date] = params[:search_date]
       session[:search_time] = params[:time]
+      session[:check_on_map] =params[:map]
       redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region_name], 
       :sport_type_name => params[:sport][:name], :venue_name => session[:venue], :search_date => session[:search_date]
     end
@@ -33,8 +27,6 @@ class MainController < ApplicationController
   def get_sub_items   
     session[:city] = params[:city_name]
     session[:region] = "选择区域"
-    puts "aaaaaaaaaaaaaaaaaa"
-    puts "jinruget"
     if session[:city] == "选择城市"
       @regions_name = []
       @regions_name[0] = ["选择区域","选择区域"]
@@ -55,6 +47,8 @@ class MainController < ApplicationController
   
   def jump_for_sub_item
     session[:region] = params[:region_name]
+       puts "bbbbbbbbbbbbbbbbbb"
+   puts session[:region]
     render :text => ""
   end
 
