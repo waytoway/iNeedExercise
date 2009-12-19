@@ -23,16 +23,18 @@ class MainController < ApplicationController
 #    puts session[:venue_name]
       session[:city] = params[:city][:name]
       session[:sport] = params[:sport][:name]
-      session[:search_date] = params[:t_venue_info][:selected_time]
+      session[:search_date] = params[:search_date]
       session[:search_time] = params[:time]
       redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region_name], 
-      :sport_type_name => params[:sport][:name], :venue_name => session[:venue], :search_date => params[:t_venue_info][:selected_time]
+      :sport_type_name => params[:sport][:name], :venue_name => session[:venue], :search_date => session[:search_date]
     end
   end
   
   def get_sub_items   
     session[:city] = params[:city_name]
     session[:region] = "选择区域"
+    puts "aaaaaaaaaaaaaaaaaa"
+    puts "jinruget"
     if session[:city] == "选择城市"
       @regions_name = []
       @regions_name[0] = ["选择区域","选择区域"]
@@ -47,6 +49,8 @@ class MainController < ApplicationController
         i=i+1
       end 
     end
+    
+    render :partial => "select"
   end
   
   def jump_for_sub_item

@@ -65,6 +65,36 @@
 
 </style>
 
+<script language="javascript" type="text/javascript">
+	function agree_onclick(){
+		
+		var city = document.getElementById("city_name")
+		var region = document.getElementById("region_name")
+		var sport = document.getElementById("sport_name")
+		var date = document.getElementById("search_date").value
+		var time = document.getElementById("time")
+		if (city.options[city.selectedIndex].value == "选择城市") {
+			alert('必须选择一个城市！');
+			return false;
+		}
+		else if (region.options[region.selectedIndex].value == "选择区域") {
+			alert('必须选择一个区域！');
+			return false;
+		}
+		else if (sport.options[sport.selectedIndex].value == "运动项目") {
+			alert('必须选择一个项目！');
+			return false;
+		}
+		else if (date == "") {
+			alert('必须选择日期！');
+			return false;
+		}
+		else {
+		    document.getElementById("search").submit();	
+		}
+	}
+</script>
+
 <div>
     <p style="width:100%;height:100px;font-size:15pt">
         广告&注册按钮
@@ -73,7 +103,7 @@
 </div>
 <div>
     <table width="100%">
-        <%form_tag do %>
+        <% form_tag({:action => 'index'},{:id => "search"}) do %>
         <tr height="120px" border="1px solid">
             <td style="border:1px solid;width:30%;height:120px">
                 <div>
@@ -126,7 +156,7 @@
                     <tr>
                         <td style="width:30%">
                             <div id="xiu4">
-						        <%= text_field :t_venue_info, :selected_time, :onClick => "WdatePicker()", :size=>10, :value=>"" %>
+						        <%= text_field_tag :search_date, session[:search_date], :onClick => "WdatePicker()", :size=>10%>
 						    </div>
                         </td>
                         <td>
@@ -176,10 +206,13 @@
                     </tr>
                 </table>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <%= image_submit_tag("t6.jpg") %>
+				        <%end %>
+                        <div id="xiu6">
+					        <button id="bi" onclick="javascript:agree_onclick()"></button>
+					    </div>
             </td>
         </tr>
-        <%end %>
+
     </table>
     <table width="100%" height="600">
         <tr border="1px solid">
