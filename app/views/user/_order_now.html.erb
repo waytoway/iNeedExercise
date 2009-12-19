@@ -1,1 +1,89 @@
-<div></div>
+<table id="content" width="354" border="1">
+    <tr>
+        <td width="85">
+            场地
+        </td>
+		<td width="85">
+            场馆
+        </td>
+		<td width="85">
+            CARD_ID
+        </td>
+		<td width="85">
+            USER_CODE
+        </td>
+		<td width="70">
+            联系方式
+        </td>
+        <td width="100">
+            电话
+        </td>
+		<td width="100">
+            付款否
+        </td>
+		<td width="100">
+            预定时间
+        </td>
+		<td width="100">
+            付款时间
+        </td>
+		<td width="100">
+            付款金额
+        </td>
+		
+		<td width="100">
+            应付金额
+        </td>
+		<td width="100">
+            付款方式
+        </td>
+        
+    </tr>
+    <%if @user_orders!=nil && @user_orders.size!=0 %>
+    <% for users_order in @user_orders %>
+    <tr>
+        <td>
+            <%=users_order[:VENUE_NAME]%>
+        </td>
+		<td>
+            <%=users_order[:NAME] %>
+        </td>
+		<td>
+            <%=users_order[:CARD_ID] %>
+        </td>
+		<td>
+            <%=users_order[:USER_CODE] %>
+        </td>
+		<td>
+            <%=users_order[:CONTACT] %>
+        </td>
+        <td>
+        	<%=users_order[:PHONE] %>
+        </td>
+		<td>
+            <%=users_order[:PAYMENT_STATUS] %>
+        </td>
+		<td>
+            <%=users_order[:BOOK_TIME] %>
+        </td>
+		<td>
+            <%=users_order[:PAYMENT_TIME] %>
+        </td>
+		<td>
+            <%=users_order[:PAYMENT_SUM] %>
+        </td>
+		<td>
+            <%=users_order[:STANDARD_PRICE] %>
+        </td>
+		<td>
+            <%=users_order[:PAYMENT_STYLE] %>
+        </td>
+        
+    </tr>
+    <% end %>
+    <%end %>
+    <%if @user_orders.size==0 %>
+    <%="无会员卡记录" %>
+    <%end %>
+    <%= will_paginate @user_orders, :renderer => 'RemoteLinkRenderer' , :previous_label => "上一页", :next_label => "下一页" %>
+</table>

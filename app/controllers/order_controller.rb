@@ -5,7 +5,7 @@ class OrderController < ApplicationController
   before_filter :login_from_cookie
 
   def index
-    
+    puts session[:user]
   end
   
   def create
