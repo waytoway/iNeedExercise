@@ -7,7 +7,7 @@ class StatusinfoController < ApplicationController
   
   def index
     if params[:venue_id]!=nil && params[:from_time]!=nil && params[:field_type]
-    @venue = TVenueInfo.find(:all, :condition=>"VENUE_ID=#{params[:venue_id]} and ")
+    @venue = TVenueInfo.find(:all, :condition=>"VENUE_ID='#{params[:venue_id]}' and FIELD_TYPE='#{params[:field_type]}' and FROM_TIME='#{params[:from_time]}'")
      @fields = TFieldBadmintoonActivity.find(:all, :conditions => {:VENUE_ID => f[:ID], :FIELD_TYPE => "羽毛球", :FROM_TIME => "07:00"})
     end
   end

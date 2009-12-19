@@ -7,9 +7,28 @@ class UserController < ApplicationController
   def index
   end
   
+  def paymentFun
+    #puts params[:venue_name]
+    render :update do |page|
+      page.replace_html 'content' , :partial => 'payment'
+    end
+  end
+  
+  def order_detail
+    #puts params[:order_id]
+    #puts params[:venue_name]
+    #puts params[:field_name]
+    @venue_name = params[:venue_name]
+    @field_name = params[:field_name]
+    @order = TFieldOrder.find(:all, :conditions=>["ID=?", params[:order_id]])
+    #puts @order.size
+    render :update do |page|
+      page.replace_html 'content' , :partial => 'order_info'
+    end
+  end
+  
   def order_now
-    @user_orders = TFieldOrder.paginate_by_sql([%!select VENUE_NAME, t_field_badmintoon.NAME, t_field_order.CARD_ID, t_field_order.USER_CODE, t_field_order.PHONE, t_field_order.PAYMENT_STATUS, t_field_order.BOOK_TIME, t_field_order.PAYMENT_TIME, t_field_order.PAYMENT_SUM, t_field_order.STANDARD_PRICE, t_field_order.PAYMENT_STYLE  from t_field_order, users_orders, t_venue_info, t_field_badmintoon  where t_field_badmintoon.ID = t_field_order.field_id AND t_venue_info.ID = t_field_order.VENUE_ID  AND users_orders.order_id = t_field_order.ID AND users_orders.user_id = #{session[:user]}!, true], :page => params[:page]||1, :per_page => 2)
-    
+    @user_orders = TFieldOrder.paginate_by_sql([%!select t_field_order.ID, t_field_order.field_id, VENUE_NAME, t_field_badmintoon.NAME, t_field_order.CARD_ID, t_field_order.USER_CODE, t_field_order.PHONE, t_field_order.PAYMENT_STATUS, t_field_order.BOOK_TIME, t_field_order.PAYMENT_TIME, t_field_order.PAYMENT_SUM, t_field_order.STANDARD_PRICE, t_field_order.PAYMENT_STYLE  from t_field_order, users_orders, t_venue_info, t_field_badmintoon  where t_field_badmintoon.ID = t_field_order.field_id AND t_venue_info.ID = t_field_order.VENUE_ID  AND users_orders.order_id = t_field_order.ID AND users_orders.user_id = #{session[:user]}!, true], :page => params[:page]||1, :per_page => 2)    
     render :update do |page|
       page.replace_html 'content' , :partial => 'order_now'
     end

@@ -8,28 +8,41 @@ class MainController < ApplicationController
   before_filter :get_initial_sports
   
   def index
-    
     if request.post?
-      redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region], 
-      :sport_type_name => params[:sport][:name], :venue_name => session[:venue_name]
+      session[:city] = params[:city][:name]
+      session[:sport] = params[:sport][:name]
+      session[:search_date] = params[:search_date]
+      session[:search_time] = params[:time]
+      session[:check_on_map] =params[:map]
+      redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region_name], 
+      :sport_type_name => params[:sport][:name], :venue_name => session[:venue], :search_date => session[:search_date]
     end
   end
   
   def get_sub_items   
-    session[:city_name] = params[:city_name]
-    @city = City.find(:first,:conditions => {:name => session[:city_name]})
-    @regions_name = Array.new
-    @regions = @city.regions
-    @regions_name.push("选择区域")
-    @regions.each do |f|
-      @regions_name.push(f.name)
-    end 
+    session[:city] = params[:city_name]
+    session[:region] = "选择区域"
+    if session[:city] == "选择城市"
+      @regions_name = []
+      @regions_name[0] = ["选择区域","选择区域"]
+    else
+      @city = City.find(:first,:conditions => {:name => session[:city]})
+      @regions_name = []
+      @regions = @city.regions
+      @regions_name[0] = ["选择区域","选择区域"]
+      i=1
+      @regions.each do |f|
+        @regions_name.push([f.name,f.name])
+        i=i+1
+      end 
+    end
     
-    render :partial => "select"   
-  end 
+    render :partial => "select"
+  end
   
   def jump_for_sub_item
-    session[:region_name] = params[:region_name]
+    session[:region] = params[:region_name]
+    puts session[:region]
     render :text => ""
   end
   
@@ -43,8 +56,8 @@ class MainController < ApplicationController
   end
   
   def save_selected_venue
-    session[:venue_name] = params[:name]
-    @lacal_venue_name = session[:venue_name]
+    session[:venue] = params[:name]
+    @lacal_venue_name = session[:venue]
     render :partial => "update_venues"
   end
   
@@ -75,7 +88,6 @@ class MainController < ApplicationController
   def get_initial_regions
     @regions_name = Array.new
     @regions_name.push("选择区域")
-    @regions_name.push("2222")
   end
   
   def get_initial_sports
