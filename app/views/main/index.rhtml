@@ -65,6 +65,36 @@
 
 </style>
 
+<script language="javascript" type="text/javascript">
+	function agree_onclick(){
+		
+		var city = document.getElementById("city_name")
+		var region = document.getElementById("region_name")
+		var sport = document.getElementById("sport_name")
+		var date = document.getElementById("search_date").value
+		var time = document.getElementById("time")
+		if (city.options[city.selectedIndex].value == "选择城市") {
+			alert('必须选择一个城市！');
+			return false;
+		}
+		else if (region.options[region.selectedIndex].value == "选择区域") {
+			alert('必须选择一个区域！');
+			return false;
+		}
+		else if (sport.options[sport.selectedIndex].value == "运动项目") {
+			alert('必须选择一个项目！');
+			return false;
+		}
+		else if (date == "") {
+			alert('必须选择日期！');
+			return false;
+		}
+		else {
+		    document.getElementById("search").submit();	
+		}
+	}
+</script>
+
 <div>
     <p style="width:100%;height:100px;font-size:15pt">
         广告&注册按钮
@@ -73,7 +103,7 @@
 </div>
 <div>
     <table width="100%">
-        <%form_tag do %>
+        <% form_tag({:action => 'index'},{:id => "search"}) do %>
         <tr height="120px" border="1px solid">
             <td style="border:1px solid;width:30%;height:120px">
                 <div>
@@ -81,7 +111,7 @@
                 </div>
                     <div id="xiu2">
 				        <%= javascript_include_tag :defaults %>   
-						<%= select :city, :name,  @city_names, { :include_blank => false }, :onchange => remote_function(:update => "sub_items",   
+						<%= select :city, :name,  @city_names, { :include_blank => false, :selected => "选择城市" }, :onchange => remote_function(:update => "sub_items",   
 						       :method => "get",   
 						       :with => "'city_name=' + value",   
 						       :url => { :controller => :main, :action => :get_sub_items})    
@@ -90,7 +120,7 @@
 				    </div>
 					<div id="xiu22">
 						<div id="sub_items">   
-						  <%= select :region, :name, @regions_name, { :include_blank => false }, :onchange => remote_function(:update => "jump_for_sub_item",   
+						  <%= select :region, :name, @regions_name, { :include_blank => false, :selected => "选择区域" }, :onchange => remote_function(:update => "jump_for_sub_item",   
 						       :method => "get",   
 						       :with => "'region_name=' + value",   
 						       :url => { :controller => :main, :action => :jump_for_sub_item}) %>
@@ -105,7 +135,7 @@
                     选择项目
                 </div>
                 <div id="xiu5">
-			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false }) %>
+			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false, :selected => "运动项目"  }) %>
                 </div>
 				OR
                 <div>
@@ -126,7 +156,7 @@
                     <tr>
                         <td style="width:30%">
                             <div id="xiu4">
-						        <%= text_field :t_venue_info, :selected_time, :onClick => "WdatePicker()", :size=>10, :value=>"" %>
+						        <%= text_field_tag :search_date, "", :onClick => "WdatePicker()", :size=>10%>
 						    </div>
                         </td>
                         <td>
@@ -167,7 +197,7 @@
                         </td>
                         <td>
                             <p>
-                                <%= check_box_tag("display_map", "yes", false) %>
+                            	<%= check_box_tag("map", "yes", false) %>                            	
                                 <label>
                                     在地图上查看查询结果
                                 </label>
@@ -176,10 +206,13 @@
                     </tr>
                 </table>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <%= image_submit_tag("t6.jpg") %>
+				        <%end %>
+                        <div id="xiu6">
+					        <button id="bi" onclick="javascript:agree_onclick()"></button>
+					    </div>
             </td>
         </tr>
-        <%end %>
+
     </table>
     <table width="100%" height="600">
         <tr border="1px solid">
