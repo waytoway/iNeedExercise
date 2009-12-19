@@ -1,7 +1,5 @@
 class SearchController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie
   before_filter :get_user_cards
   before_filter :get_initial_cities
@@ -9,7 +7,6 @@ class SearchController < ApplicationController
   before_filter :get_initial_sports
 
   def index
-    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 6,:conditions=>"user_id=#{session[:user]}"
     @users_cards2 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
     @users_cards3 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
@@ -43,33 +40,21 @@ class SearchController < ApplicationController
   end
   
   def negotiated_venues
-    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 6,:conditions=>"user_id=#{session[:user]}"
-    #    respond_to do |format|
-    #      format.html # index.html.erb
-    #      format.js do
     render :update do |page|
       page.replace_html 'table1' , :partial => 'negotiated_venues'
     end
   end
   
   def unnegotiated_venues
-    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 6,:conditions=>"user_id=#{session[:user]}"
-    #    respond_to do |format|
-    #      format.html # index.html.erb
-    #      format.js do
     render :update do |page|
       page.replace_html 'table2' , :partial => 'unnegotiated_venues'
     end
   end
   
   def other_venue_in_the_region
-    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 6,:conditions=>"user_id=#{session[:user]}"
-    #    respond_to do |format|
-    #      format.html # index.html.erb
-    #      format.js do
     render :update do |page|
       page.replace_html 'table3' , :partial => 'other_venue_in_the_region'
     end

@@ -9,15 +9,7 @@ class UserController < ApplicationController
   
   def order_now
     @user_orders = TFieldOrder.paginate_by_sql([%!select VENUE_NAME, t_field_badmintoon.NAME, t_field_order.CARD_ID, t_field_order.USER_CODE, t_field_order.PHONE, t_field_order.PAYMENT_STATUS, t_field_order.BOOK_TIME, t_field_order.PAYMENT_TIME, t_field_order.PAYMENT_SUM, t_field_order.STANDARD_PRICE, t_field_order.PAYMENT_STYLE  from t_field_order, users_orders, t_venue_info, t_field_badmintoon  where t_field_badmintoon.ID = t_field_order.field_id AND t_venue_info.ID = t_field_order.VENUE_ID  AND users_orders.order_id = t_field_order.ID AND users_orders.user_id = #{session[:user]}!, true], :page => params[:page]||1, :per_page => 2)
-    #puts @user_orders.size
-    #puts @user_orders[0][:VENUE_NAME]
-    #puts @user_orders[0][:NAME]
-    #@orderIDs = UsersOrder.find(:all, :conditions => ["user_id = ?", session[:user]])
-    #@orders = TFieldOrder.find(:all, :conditions => ["ID = 1"])  
-    #@user_orders = UsersOrder.paginate :include => [:t_field_order], :page => params[:page]||1, :per_page => 2,:conditions=>"user_id=#{session[:user]}"
-    #puts @user_orders.size
     
-    #@user_orders = UsersOrder.paginate :page => params[:page]||1, :per_page => 2,:conditions=>"user_id=#{session[:user]}"
     render :update do |page|
       page.replace_html 'content' , :partial => 'order_now'
     end
@@ -25,18 +17,11 @@ class UserController < ApplicationController
   
   #this is the card manage loader
   def card_manage
-    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 2,:conditions=>"user_id=#{session[:user]}"
-    
-    #    respond_to do |format|
-    #      format.html # index.html.erb
-    #      format.js do
     render :update do |page|
       page.replace_html 'content' , :partial => 'card_manage'
     end
   end
-  #    end
-  #  end 
   
   #this is the my records loader    
   def my_records
@@ -44,17 +29,6 @@ class UserController < ApplicationController
       page.replace_html 'content' , :partial => 'my_records'
     end
   end
-  
-  #this is the order now loader      
-  #def order_now
-  #render :update do |page|        
-  #page.replace_html 'content' , :partial => 'order_now'
-  #end
-  #end
-  
-  #def modify_order_now
-  
-  #end
   
   #this is the pwd  loader    
   def modify_pwd
@@ -135,7 +109,6 @@ class UserController < ApplicationController
   protected
   def get_user
     @user = User.find(session[:user])
-    #@questions = ["where is your home?","what is your first teacher name?"]
     @questions = ProtectQuestion.find(:all)
     @question_items = Array.new
     @questions.each do |f|   

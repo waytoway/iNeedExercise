@@ -5,6 +5,7 @@
     <tr>
         <td style="width:200px">
             <div>
+                <%if@venue!=nil %>
                 <p>
                     ><%=@venue[:VENUE_NAME] %>
                 </p>
@@ -38,14 +39,47 @@
                 <div>
                     最新信息：<%=@venue[:INTRADUCTION] %>
                 </div>
+                <%end %>
             </div>
         </td>
         <td style="width:500px">
-            <% tabs_tag do |tab| %>
-            <%= tab.home       'Homepage', 'a' %>
-            <%= tab.dashboard  'Dashboard', 'b' %>
-            <%= tab.account    'Account', 'c' %>
-            <% end %>
+            <div id="container">
+                <div id="mainmenu">
+                    <ul id="tabs">
+                        <li>
+                            <%=link_to_remote '羽毛球',  :url=>{:action=>"get_field",:sports_type=>"羽毛球"} %>
+                        </li>
+                        <li>
+                            <a href="tab2">Tab 2</a>
+                        </li>
+                        <li>
+                            <a href="#tab3">Tab 3</a>
+                        </li>
+                        <li>
+                            <a href="#tab4">Tab 4</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bar">
+                    &nbsp;
+                </div>
+                <div id="content">
+                    <%= render :partial => "status" %>
+                </div>
+                <!--        <div class="panel" id="tab1">
+                Tab 1 Bod
+                </div>
+                <div class="panel" id="tab2">
+                Tab 2 Body
+                </div>
+                <div class="panel" id="tab3">
+                Tab 3 Body
+                </div>
+                <div class="panel" id="tab4">
+                Tab 4 Body
+                </div>
+                -->
+            </div>
         </td>
         <td style="width:150px">
             我来推荐

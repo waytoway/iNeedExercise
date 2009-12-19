@@ -1,22 +1,16 @@
 class AccountController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie 
   before_filter :find_user
   
-  # say something nice, you goof!  something sweet.
   def index
-    #redirect_to(:action => 'signup') unless logged_in? || User.count > 0
-
+    
   end
-  
   
   def login
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
     @tmp_user = session[:user]
-    puts "ddddddddddddddddddddddd"
     puts @tmp_user
     puts self.current_user.id
     if logged_in?
@@ -28,7 +22,6 @@ class AccountController < ApplicationController
       redirect_back_or_default(:controller => 'main', :action => 'index')
       flash[:notice] = "Logged in successfully"
     else
-    #  redirect_to request.request_uri
       redirect_to(:controller => 'account', :action => 'login')
     end
   end
@@ -71,7 +64,7 @@ class AccountController < ApplicationController
     @questions = ProtectQuestion.find(:all)
     @question_items = Array.new
     @questions.each do |f|   
-        @question_items.push(f.question)
+      @question_items.push(f.question)
     end 
   end
   

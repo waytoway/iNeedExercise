@@ -1,8 +1,6 @@
 class MainController < ApplicationController
   session :session_key => '_iNeedExercise_session_id'
-  # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie  
   before_filter :get_regions_full_name
   before_filter :get_initial_cities
@@ -10,12 +8,8 @@ class MainController < ApplicationController
   before_filter :get_initial_sports
   
   def index
-
+    
     if request.post?
-#          puts params[:city][:name]
-#    puts session[:region_name]
-#    puts params[:sport][:name]
-#    puts session[:venue_name]
       redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region], 
       :sport_type_name => params[:sport][:name], :venue_name => session[:venue_name]
     end
@@ -30,7 +24,7 @@ class MainController < ApplicationController
     @regions.each do |f|
       @regions_name.push(f.name)
     end 
-       
+    
     render :partial => "select"   
   end 
   
@@ -38,7 +32,7 @@ class MainController < ApplicationController
     session[:region_name] = params[:region_name]
     render :text => ""
   end
-
+  
   def show_all_venues
     @venues = TVenueInfo.find(:all)
     @venue_names = Array.new
@@ -53,7 +47,7 @@ class MainController < ApplicationController
     @lacal_venue_name = session[:venue_name]
     render :partial => "update_venues"
   end
-
+  
   protected
   def get_regions_full_name
     @cities_and_regions = Array.new
@@ -92,5 +86,5 @@ class MainController < ApplicationController
       @sport_type_names.push(f.sport_type)
     end
   end
-
+  
 end
