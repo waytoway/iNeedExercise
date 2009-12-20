@@ -14,8 +14,13 @@ class MainController < ApplicationController
       session[:search_date] = params[:search_date]
       session[:search_time] = params[:time]
       session[:check_on_map] =params[:map]
-      redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region_name], 
-      :sport_type_name => params[:sport][:name], :venue_name => session[:venue], :search_date => session[:search_date]
+      if session[:venue] == nil
+        redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region_name], 
+        :sport_type_name => params[:sport][:name], :venue_name => session[:venue], :search_date => session[:search_date]
+      else
+        session[:venue] = nil
+        redirect_to :controller => "statusinfo", :action => "index"
+      end
     end
   end
   
@@ -57,6 +62,8 @@ class MainController < ApplicationController
   
   def save_selected_venue
     session[:venue] = params[:name]
+    puts "aaaaaaaaaaaaaaa"
+    puts session[:venue]
     @lacal_venue_name = session[:venue]
     render :partial => "update_venues"
   end

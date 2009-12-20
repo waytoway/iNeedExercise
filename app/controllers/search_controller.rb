@@ -24,8 +24,6 @@ class SearchController < ApplicationController
     @next_three_hour = @next_three_hour_time.strftime("%H:%M").to_s
     
     @venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{session[:search_time]}' AND t_field_badmintoon_activity.FROM_TIME<'#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预定'!, true], :page => params[:page]||1, :per_page => 7)
-
-    @venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME='07:00' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}'!, true], :page => params[:page]||1, :per_page => 2)
     
     #mei zuo fei ling pan duan
     @show_records = []
