@@ -52,7 +52,7 @@ class MainController < ApplicationController
   end
   
   def show_all_venues
-    @venues = TVenueInfo.find(:all)
+    @venues = TVenueInfo.find(:all, :conditions => {:city => session[:city], :district => session[:region]})
     @venue_names = Array.new
     @venues.each do |f|
       @venue_names.push(f.VENUE_NAME)
