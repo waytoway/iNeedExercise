@@ -110,6 +110,10 @@ class SearchController < ApplicationController
         end
       end 
       
+      puts "eeeeeeeeeeeeeeeeeee"
+      puts @min_price_1
+      puts @min_price_2
+      puts @min_price_3
         @min_price = min(@min_price_1,@min_price_2,@min_price_3)
         @max_price = max(@max_price_1,@max_price_2,@max_price_3)
         if @min_price < @max_price
@@ -191,7 +195,12 @@ class SearchController < ApplicationController
   
   def min(*elements)
     
-    @min_element = elements[0]
+    @index =0
+    while elements[@index] == nil
+      @index = @index + 1
+    end
+    puts "sdfadfsadfasfasf"
+    @min_element = elements[@index]
     elements.each do |f|
       unless f == nil
         if f<@min_element
@@ -204,7 +213,11 @@ class SearchController < ApplicationController
   end
   
   def max(*elements)
-    @max_element = elements[0]
+    @index =0
+    while elements[@index] == nil
+      @index = @index + 1
+    end
+    @max_element = elements[@index]
     elements.each do |f|
       unless f == nil
         if f>@max_element

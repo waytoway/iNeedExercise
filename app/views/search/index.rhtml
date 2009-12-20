@@ -131,7 +131,11 @@
                 <td width="294">
                     符合要求的可能的时间
                     <br/>
-                    <a>7:00　　　　 　　8:00　 　　　　　9:00</a>
+                    <a>
+                    	<%= session[:search_time]%>
+					　　　　 　　<%= @next_hour%> 　　　　　
+					<%= @next_two_hour%>
+					</a>
                 </td>
             </tr>
             <% index = 0 %>
