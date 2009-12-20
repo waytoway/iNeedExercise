@@ -1,7 +1,5 @@
 class SearchController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie
   before_filter :get_user_cards
   before_filter :get_initial_cities
@@ -9,8 +7,6 @@ class SearchController < ApplicationController
   before_filter :get_initial_sports
   
   def index
-    
-    
     if request.post?
       session[:city] = params[:city][:name]
       session[:region] = params[:region][:name]
@@ -28,14 +24,10 @@ class SearchController < ApplicationController
     @next_three_hour = @next_three_hour_time.strftime("%H:%M").to_s
     
     @venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{session[:search_time]}' AND t_field_badmintoon_activity.FROM_TIME<'#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预定'!, true], :page => params[:page]||1, :per_page => 7)
+
+    @venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME='07:00' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}'!, true], :page => params[:page]||1, :per_page => 2)
     
-    puts "aaaaaaaaaaaaaaaaaaaa"
-    puts @venues.size
-    puts @cur_time
-    puts @next_hour
-    puts @next_two_hour
-    puts @next_three_hour
-    
+    #mei zuo fei ling pan duan
     @show_records = []
     @venues.each do |f|
       puts f[:VENUE_NAME]
@@ -130,12 +122,11 @@ class SearchController < ApplicationController
 
       @show_records.push([session[:search_date],@price,[@venue_state_1,@venue_state_2,@venue_state_3]])
     end
-  end
-  
-  
-  #      @users_cards2 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
-  #      @users_cards3 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
-  
+    
+#    @users_cards2 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
+#    @users_cards3 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
+    
+  end  
   
   def get_sub_items   
     session[:city] = params[:city_name]
@@ -172,47 +163,29 @@ class SearchController < ApplicationController
   end
   
   def card_manage
-    puts "aaaaaaaaaaaaaaaaaaaaa"
     puts "jin ru card_manage"
-    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 2,:conditions=>"user_id=#{session[:user]}"
-    
-    #    respond_to do |format|
-    #      format.html # index.html.erb
-    #      format.js do
     render :update do |page|
       page.replace_html 'content' , :partial => 'card_manage'
     end
   end
   
   def negotiated_venues
-    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 6,:conditions=>"user_id=#{session[:user]}"
-    #    respond_to do |format|
-    #      format.html # index.html.erb
-    #      format.js do
     render :update do |page|
       page.replace_html 'table1' , :partial => 'negotiated_venues'
     end
   end
   
   def unnegotiated_venues
-    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 6,:conditions=>"user_id=#{session[:user]}"
-    #    respond_to do |format|
-    #      format.html # index.html.erb
-    #      format.js do
     render :update do |page|
       page.replace_html 'table2' , :partial => 'unnegotiated_venues'
     end
   end
   
   def other_venue_in_the_region
-    #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 6,:conditions=>"user_id=#{session[:user]}"
-    #    respond_to do |format|
-    #      format.html # index.html.erb
-    #      format.js do
     render :update do |page|
       page.replace_html 'table3' , :partial => 'other_venue_in_the_region'
     end

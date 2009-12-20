@@ -1,20 +1,15 @@
 class HelpController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie
-
+  
   def index
-#    a=User.find(1)
-#    puts "aaaaaaaaaaaaaaaa"
-#    puts a.t_member_cards[0][:ID]
-#    puts a.t_member_cards[0].t_card_usage_records.length
-#    a=TMemberCard.find(1)
-#    puts "aaaaaaaaaaaaaaaa"
-#    puts a.t_card_usage_records[0][:card_no]
-#@user = User.paginate :page => params[:page], :per_page => 5
-@users = User.paginate :page => params[:page], :order => 'id ASC'
-puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-puts @users[0][:login]
+    @request = Kuaiqian::Request.new('产品名称', # 产品名称
+    1, # 订单ID，必须全局唯一
+    Time.now, # 订单生成时间，格式为20091104174132
+    4500, # 订单金额，以分为单位
+            'http://return', # 通知地址，用户支付成功后快钱会通过此地址通知商户支付结果
+            '00', # 支付类型，00显示所有方式，10只显示银行卡方式，11只显示电话银行方式，12只显示快钱帐户支付方式，13只显示线下方式
+            'attach') #自定义数据，会在返回URL中原样返回
+    redirect_to @request.url
   end
 end

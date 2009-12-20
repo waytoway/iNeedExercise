@@ -1,0 +1,58 @@
+快钱
+======
+
+用于支持快钱(http://99bill.com/)支付网关的Rails插件。
+演示站点：http://kqdemo.zaituu.com
+演示代码：http://github.com/yzhang/kuaiqian_demo
+
+安装
+=======
+
+$ script/plugin install git://github.com/yzhang/kuaiqian.git
+
+集成
+=======
+
+1. 安装完成后，插件会自动在你的应用的config目录创建一个kuaiqian.yml文件，默认是快钱提供的测试帐号（关于测试帐号的使用方法请参看测试章节）
+将kuaiqian.yml中的商户ID和密钥替换为快钱提供给你的真实ID和密钥然后进行下一步。
+
+2. 下面的代码会创建一笔新订单：
+
+  @request = Kuaiqian::Request.new('产品名称', # 产品名称
+                  1, # 订单ID，必须全局唯一
+                  Time.now.strftime("%Y%m%d%H%M%S"), # 订单生成时间，格式为20091104174132
+                  4500, # 订单金额，以分为单位
+                  'http://return', # 通知地址，用户支付成功后快钱会通过此地址通知商户支付结果
+                  '00', # 支付类型，00显示所有方式，10只显示银行卡方式，11只显示电话银行方式，12只显示快钱帐户支付方式，13只显示线下方式
+                  'attach') #自定义数据，会在返回URL中原样返回
+  redirect_to @request.url
+
+上面的代码会将用户重定向到快钱的支付页面。
+
+3. 在用户完成支付后，快钱会调用你在支付请求中提供的返回URL：
+
+  @response = Kuaiqian::Response.new(params)
+  if @response.successful?
+    # 支付成功
+  else
+    # 支付失败
+  end
+  
+注意，快钱可能会多次调用你的返回URL，并将结果展现给用户，因此你的代码要考虑多次执行后的输出对用户的有好度。
+
+测试
+=======
+
+要使用快钱提供的测试ID，需要修改你的hosts文件，将快钱的域名指向测试服务器：
+
+218.242.247.5 www.99bill.com
+
+然后使用下面的帐号进行支付：
+
+用户名：kquser02@sina.com 
+密码：99bill
+
+----------------
+如果在使用中遇到任何的问题或者建议，欢迎和我联系： zhangyuanyi@gmail.com
+
+Copyright (c) 2009 Yuanyi Zhang, released under the MIT license

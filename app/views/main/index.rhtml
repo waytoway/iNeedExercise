@@ -118,7 +118,7 @@
 						       %>   
 						
 				    </div>
-					<div id="xiu22">
+					<div id="xiu22" style="margin-top:20px">
 						<div id="sub_items">   
 						  <%= select :region, :name, @regions_name, { :include_blank => false, :selected => "选择区域" }, :onchange => remote_function(:update => "jump_for_sub_item",   
 						       :method => "get",   
@@ -134,12 +134,13 @@
                 <div>
                     选择项目
                 </div>
+
                 <div id="xiu5">
 			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false, :selected => "运动项目"  }) %>
                 </div>
-				OR
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR
                 <div>
-                    <div id = "venue_edit_box">
+                    <div id = "venue_edit_box" style="margin-left:60px;margin-top:5px">
                         <%= text_field_tag :venue_name, "输入运动场馆名称" %>
                     </div>
                     <%= link_to_remote "查看该地域所有运动场馆", :update =>"all_venues",
@@ -170,8 +171,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="width:30%">
-                            mm/dd/yyyy
+                        <td style="width:30%;">
+                           <span style="margin-left:30px"> mm/dd/yyyy</span>
                         </td>
                         <td>
                             <p>
@@ -199,6 +200,7 @@
             </td>
             <td style="border:1px solid;width:30%">
                 最热场地
+				
             </td>
             <td style="border:1px solid;width:40%">
                 最新预告

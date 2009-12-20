@@ -6,17 +6,17 @@
         <label>
             当前密码:
         </label>
-        <%=text_field_tag :current_password,"",:size =>User::PASSWORD_SIZE,:maxlength => User::PASSWORD_MAX_LENGTH %>
+        <%=password_field_tag :current_password,"",:size =>User::PASSWORD_SIZE,:maxlength => User::PASSWORD_MAX_LENGTH %>
         <br>
         <label>
             新的密码:
         </label>
-        <%= text_field_tag :password,"",:size =>User::PASSWORD_SIZE,:maxlength =>User::PASSWORD_MAX_LENGTH %>
+        <%= password_field_tag :password,"",:size =>User::PASSWORD_SIZE,:maxlength =>User::PASSWORD_MAX_LENGTH %>
         <br>
         <label>
             重复输入:
         </label>
-        <%= text_field_tag :password_confirmation,"",:size =>User::PASSWORD_SIZE,:maxlength => User::PASSWORD_MAX_LENGTH %>
+        <%= password_field_tag :password_confirmation,"",:size =>User::PASSWORD_SIZE,:maxlength => User::PASSWORD_MAX_LENGTH %>
     </div>
     <%=submit_tag "提交" %>
     <%end %>
@@ -27,7 +27,6 @@
     <%form_remote_tag :update=>"info2",:html => {:id => 'commit'}, :url=>{:action=>:modify} do %>
     <div>
         密码保护问题<%= hidden_field_tag "attribute", "pwd_protect", :id => nil %>
-	
         选择保护问题：<%= select(:question, "", @question_items, { :include_blank => false }) %>
         <br>
         <label>
