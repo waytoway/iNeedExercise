@@ -103,31 +103,11 @@
         <%= text_field_tag :search_date, session[:search_date], :onClick => "WdatePicker()", :size=>10%>
     </div>
     <div id="xiu5">
-        <%= select_tag :time,
-        "<option>1:00AM</option>
-        <option>2:00AM</option>
-        <option>3:00AM</option>
-        <option>4:00AM</option>
-        <option>5:00AM</option>
-        <option>6:00AM</option>
-        <option>7:00AM</option>
-        <option>8:00AM</option>
-        <option>9:00AM</option>
-        <option>10:00AM</option>
-        <option>11:00AM</option>
-        <option>12:00AM</option>
-        <option>1:00PM</option>
-        <option>2:00PM</option>
-        <option>3:00PM</option>
-        <option>4:00PM</option>
-        <option>5:00PM</option>
-        <option>6:00PM</option>
-        <option>7:00PM</option>
-        <option>8:00PM</option>
-        <option>9:00PM</option>
-        <option>10:00PM</option>
-        <option>11:00PM</option>
-        <option>12:00PM</option>" %>
+    	<%= select_tag(:time, options_for_select([['1:00', '1:00'], ['2:00', '2:00'],['3:00','3:00'],['4:00','4:00'],['5:00','5:00'],['6:00','6:00'],
+			['7:00','7:00'],['8:00','8:00'],['9:00','9:00'],['10:00','10:00'],['11:00','11:00'],['12:00','12:00'],['13:00','13:00'],['14:00','14:00'],
+			['15:00','15:00'],['16:00','16:00'],['17:00','17:00'],['18:00','18:00'],['19:00','19:00'],['20:00','20:00'],['21:00','21:00'],['22:00','22:00'],
+			['23:00','23:00'],['24:00','24:00']],session[:search_time]))%>
+        
     </div>
 		<% end %>
     <div id="xiu6">
@@ -169,7 +149,22 @@
                     <%=@show_records[index][1] %>
                 </td>
                 <td>
-                    <%=@show_records[index][2] %>
+                	<table width="293" border="0" cellspacing="0" cellpadding="0">
+				      <tr>
+				        <td width="97" height="26">
+				        	<% if @show_records[index][2][0]=="未预定"%><img src="images/yu.jpg" />
+							<% else %>已预定
+							<% end %></td>
+				        <td width="97" height="26">
+				        	<% if @show_records[index][2][1]=="未预定"%><img src="images/yu.jpg" />
+							<% else %>已预定
+							<% end %></td>
+				        <td width="97" height="26">
+				        	<% if @show_records[index][2][2]=="未预定"%><img src="images/yu.jpg" />
+							<% else %>已预定
+							<% end %></td>
+				      </tr>
+				    </table>
                 </td>
             </tr>
             <% index=index+1 %>
@@ -186,7 +181,22 @@
                     <%=@show_records[index][1] %>
                 </td>
                 <td>
-                    <%=@show_records[index][2] %>
+                    <table width="293" border="0" cellspacing="0" cellpadding="0">
+				      <tr>
+				        <td width="97" height="26">
+				        	<% if @show_records[index][2][0]=="未预定"%><img src="images/yu.jpg" />
+							<% else %>已预定
+							<% end %></td>
+				        <td width="97" height="26">
+				        	<% if @show_records[index][2][1]=="未预定"%><img src="images/yu.jpg" />
+							<% else %>已预定
+							<% end %></td>
+				        <td width="97" height="26">
+				        	<% if @show_records[index][2][2]=="未预定"%><img src="images/yu.jpg" />
+							<% else %>已预定
+							<% end %></td>
+				      </tr>
+				    </table>
                 </td>
             </tr>
             <% index=index+1 %>

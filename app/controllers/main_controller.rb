@@ -13,7 +13,6 @@ class MainController < ApplicationController
 
     if request.post?
     
-
       session[:city] = params[:city][:name]
       session[:sport] = params[:sport][:name]
       session[:search_date] = params[:search_date]
