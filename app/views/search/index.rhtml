@@ -213,7 +213,7 @@
             <% state = 0 %>
             <% end %>
             <% end %>
-            <% while index < 6 %>
+            <% while index < 7 %>
             <% if state==0 %>
             <tr bgcolor="#ffffff">
                 <td height="26">
@@ -322,7 +322,7 @@
             <% state = 0 %>
             <% end %>
             <% end %>
-            <% while index < 6 %>
+            <% while index < 7 %>
             <% if state==0 %>
             <tr bgcolor="#ffffff">
                 <td height="26">
@@ -379,92 +379,64 @@
                     我来推荐该场馆加入www.51duanlian.com
                 </td>
             </tr>
+            <% index = 0 %>
+            <% state = 0 %>
+            <% for venue_info in @unnegotiated_venues %>
+            <% if state == 0 %>
             <tr bgcolor="#b5c5ba">
-                <td height="26" class="zaq5">
-                    > <a href="#">E体育馆</a>
+
+                <td height="26">
+                    <%=venue_info[:VENUE_NAME] %>
                 </td>
                 <td>
-                    09/30
+                    <%= session[:search_date] %>
                 </td>
-                <td>
-                    不明
+				<td>
+                   	 不明
                 </td>
                 <td bgcolor="#d0dcd2">
-                    <table width="293" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="115" height="26">
-                                &nbsp;
-                            </td>
-                            <td>
-                                <img src="images/xx1.gif" />
-                            </td>
-                            <td class="zaq7">
-                                <a href="#">我来推荐</a>
-                            </td>
-                            <td width="115">
-                                &nbsp;
-                            </td>
-                        </tr>
-                    </table>
-                </td>
+                	<table width="293" border="0" cellspacing="0" cellpadding="0">
+				      <tr>
+				        <td width="115" height="26">&nbsp;</td>
+				        <td><img src="images/xx1.gif" /></td>
+				        <td class="zaq7">
+				        	<%= link_to "我来推荐",:controller => :search,:action=>"recommend" %>
+							</td>
+				        <td width="115">&nbsp;</td>
+				      </tr>
+			    	</table>      
+				</td>
             </tr>
+            <% index=index+1 %>
+            <% state = 1 %>
+            <% else %>
             <tr bgcolor="#e3dfc6">
                 <td height="26">
-                    &nbsp;
+                    <%=venue_info[:VENUE_NAME] %>
                 </td>
                 <td>
-                    &nbsp;
+                    <%= session[:search_date] %>
                 </td>
                 <td>
-                    &nbsp;
+                    	不明
                 </td>
                 <td bgcolor="#edecda">
-                    <table width="293" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="115" height="26">
-                                &nbsp;
-                            </td>
-                            <td>
-                                <img src="images/xx1.gif" />
-                            </td>
-                            <td class="zaq7">
-                                <a href="#">我来推荐</a>
-                            </td>
-                            <td width="115">
-                                &nbsp;
-                            </td>
-                        </tr>
-                    </table>
-                </td>
+                	<table width="293" border="0" cellspacing="0" cellpadding="0">
+				      <tr>
+				        <td width="115" height="26">&nbsp;</td>
+				        <td><img src="images/xx1.gif" /></td>
+				        <td class="zaq7"><%= link_to "我来推荐",:controller => :search,:action=>"recommend" %></td>
+				        <td width="115">&nbsp;</td>
+				      </tr>
+			    	</table>      
+				</td>
             </tr>
-            <tr bgcolor="#b5c5ba">
-                <td height="26">
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td bgcolor="#d0dcd2">
-                    &nbsp;
-                </td>
-            </tr>
-            <tr bgcolor="#e3dfc6">
-                <td height="26">
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td bgcolor="#edecda">
-                    &nbsp;
-                </td>
-            </tr>
+            <% index=index+1 %>
+            <% state = 0 %>
+            <% end %>
+            <% end %>
+            <% while index < 7 %>
+            <% if state==0 %>
             <tr bgcolor="#b5c5ba">
                 <td height="26">
                     &nbsp;
@@ -476,9 +448,12 @@
                     &nbsp;
                 </td>
                 <td bgcolor="#d0dcd2">
-                    &nbsp;
-                </td>
+                	&nbsp;
+				</td>
             </tr>
+            <% index=index+1 %>
+            <% state = 1 %>
+            <% else %>
             <tr bgcolor="#e3dfc6">
                 <td height="26">
                     &nbsp;
@@ -490,38 +465,15 @@
                     &nbsp;
                 </td>
                 <td bgcolor="#edecda">
-                    &nbsp;
-                </td>
+                	&nbsp;
+				</td>
             </tr>
-            <tr bgcolor="#b5c5ba">
-                <td height="26">
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td bgcolor="#d0dcd2">
-                    &nbsp;
-                </td>
-            </tr>
-            <tr bgcolor="#e3dfc6">
-                <td height="26">
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td bgcolor="#edecda">
-                    &nbsp;
-                </td>
-            </tr>
+            <% index=index+1 %>
+            <% state = 0 %>
+            <% end %>
+            <% end %>
         </table>
+		<%= will_paginate @unnegotiated_venues, :previous_label => "上一页", :next_label => "下一页" %>
     </div>
     <div id="nei2">
         我要锻炼网
