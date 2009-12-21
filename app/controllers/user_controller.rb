@@ -7,6 +7,7 @@ class UserController < ApplicationController
   def index
   end
   
+  
   def paymentFun
     #puts params[:venue_name]
     render :update do |page|
