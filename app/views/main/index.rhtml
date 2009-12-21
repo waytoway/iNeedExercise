@@ -93,6 +93,10 @@
 		    document.getElementById("search").submit();	
 		}
 	}
+	
+	function clear_venue(){
+		document.getElementById("venue_name").value = "查看该地域所有运动场馆"
+	}
 </script>
 
 <div>
@@ -136,7 +140,7 @@
                 </div>
 
                 <div id="xiu5">
-			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false, :selected => "运动项目"  }) %>
+			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false, :selected => "运动项目"  }, :onchange => "clear_venue()") %>
                 </div>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR
                 <div>
