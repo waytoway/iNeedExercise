@@ -64,10 +64,22 @@ class MainController < ApplicationController
   
   def save_selected_venue
     session[:venue] = params[:name]
-    puts "aaaaaaaaaaaaaaa"
-    puts session[:venue]
     @lacal_venue_name = session[:venue]
     render :partial => "update_venues"
+  end
+  
+  def most_popular_venues
+    @sport_type = params[:sport_type]
+    @top10_popular_venues = TFieldOrder.find_by_sql("SELECT COUNT(*) AS NUM,t_field_badmintoon.VENUE_ID  FROM t_field_order,t_field_badmintoon WHERE t_field_order.field_id = t_field_badmintoon.ID AND t_field_badmintoon.ID IN 
+    (select distinct t_field_badmintoon.ID from t_field_badmintoon_activity, t_field_badmintoon where t_field_badmintoon_activity.FIELD_ID = t_field_badmintoon.ID AND t_field_badmintoon_activity.FIELD_TYPE = '#{@sport_type}') GROUP BY t_field_badmintoon.VENUE_ID ORDER BY NUM DESC")
+    @top10_popular_venue_names = []
+    if @top10_popular_venues.size>0
+      @top10_popular_venues.each do |f|
+        @top10_popular_venue_name = TVenueInfo.find(:first, :conditions => {:ID => f[:VENUE_ID]})
+        @top10_popular_venue_names.push(@top10_popular_venue_name.VENUE_NAME)
+      end
+    end
+    render :partial => "most_popular_venues"
   end
   
   protected

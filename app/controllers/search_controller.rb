@@ -188,6 +188,10 @@ class SearchController < ApplicationController
       puts @show_other_records[0][1]
     end
     
+    #第三部分
+    @unnegotiated_venues = TVenueMemberInfo.paginate_by_sql([%!SELECT DISTINCT t.VENUE_NAME FROM `exercise-test`.t_venue_member_info t!, true], :page => params[:page]||1, :per_page => 7)
+
+    
   end  
   
   def get_sub_items   
