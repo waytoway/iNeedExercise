@@ -1,0 +1,8 @@
+<%= @sport_type %>
+<br/>
+<% if @top10_popular_venue_names.size > 0%>
+	<% @top10_popular_venue_names.each do |f|%>
+		<%= f%>
+		<br/>
+	<% end %>
+<% end %>

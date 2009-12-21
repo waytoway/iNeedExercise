@@ -1,5 +1,7 @@
-<script>
+<script language="javascript" type="text/javascript">
 	document.getElementById("all_venues").innerHTML = ""
-	document.getElementById("venue_name").setAttribute(value,"caijia")
+	var sport = document.getElementById("sport_name")
+	sport.options[0].selected = true
+
 </script>
 <%= text_field_tag :venue_name, @lacal_venue_name %>

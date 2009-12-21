@@ -93,6 +93,10 @@
 		    document.getElementById("search").submit();	
 		}
 	}
+	
+	function clear_venue(){
+		document.getElementById("venue_name").value = "输入运动场馆名称"
+	}
 </script>
 
 <div>
@@ -136,7 +140,7 @@
                 </div>
 
                 <div id="xiu5">
-			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false, :selected => "运动项目"  }) %>
+			    	<%= select(:sport, :name, @sport_type_names, { :include_blank => false, :selected => "运动项目"  }, :onchange => "clear_venue()") %>
                 </div>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR
                 <div>
@@ -199,8 +203,34 @@
                 帮助中心
             </td>
             <td style="border:1px solid;width:30%">
-                最热场地
-				
+				<table>
+					<tr>
+						<td width = "100px">
+							<ul>
+			                    <li>
+			                        <%=link_to_remote '足球',  :update => "content", :url=>{:action=>"most_popular_venues", :sport_type => '足球'} %>
+			                    </li>
+			                    <li>
+			                        <%=link_to_remote '篮球',  :update => "content",  :url=>{:action=>"most_popular_venues", :sport_type => '篮球'} %>
+			                    </li>
+			                    <li>
+			                        <%=link_to_remote '网球',  :update => "content",  :url=>{:action=>"most_popular_venues", :sport_type => '网球'} %>
+			                    </li>
+								<li>
+			                        <%=link_to_remote '排球',  :update => "content",  :url=>{:action=>"most_popular_venues", :sport_type => '排球'} %>
+			                    </li>
+								<li>
+			                        <%=link_to_remote '羽毛球',  :update => "content",  :url=>{:action=>"most_popular_venues", :sport_type => '羽毛球'} %>
+			                    </li>
+			                </ul>
+						</td>
+						<td width = "200px">
+							<div id = "content">
+								<%= render :partial => 'most_popular_venues'%>
+							</div>
+						</td>
+					</tr>
+				</table>
             </td>
             <td style="border:1px solid;width:40%">
                 最新预告
