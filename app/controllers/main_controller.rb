@@ -6,6 +6,7 @@ class MainController < ApplicationController
   before_filter :get_initial_cities
   before_filter :get_initial_regions
   before_filter :get_initial_sports
+  before_filter :get_initial_popular
   
   def index
     if request.post?
@@ -120,4 +121,17 @@ class MainController < ApplicationController
     end
   end
   
+  def get_initial_popular
+    @sport_type = "足球"
+    @top10_popular_venues = TFieldOrder.find_by_sql("SELECT COUNT(*) AS NUM,t_field_badmintoon.VENUE_ID  FROM t_field_order,t_field_badmintoon WHERE t_field_order.field_id = t_field_badmintoon.ID AND t_field_badmintoon.ID IN 
+    (select distinct t_field_badmintoon.ID from t_field_badmintoon_activity, t_field_badmintoon where t_field_badmintoon_activity.FIELD_ID = t_field_badmintoon.ID AND t_field_badmintoon_activity.FIELD_TYPE = '#{@sport_type}') GROUP BY t_field_badmintoon.VENUE_ID ORDER BY NUM DESC")
+    @top10_popular_venue_names = []
+    if @top10_popular_venues.size>0
+      @top10_popular_venues.each do |f|
+        @top10_popular_venue_name = TVenueInfo.find(:first, :conditions => {:ID => f[:VENUE_ID]})
+        @top10_popular_venue_names.push(@top10_popular_venue_name.VENUE_NAME)
+      end
+    end
+  end
+    
 end
