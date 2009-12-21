@@ -42,11 +42,18 @@
             <%=record[:USABLE_DATE] %>
         </td>
         <td>
-            预订情况
+            <%=record[:ACTIVITY]%>
         </td>
         <td>
-            验证码
+           <%=record[:AUTHENTICODE]%>
         </td>
+		<td>
+		<%if record[:ACTIVITY]=="未预定"%>
+		 <%=link_to_remote "预定", :url=>"bbs.nju.edu.cn"%>
+		 <%else%>
+		 <%="不可预定"%>
+		<%end%>
+		</td>
     </tr>
     <%i=i+1 %>
     <%end %>

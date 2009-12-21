@@ -1,30 +1,33 @@
 <script language="javascript" type="text/javascript">
-	function agree_onclick(){
-		var city = document.getElementById("city_name")
-		var region = document.getElementById("region_name")
-		var sport = document.getElementById("sport_name")
-		var date = document.getElementById("search_date").value
-		var time = document.getElementById("time")
-		if (city.options[city.selectedIndex].value == "选择城市") {
-			alert('必须选择一个城市！');
-			return false;
-		}
-		else if (region.options[region.selectedIndex].value == "选择区域") {
-			alert('必须选择一个项目！');
-			return false;
-		}
-		else if (sport.options[sport.selectedIndex].value == "运动项目") {
-			alert('必须选择一个项目！');
-			return false;
-		}
-		else if (date == "") {
-			alert('必须选择日期！');
-			return false;
-		}
-		else {
-		    document.getElementById("search").submit();	
-		}
-	}
+    function agree_onclick(){
+        var city = document.getElementById("city_name")
+        var region = document.getElementById("region_name")
+        var sport = document.getElementById("sport_name")
+        var date = document.getElementById("search_date").value
+        var time = document.getElementById("time")
+        if (city.options[city.selectedIndex].value == "选择城市") {
+            alert('必须选择一个城市！');
+            return false;
+        }
+        else 
+            if (region.options[region.selectedIndex].value == "选择区域") {
+                alert('必须选择一个项目！');
+                return false;
+            }
+            else 
+                if (sport.options[sport.selectedIndex].value == "运动项目") {
+                    alert('必须选择一个项目！');
+                    return false;
+                }
+                else 
+                    if (date == "") {
+                        alert('必须选择日期！');
+                        return false;
+                    }
+                    else {
+                        document.getElementById("search").submit();
+                    }
+    }
 </script>
 <style>
     
@@ -75,7 +78,7 @@
     　 >　 <%= link_to "查询",:controller => :search,:action=>"index" %>
 </div>
 <div id="xiu">
-	<% form_tag({:action => 'index'},{:id => "search"}) do %>
+    <% form_tag({:action => 'index'},{:id => "search"}) do %>
     <div id="xiu1">
     </div>
     <div id="xiu2">
@@ -87,10 +90,10 @@
     </div>
     <div id="xiu22">
         <div id="sub_items">
-            <%= select :region, :name, @regions_name, { :include_blank => false, :selected => session[:region]}, :onchange => remote_function(:update => "jump_for_sub_item",   
-						       :method => "get",   
-						       :with => "'region_name=' + value",   
-						       :url => { :controller => :search, :action => :jump_for_sub_item}) %>
+            <%= select :region, :name, @regions_name, { :include_blank => false, :selected => session[:region]}, :onchange => remote_function(:update => "jump_for_sub_item",
+            :method => "get",
+            :with => "'region_name=' + value",
+            :url => { :controller => :search, :action => :jump_for_sub_item}) %>
         </div>
         <div id="jump_for_sub_item">
             &nbsp;
@@ -100,20 +103,19 @@
         <%= select(:sport, :name, @sport_type_names, { :include_blank => false, :selected => session[:sport] }) %>
     </div>
     <div id="xiu4">
-        <%= text_field_tag :search_date, session[:search_date], :onClick => "WdatePicker()", :size=>10%>
+        <%= text_field_tag :search_date, session[:search_date], :onClick => "WdatePicker()", :size=>10 %>
     </div>
     <div id="xiu5">
-    	<%= select_tag(:time, options_for_select([['1:00', '1:00'], ['2:00', '2:00'],['3:00','3:00'],['4:00','4:00'],['5:00','5:00'],['6:00','6:00'],
-			['7:00','7:00'],['8:00','8:00'],['9:00','9:00'],['10:00','10:00'],['11:00','11:00'],['12:00','12:00'],['13:00','13:00'],['14:00','14:00'],
-			['15:00','15:00'],['16:00','16:00'],['17:00','17:00'],['18:00','18:00'],['19:00','19:00'],['20:00','20:00'],['21:00','21:00'],['22:00','22:00'],
-			['23:00','23:00'],['24:00','24:00']],session[:search_time]))%>
-        
+        <%= select_tag(:time, options_for_select([['1:00', '1:00'], ['2:00', '2:00'],['3:00','3:00'],['4:00','4:00'],['5:00','5:00'],['6:00','6:00'],
+        ['7:00','7:00'],['8:00','8:00'],['9:00','9:00'],['10:00','10:00'],['11:00','11:00'],['12:00','12:00'],['13:00','13:00'],['14:00','14:00'],
+        ['15:00','15:00'],['16:00','16:00'],['17:00','17:00'],['18:00','18:00'],['19:00','19:00'],['20:00','20:00'],['21:00','21:00'],['22:00','22:00'],
+        ['23:00','23:00'],['24:00','24:00']],session[:search_time])) %>
     </div>
-		<% end %>
+    <% end %>
     <div id="xiu6">
-        <button id="bi" onclick="javascript:agree_onclick()"></button>
+        <button id="bi" onclick="javascript:agree_onclick()">
+        </button>
     </div>
-
 </div>
 <div id="nei">
     <div id="nei1">
@@ -131,11 +133,10 @@
                 <td width="294">
                     符合要求的可能的时间
                     <br/>
-                    <a>
-                    	<%= session[:search_time]%>
-					　　　　 　　<%= @next_hour%> 　　　　　
-					<%= @next_two_hour%>
-					</a>
+                    <a><%= session[:search_time] %>
+                        　　　　 　　 <%= @next_hour %>
+                        　　　　　<%= @next_two_hour %>
+                    </a>
                 </td>
             </tr>
             <% index = 0 %>
@@ -153,25 +154,25 @@
                     <%=@show_records[index][1] %>
                 </td>
                 <td>
-                	<table width="293" border="0" cellspacing="0" cellpadding="0">
-				      <tr>
-				        <td width="97" height="26">
-				        	<% if @show_records[index][2][0]=="未预定"%>
-							<%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index" %>
-							<% else %>已预定
-							<% end %></td>
-				        <td width="97" height="26">
-				        	<% if @show_records[index][2][1]=="未预定"%>
-							<%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index" %>
-							<% else %>已预定
-							<% end %></td>
-				        <td width="97" height="26">
-				        	<% if @show_records[index][2][2]=="未预定"%>
-							<%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index" %>
-							<% else %>已预定
-							<% end %></td>
-				      </tr>
-				    </table>
+                    <table width="293" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="97" height="26">
+                                <% if @show_records[index][2][0]=="未预定" %>
+                                <%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] %>
+                                <% else %>已预定<% end %>
+                            </td>
+                            <td width="97" height="26">
+                                <% if @show_records[index][2][1]=="未预定" %>
+                                <%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index",:venue_id=>venue_info[:ID],:from_time=>@next_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] %>
+                                <% else %>已预定<% end %>
+                            </td>
+                            <td width="97" height="26">
+                                <% if @show_records[index][2][2]=="未预定" %>
+                                <%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index",:venue_id=>venue_info[:ID],:from_time=>@next_two_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] %>
+                                <% else %>已预定<% end %>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             <% index=index+1 %>
@@ -189,24 +190,24 @@
                 </td>
                 <td>
                     <table width="293" border="0" cellspacing="0" cellpadding="0">
-				      <tr>
-				        <td width="97" height="26">
-				        	<% if @show_records[index][2][0]=="未预定"%>
-							<%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index" %>
-							<% else %>已预定
-							<% end %></td>
-				        <td width="97" height="26">
-				        	<% if @show_records[index][2][1]=="未预定"%>
-							<%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index" %>
-							<% else %>已预定
-							<% end %></td>
-				        <td width="97" height="26">
-				        	<% if @show_records[index][2][2]=="未预定"%>
-							<%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index" %>
-							<% else %>已预定
-							<% end %></td>
-				      </tr>
-				    </table>
+                        <tr>
+                            <td width="97" height="26">
+                                <% if @show_records[index][2][0]=="未预定" %>
+                                <%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] %>
+                                <% else %>已预定<% end %>
+                            </td>
+                            <td width="97" height="26">
+                                <% if @show_records[index][2][1]=="未预定" %>
+                                <%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index",:venue_id=>venue_info[:ID],:from_time=>@next_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] %>
+                                <% else %>已预定<% end %>
+                            </td>
+                            <td width="97" height="26">
+                                <% if @show_records[index][2][2]=="未预定" %>
+                                <%= link_to image_tag("yu.jpg"),:controller => :statusinfo, :action=>"index",:venue_id=>venue_info[:ID],:from_time=>@next_two_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] %>
+                                <% else %>已预定<% end %>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             <% index=index+1 %>
