@@ -41,9 +41,9 @@ class UserController < ApplicationController
       page.replace_html 'content' , :partial => 'card_manage'
     end
   end
-  
   #this is the my records loader    
   def my_records
+    @my_records = TFieldOrder.paginate_by_sql([%!select VENUE_NAME,count(*) as COUNT,SUM(t_field_order.PAYMENT_SUM) as SUM  from t_field_order, users_orders, t_venue_info  where t_venue_info.ID = t_field_order.VENUE_ID  AND users_orders.order_id = t_field_order.ID AND users_orders.user_id = #{session[:user]} and PAYMENT_STATUS=1 and YEAR(BOOK_TIME)=YEAR(NOW()) and MONTH(BOOK_TIME)=MONTH(NOW()) group by t_field_order.VENUE_ID!, true], :page => params[:page]||1, :per_page => 2)    
     render :update do |page|        
       page.replace_html 'content' , :partial => 'my_records'
     end
