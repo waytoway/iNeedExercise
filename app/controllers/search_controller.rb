@@ -54,8 +54,8 @@ class SearchController < ApplicationController
             if g.PRICE > @max_price_1
               @max_price_1 = g.PRICE
             end
-            if g.PRICE < @max_price_1
-              @max_price_1 = g.PRICE
+            if g.PRICE < @min_price_1
+              @min_price_1 = g.PRICE
             end
           end
           @index = @index+1
@@ -78,8 +78,8 @@ class SearchController < ApplicationController
             if g.PRICE > @max_price_2
               @max_price_2 = g.PRICE
             end
-            if g.PRICE < @max_price_2
-              @max_price_2 = g.PRICE
+            if g.PRICE < @min_price_2
+              @min_price_2 = g.PRICE
             end
           end
           @index = @index+1
@@ -102,8 +102,8 @@ class SearchController < ApplicationController
             if g.PRICE > @max_price_3
               @max_price_3 = g.PRICE
             end
-            if g.PRICE < @max_price_3
-              @max_price_3 = g.PRICE
+            if g.PRICE < @min_price_3
+              @min_price_3 = g.PRICE
             end
           end
           @index = @index+1
@@ -127,6 +127,66 @@ class SearchController < ApplicationController
     
 #    @users_cards2 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
 #    @users_cards3 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
+    @other_venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{session[:search_date]}' AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预定'!, true], :page => params[:page]||1, :per_page => 7)
+    puts "hhhhhhhhhhhhhhhhhhhhhhhhh"
+    puts @other_venues.size
+    puts @next_three_hour
+    
+    @show_other_records = []
+    @other_venues.each do |f|
+      @other_min_price
+      @other_max_price
+      @other_price
+      @other_venue_state = "已预定"
+      @current_hour_time = @next_three_hour_time
+      @next_hour_time = @current_hour_time+3600
+      @current_hour = @current_hour_time.strftime("%H:%M").to_s
+      @next_hour = @next_hour_time.strftime("%H:%M").to_s
+      @final_hour = Time.parse('23:00') 
+      @time_for_unbooking_array = []
+      @index = 0
+      while @current_hour_time.hour < @final_hour.hour     #不确定可否比较
+         @other_fields = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{session[:sport]}' AND t.FROM_TIME>='#{@current_hour}' AND t.FROM_TIME<'#{@next_hour}' AND t.ACTIVITY='未预定'")
+        if @other_fields.size > 0
+        
+          @other_fields.each do |g|
+            if g.ACTIVITY = "未预定"
+              @other_venue_state = "未预定"
+            end
+            if(@index == 0)
+              @other_min_price = g.PRICE
+              @other_max_price = g.PRICE
+              @index = @index+1
+            else
+              if g.PRICE > @other_max_price
+                @other_max_price = g.PRICE
+              end
+              if g.PRICE < @other_min_price
+                @other_min_price = g.PRICE
+              end
+            end
+    
+          end
+        @time_for_unbooking_array.push(@current_hour)
+        
+        end
+        @current_hour_time = @next_hour_time
+        @next_hour_time = @current_hour_time+3600
+        @current_hour = @current_hour_time.strftime("%H:%M").to_s
+        @next_hour = @next_hour_time.strftime("%H:%M").to_s
+      end
+      puts "sdfsfsfsfsfsfsfsf"
+      puts @other_min_price
+      puts @other_max_price
+      if @other_min_price < @other_max_price
+        @price = "#{@other_min_price}-#{@other_max_price}"
+      else
+        @price = "#{@other_min_price}"
+      end
+      puts @price
+      @show_other_records.push([session[:search_date],@price,@time_for_unbooking_array])
+      puts @show_other_records[0][1]
+    end
     
   end  
   

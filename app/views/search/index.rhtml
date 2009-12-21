@@ -277,53 +277,51 @@
                     可预订的运动时间
                 </td>
             </tr>
+            <% index = 0 %>
+            <% state = 0 %>
+            <% for venue_info in @other_venues %>
+            <% if state == 0 %>
             <tr bgcolor="#ffffff">
-                <td height="26" class="zaq5">
-                    > <a href="#">上海大学体育馆</a>
-                    <img src="images/t4.jpg" />
+                <td height="26">
+                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index" %>
                 </td>
                 <td>
-                    09/30
+                    <%=@show_other_records[index][0] %>
                 </td>
                 <td>
-                    30-45
+                    <%=@show_other_records[index][1] %>
                 </td>
                 <td>
-                    <table width="293" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="58" height="26" class="zaq6">
-                                <a href="#">13:00</a>
-                            </td>
-                            <td width="58" class="zaq6">
-                                <a href="#">15:00</a>
-                            </td>
-                            <td width="58">
-                                &nbsp;
-                            </td>
-                            <td width="58">
-                                &nbsp;
-                            </td>
-                            <td width="58">
-                                &nbsp;
-                            </td>
-                        </tr>
-                    </table>
+					<% @show_other_records[index][2].each do |f|%>
+						<%= link_to f,:controller => :statusinfo, :action=>"index" %>
+					<% end %>
                 </td>
             </tr>
+            <% index=index+1 %>
+            <% state = 1 %>
+            <% else %>
             <tr bgcolor="#cedfcc">
                 <td height="26">
-                    &nbsp;
+                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index" %>
                 </td>
                 <td>
-                    &nbsp;
+                    <%=@show_other_records[index][0] %>
                 </td>
                 <td>
-                    &nbsp;
+                    <%=@show_other_records[index][1] %>
                 </td>
                 <td>
-                    &nbsp;
+                    <% @show_other_records[index][2].each do |f|%>
+						<%= link_to f,:controller => :statusinfo, :action=>"index" %>
+					<% end %>
                 </td>
             </tr>
+            <% index=index+1 %>
+            <% state = 0 %>
+            <% end %>
+            <% end %>
+            <% while index < 6 %>
+            <% if state==0 %>
             <tr bgcolor="#ffffff">
                 <td height="26">
                     &nbsp;
@@ -338,6 +336,9 @@
                     &nbsp;
                 </td>
             </tr>
+            <% index=index+1 %>
+            <% state = 1 %>
+            <% else %>
             <tr bgcolor="#cedfcc">
                 <td height="26">
                     &nbsp;
@@ -352,35 +353,12 @@
                     &nbsp;
                 </td>
             </tr>
-            <tr bgcolor="#ffffff">
-                <td height="26">
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-            <tr bgcolor="#cedfcc">
-                <td height="26">
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
+            <% index=index+1 %>
+            <% state = 0 %>
+            <% end %>
+            <% end %>
         </table>
+		<%= will_paginate @other_venues, :previous_label => "上一页", :next_label => "下一页" %>
         <div id="d2">
             该地域其他场馆
         </div>
