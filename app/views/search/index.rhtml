@@ -61,7 +61,7 @@
     }
     
     #search_date {
-        width: 58px;
+        width: 70px;
         height: 16px;
         text-align: center;
         padding-top: 2px;
@@ -294,7 +294,8 @@
                 </td>
                 <td>
 					<% @show_other_records[index][2].each do |f|%>
-						<%= link_to f,:controller => :statusinfo, :action=>"index" %>
+					
+						<%= link_to f,:controller => :statusinfo, :action=>"index",:venue_id=>venue_info[:ID],:from_time=>f,:field_type=>session[:sport],:usable_time=>@show_other_records[index][0]  %>
 					<% end %>
                 </td>
             </tr>
@@ -313,7 +314,8 @@
                 </td>
                 <td>
                     <% @show_other_records[index][2].each do |f|%>
-						<%= link_to f,:controller => :statusinfo, :action=>"index" %>
+						
+						<%= link_to f,:controller => :statusinfo, :action=>"index",:venue_id=>venue_info[:ID],:from_time=>f,:field_type=>session[:sport],:usable_time=>@show_other_records[index][0] %>
 					<% end %>
                 </td>
             </tr>
