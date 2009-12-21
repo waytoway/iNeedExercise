@@ -46,39 +46,20 @@
             <div id="container">
                 <div id="mainmenu">
                     <ul id="tabs">
+                        <%i=0 %>
+                        <%@tabs.each do |tab| %>
                         <li>
-                            <%=link_to_remote '羽毛球',  :url=>{:action=>"get_field",:sports_type=>"羽毛球"} %>
+                            <%=link_to_remote @tabs[i],  :url=>{:action=>"get_field",:usable_time=>params[:usable_time],:from_time=>params[:from_time],:venue_id=>params[:venue_id],:field_type=> @tabs[i]} %>
                         </li>
-                        <li>
-                            <a href="tab2">Tab 2</a>
-                        </li>
-                        <li>
-                            <a href="#tab3">Tab 3</a>
-                        </li>
-                        <li>
-                            <a href="#tab4">Tab 4</a>
-                        </li>
+                        <%i=i+1 %>
+                        <%end %>
                     </ul>
                 </div>
                 <div class="bar">
                     &nbsp;
                 </div>
                 <div id="content">
-                    <%= render :partial => "status" %>
                 </div>
-                <!--        <div class="panel" id="tab1">
-                Tab 1 Bod
-                </div>
-                <div class="panel" id="tab2">
-                Tab 2 Body
-                </div>
-                <div class="panel" id="tab3">
-                Tab 3 Body
-                </div>
-                <div class="panel" id="tab4">
-                Tab 4 Body
-                </div>
-                -->
             </div>
         </td>
         <td style="width:150px">
