@@ -18,8 +18,10 @@ class MainController < ApplicationController
         redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region_name], 
         :sport_type_name => params[:sport][:name], :venue_name => session[:venue], :search_date => session[:search_date]
       else
+        
+        @venue = TVenueInfo.find(:first, :conditions => {:VENUE_NAME => session[:venue]})
         session[:venue] = nil
-        redirect_to :controller => "statusinfo", :action => "index"
+        redirect_to :controller => "statusinfo", :action => "index", :venue_id => @venue[:ID], :from_time => session[:search_time], :usable_time => session[:search_date]
       end
     end
   end
