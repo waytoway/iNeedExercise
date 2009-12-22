@@ -49,7 +49,7 @@
         </td>
 		<td>
 		<%if record[:ACTIVITY]=="未预定"%>
-		 <%=link_to_remote "预定", :url=>"bbs.nju.edu.cn"%>
+		 <%=link_to "预定", :controller=>"pay", :action=>"index", :field_id=>record[:FIELD_ID], :venue_id=>record[:VENUE_ID], :period=>record[:PERIOD], :price=>record[:PRICE], :usable=>record[:ACTIVITY], :usable_date=>record[:USABLE_DATE], :authenCode=>record[:AUTHENTICODE] %>
 		 <%else%>
 		 <%="不可预定"%>
 		<%end%>
