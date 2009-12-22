@@ -4,9 +4,9 @@ class StatusinfoController < ApplicationController
   # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie
   
-  
   def index
     #如果传进来的是查询某项目状态，则返回一个tab
+    
     if params[:venue_id]!=nil && params[:from_time]!=nil 
       @tabs=[]
       @span_time=Time.parse params[:from_time] 
