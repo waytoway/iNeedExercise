@@ -12,10 +12,11 @@
 					<% end %>
 	            </ul>
 			</div>
-			<hr/>
-			<div style = "width:100px,height:300px" >
-				<%=link_to '编辑帮助信息',:controller => "help", :action=>"modify_page" %>
-			</div>
+			<% if @is_admin %>
+				<div style = "width:100px,height:300px" >
+					<%=link_to '编辑帮助信息',:controller => "help", :action=>"modify_page" %>
+				</div>
+			<% end %>
 			
 		</td>
 		<td width = "500px" height="100%">

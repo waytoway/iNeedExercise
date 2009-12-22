@@ -4,7 +4,8 @@ class HelpController < ApplicationController
   before_filter :get_page_title
   
   def index
-    
+    @user_id = session[:user]
+    @is_admin = User.isAdmin?(@user_id)
   end
   
   def helper_page
@@ -18,19 +19,11 @@ class HelpController < ApplicationController
   end
   
   def modify_page
-    if request.post?
-      puts "aaaaaaaaaaaaaaaaaaaaa"
-      puts "jinrupost"
-    end
+    
   end
   
   def modifiabe_helper_page
-    unless request.post?
-      puts "ddddddddddddddddddd"
-      puts "jinrupost"
-    else
-      puts "ttttttttttttttttttttt"
-      puts "jinrupost"
+    if request.post?
       if params[:title] != nil
         @page = Page.find(:first, :conditions => {:title => params[:title]})
       elsif params[:id] != nil
@@ -40,6 +33,18 @@ class HelpController < ApplicationController
       render :partial => "modifiabe_helper_page"
     end
 
+  end
+
+  def save_modify
+   if request.post?
+      @title = params[:title]
+      @content = params[:content]
+      @page = Page.find(:first, :conditions => {:title => @title})
+      @page.update_attributes(:title => @title)
+      @page.update_attributes(:content => @content)
+      
+      render :text=>"修改成功"
+    end
   end
   
   protected
