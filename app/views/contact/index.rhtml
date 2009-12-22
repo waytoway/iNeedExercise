@@ -1,1 +1,17 @@
-<div style="font-size:24pt;">联系我们<div/>
+<% if @is_admin%>
+	<% form_remote_tag :update=>"info1", :url => {:action => 'save_commit_modify'},:html => {:id => "edit"},:before => "tinyMCE.triggerSave()"  do %>
+		<%=text_area_tag :body, @page[:content], :class => 'mceEditor' %>
+		<br/>
+		<input type = "submit" value = "提交" id="commit"></input>
+		<script type="text/javascript">
+	  	//<![CDATA[
+	    	setTextareaToTinyMCE('body');
+	  	//]]>
+	  	</script>
+	<% end %>
+
+	<div id="info1">
+	</div>
+<% else %>
+	<%= @page[:content]%>
+<% end %>

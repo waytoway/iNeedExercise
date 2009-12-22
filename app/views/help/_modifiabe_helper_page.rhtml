@@ -1,8 +1,0 @@
-<% form_remote_tag :update=>"info1", :url => {:action => 'save_modify'} do %>
-	<%=text_field_tag :title, @page[:title] %>
-	<br/>
-	<%=text_area_tag :content, @page[:content] %>
-	<input type = "submit" value = "提交" id="commit"></input>
-<% end %>
-<div id="info1">
-</div>

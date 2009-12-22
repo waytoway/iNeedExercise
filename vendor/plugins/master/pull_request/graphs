@@ -1,0 +1,878 @@
+
+  
+
+  
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>kete's tiny_mce at master - GitHub</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub" />
+    <link rel="fluid-icon" href="http://github.com/fluidicon.png" title="GitHub" />
+
+    <link href="http://assets0.github.com/stylesheets/bundle_common.css?21d2938637297b502ab2e1ca0b94ad02185ca266" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://assets3.github.com/stylesheets/bundle_github.css?21d2938637297b502ab2e1ca0b94ad02185ca266" media="screen" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" charset="utf-8">
+      var GitHub = {}
+      var github_user = null
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://assets2.github.com/javascripts/bundle_common.js?21d2938637297b502ab2e1ca0b94ad02185ca266" type="text/javascript"></script>
+<script src="http://assets3.github.com/javascripts/bundle_github.js?21d2938637297b502ab2e1ca0b94ad02185ca266" type="text/javascript"></script>
+
+        <script type="text/javascript" charset="utf-8">
+      GitHub.spy({
+        repo: "kete/tiny_mce"
+      })
+    </script>
+
+    
+  
+    
+  
+
+  <link href="http://github.com/feeds/kete/commits/tiny_mce/master" rel="alternate" title="Recent Commits to tiny_mce:master" type="application/atom+xml" />
+
+    <meta name="description" content="A Ruby on Rails plugin that allows easy implementation of the TinyMCE editor into your applications." />
+    <script type="text/javascript">
+      GitHub.nameWithOwner = GitHub.nameWithOwner || "kete/tiny_mce";
+      GitHub.currentRef = "master";    
+    </script>
+  
+
+            <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-3769691-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script');
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        ga.setAttribute('async', 'true');
+        document.documentElement.firstChild.appendChild(ga);
+      })();
+    </script>
+
+  </head>
+
+  
+
+  <body>
+    
+
+    
+
+    <div id="main">
+      <div id="header" class="">
+        <div class="site">
+          <div class="logo">
+            <a href="http://github.com"><img src="/images/modules/header/logov3.png" alt="github" /></a>
+          </div>
+          
+          <div class="topsearch">
+  
+    <form action="/search" id="top_search_form" method="get">
+      <a href="/search" class="advanced-search tooltipped downwards" title="Advanced Search">Advanced Search</a>
+      <input type="search" class="search repo_autocompleter" name="q" results="5" placeholder="Search GitHub&hellip;" /> <input type="submit" value="Search", class="button" />
+      <input type="hidden" name="type" value="Everything" />
+      <input type="hidden" name="repo" value="" />
+      <input type="hidden" name="langOverride" value="" />
+      <input type="hidden" name="start_value" value="1" />
+    </form>
+  
+  
+    <ul class="nav logged_out">
+      
+        <li><a href="http://github.com">Home</a></li>
+        <li class="pricing"><a href="/plans">Pricing and Signup</a></li>
+        <li><a href="http://github.com/popular/forked">Explore GitHub</a></li>
+        
+        <li><a href="/blog">Blog</a></li>
+      
+      <li><a href="https://github.com/login">Login</a></li>
+    </ul>
+  
+</div>
+        </div>
+      </div>
+
+      
+        
+      <div id="repo_menu">
+        <div class="site">
+          <ul>
+            
+              <li class="active"><a href="http://github.com/kete/tiny_mce/tree/master">Source</a></li>
+
+              <li class=""><a href="http://github.com/kete/tiny_mce/commits/master">Commits</a></li>
+
+              
+              <li class=""><a href="/kete/tiny_mce/network">Network (15)</a></li>
+
+              
+
+              
+
+              
+
+              
+
+              <li class=""><a href="/kete/tiny_mce/graphs">Graphs</a></li>
+
+              
+
+            
+          </ul>
+        </div>
+      </div>
+
+    <div id="repo_sub_menu">
+      <div class="site">
+        <div class="joiner"></div>
+        
+
+        
+
+        
+
+        
+          <ul>
+            <li>
+              <a class="active" href="/kete/tiny_mce/tree/master">master</a>
+            </li>
+            <li>
+              
+                <a href="#">all branches</a>
+              
+              <ul>
+                
+                  
+                    <li><a href="/kete/tiny_mce/tree/experimental">experimental</a></li>
+                  
+                
+                  
+                    <li><a href="/kete/tiny_mce/tree/master">master</a></li>
+                  
+                
+              </ul>
+            </li>
+            <li>
+              <a href="#">all tags</a>
+              
+                <ul>
+                  
+                    
+                      <li><a href="/kete/tiny_mce/tree/0.1.0">0.1.0</a></li>
+                    
+                  
+                </ul>
+              
+            </li>
+          </ul>
+
+        
+      </div>
+    </div>
+
+    <div class="site">
+      
+
+
+
+
+
+
+
+<div id="repos">
+  
+
+
+<script type="text/javascript">
+  GitHub.currentCommitRef = "master"
+  GitHub.currentRepoOwner = "kete"
+  GitHub.currentRepo = "tiny_mce"
+  
+</script>
+
+
+
+  <div class="repo public" id="repo_details">
+    <div class="title">
+      <div class="path">
+        <a href="/kete">kete</a> / <b><a href="http://github.com/kete/tiny_mce">tiny_mce</a></b>
+
+        
+
+          <span id="edit_button" style="display:none;">
+            <a href="/kete/tiny_mce/edit"><img alt="edit" class="button" src="http://assets1.github.com/images/modules/repos/edit_button.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" /></a>
+          </span>
+
+          
+            <span id="pull_request_button" style="display:none;">
+              <a href="/kete/tiny_mce/pull_request/" class="pull_request_button"><img alt="pull request" class="button" src="http://assets0.github.com/images/modules/repos/pull_request_button.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" /></a>
+            </span>
+
+            <span id="fork_button">
+              <form method="POST" action="/kete/tiny_mce/fork" style="display:inline;">
+                <input alt="fork" class="button" src="http://assets1.github.com/images/modules/repos/fork_button.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" type="image" />
+              </form>
+            </span>
+          
+
+          <span id="watch_button">
+            <a href="/kete/tiny_mce/toggle_watch" class="toggle_watch"><img alt="watch" class="button" src="http://assets0.github.com/images/modules/repos/watch_button.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" /></a>
+          </span>
+
+          <span id="unwatch_button" style="display:none;">
+            <a href="/kete/tiny_mce/toggle_watch" class="toggle_watch"><img alt="watch" class="button" src="http://assets3.github.com/images/modules/repos/unwatch_button.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" /></a>
+          </span>
+
+          
+            <a href="/kete/tiny_mce/archives/71cb65309d1590e700f0e1fce85bcb2926714e75" id="download_button">
+              <img alt="download tarball" class="button" src="http://assets3.github.com/images/modules/repos/download_button.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" />
+            </a>
+          
+        
+      </div>
+
+      <div class="security private_security" style="display:none">
+        <a href="#private_repo" rel="facebox"><img src="/images/icons/private.png" alt="private" /></a>
+      </div>
+
+      <div id="private_repo" class="hidden">
+        This repository is private.
+        All pages are served over SSL and all pushing and pulling is done over SSH.
+        No one may fork, clone, or view it unless they are added as a <a href="/kete/tiny_mce/edit">member</a>.
+
+        <br/>
+        <br/>
+        Every repository with this icon (<img src="/images/icons/private.png" alt="private" />) is private.
+      </div>
+
+      <div class="security public_security" style="">
+        <a href="#public_repo" rel="facebox"><img src="/images/icons/public.png" alt="public" /></a>
+      </div>
+
+      <div id="public_repo" class="hidden">
+        This repository is public.
+        Anyone may fork, clone, or view it.
+
+        <br/>
+        <br/>
+        Every repository with this icon (<img src="/images/icons/public.png" alt="public" />) is public.
+      </div>
+
+      
+
+        <div class="flexipill">
+          <a href="/kete/tiny_mce/network">
+          <table cellpadding="0" cellspacing="0">
+            <tr><td><img alt="Forks" src="http://assets1.github.com/images/modules/repos/pills/forks.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" /></td><td class="middle"><span>15</span></td><td><img alt="Right" src="http://assets2.github.com/images/modules/repos/pills/right.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" /></td></tr>
+          </table>
+          </a>
+        </div>
+
+        <div class="flexipill">
+          <a href="/kete/tiny_mce/watchers">
+          <table cellpadding="0" cellspacing="0">
+            <tr><td><img alt="Watchers" src="http://assets1.github.com/images/modules/repos/pills/watchers.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" /></td><td class="middle"><span>244</span></td><td><img alt="Right" src="http://assets2.github.com/images/modules/repos/pills/right.png?c8151bec5ef2ff46b7ed36a69f07b422bb208089" /></td></tr>
+          </table>
+          </a>
+        </div>
+      </div>
+
+    <div class="meta">
+      <table>
+        
+        <tr>
+          <td class="label" style="vertical-align:top">Description:</td>
+          <td>
+            <span id="repository_description" rel="/kete/tiny_mce/edit/update">A Ruby on Rails plugin that allows easy implementation of the TinyMCE editor into your applications.</span>
+            <a href="#description" class="edit_link action" style="display:none;">edit</a>
+          </td>
+        </tr>
+
+        
+            <tr>
+              <td class="label">Homepage:</td>
+              <td>
+                
+                <span id="repository_homepage" rel="/kete/tiny_mce/edit/update">
+                  <a href="http://" rel="nofollow"></a>
+                </span>
+                <a href="#homepage" class="edit_link action" style="display:none;">edit</a>
+              </td>
+            </tr>
+
+          
+            <tr>
+              <td class="label"><span id="public_clone_text" style="display:none;">Public&nbsp;</span>Clone&nbsp;URL:</td>
+              
+              <td>
+                <a href="git://github.com/kete/tiny_mce.git" class="git_url_facebox" rel="#git-clone">git://github.com/kete/tiny_mce.git</a>
+                      <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+              width="110"
+              height="14"
+              class="clippy"
+              id="clippy" >
+      <param name="movie" value="/flash/clippy.swf"/>
+      <param name="allowScriptAccess" value="always" />
+      <param name="quality" value="high" />
+      <param name="scale" value="noscale" />
+      <param NAME="FlashVars" value="text=git://github.com/kete/tiny_mce.git">
+      <param name="bgcolor" value="#F0F0F0">
+      <param name="wmode" value="opaque">
+      <embed src="/flash/clippy.swf"
+             width="110"
+             height="14"
+             name="clippy"
+             quality="high"
+             allowScriptAccess="always"
+             type="application/x-shockwave-flash"
+             pluginspage="http://www.macromedia.com/go/getflashplayer"
+             FlashVars="text=git://github.com/kete/tiny_mce.git"
+             bgcolor="#F0F0F0"
+             wmode="opaque"
+      />
+      </object>
+
+                <div id="git-clone" style="display:none;">
+                  Give this clone URL to anyone.
+                  <br/>
+                  <code>git clone git://github.com/kete/tiny_mce.git </code>
+                </div>
+              </td>
+            </tr>
+          
+
+          <tr id="private_clone_url" style="display:none;">
+            <td class="label">Your Clone URL:</td>
+            
+            <td>
+
+              <div id="private-clone-url">
+                <a href="git@github.com:kete/tiny_mce.git" class="git_url_facebox" rel="#your-git-clone">git@github.com:kete/tiny_mce.git</a>
+                <input type="text" value="git@github.com:kete/tiny_mce.git" style="display: none;" />
+                      <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+              width="110"
+              height="14"
+              class="clippy"
+              id="clippy" >
+      <param name="movie" value="/flash/clippy.swf"/>
+      <param name="allowScriptAccess" value="always" />
+      <param name="quality" value="high" />
+      <param name="scale" value="noscale" />
+      <param NAME="FlashVars" value="text=git@github.com:kete/tiny_mce.git">
+      <param name="bgcolor" value="#F0F0F0">
+      <param name="wmode" value="opaque">
+      <embed src="/flash/clippy.swf"
+             width="110"
+             height="14"
+             name="clippy"
+             quality="high"
+             allowScriptAccess="always"
+             type="application/x-shockwave-flash"
+             pluginspage="http://www.macromedia.com/go/getflashplayer"
+             FlashVars="text=git@github.com:kete/tiny_mce.git"
+             bgcolor="#F0F0F0"
+             wmode="opaque"
+      />
+      </object>
+
+              </div>
+
+              <div id="your-git-clone" style="display:none;">
+                Use this clone URL yourself.
+                <br/>
+                <code>git clone git@github.com:kete/tiny_mce.git </code>
+              </div>
+            </td>
+          </tr>
+
+          
+
+          
+
+          
+
+          
+      </table>
+
+          </div>
+  </div>
+
+
+
+
+
+
+</div>
+
+
+  <div id="commit">
+    <div class="group">
+        
+  <div class="envelope commit">
+    <div class="human">
+      
+        <div class="message"><pre><a href="/kete/tiny_mce/commit/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94">Merge branch 'master' of github.com:kete/tiny_mce into experimental</a> </pre></div>
+      
+
+      <div class="actor">
+        <div class="gravatar">
+          
+          <img alt="" height="30" src="http://www.gravatar.com/avatar/140ae9b545cbeb0942190c67cca6e1c2?s=30&amp;d=http%3A%2F%2Fgithub.com%2Fimages%2Fgravatars%2Fgravatar-30.png" width="30" />
+        </div>
+        <div class="name"><a href="/KieranP">KieranP</a> <span>(author)</span></div>
+          <div class="date">
+            <abbr class="relatize" title="2009-10-02 11:59:50">Fri Oct 02 11:59:50 -0700 2009</abbr> 
+          </div>
+      </div>
+  
+      
+  
+    </div>
+    <div class="machine">
+      <span>c</span>ommit&nbsp;&nbsp;<a href="/kete/tiny_mce/commit/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94" hotkey="c">5ede17367bfa7c4cdca9a96b544c2a58d3e23a94</a><br />
+      <span>t</span>ree&nbsp;&nbsp;&nbsp;&nbsp;<a href="/kete/tiny_mce/tree/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94" hotkey="t">ec0329d3d84ee64367d0d94fdd4380ddc4a87a22</a><br />
+  
+      
+        <span>p</span>arent&nbsp;
+        
+        <a href="/kete/tiny_mce/tree/2677c11c8d72f491d7150470bfe26423cd04a3bb" hotkey="p">2677c11c8d72f491d7150470bfe26423cd04a3bb</a>
+      
+        <span>p</span>arent&nbsp;
+        
+        <a href="/kete/tiny_mce/tree/3350f8b0e65287fac363a8019be28feb0724240b" hotkey="p">3350f8b0e65287fac363a8019be28feb0724240b</a>
+      
+  
+    </div>
+  </div>
+
+    </div>
+  </div>
+
+
+
+  
+    <div id="path">
+      <b><a href="/kete/tiny_mce/tree/master">tiny_mce</a></b> / 
+    </div>
+
+    
+      
+
+  <script type="text/javascript">
+    GitHub.currentTreeSHA = "5ede17367bfa7c4cdca9a96b544c2a58d3e23a94"
+    GitHub.commitSHA = "5ede17367bfa7c4cdca9a96b544c2a58d3e23a94"
+    GitHub.currentPath = ""
+  </script>
+
+
+<div id="browser">
+  <table cellpadding="0" cellspacing="0">
+    <tr>
+      <th></th>
+      <th>name</th>
+      <th>age</th>
+      <th>
+        <div class="history">
+          <a href="/kete/tiny_mce/commits/master/">history</a>
+        </div>
+        message
+      </th>
+    </tr>
+
+    
+
+    
+      <tr class="alt">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/.gitignore" id="10871bbcba1c6d3090bc767223877af24d9d20d7">.gitignore</a></td>
+        
+        <td class="age"> <span class="relatize">Mon Aug 31 18:36:37 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/c8cc914458c352441f5ed7170b8b88136123217a" class="message" title="Added gemspec">Added gemspec</a> [<a href="/rotuka">rotuka</a>] </td>
+      </tr>
+    
+      <tr class="">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/CHANGELOG_PLUGIN.rdoc" id="60d40a9fcaa37df924f620422ac6a9e279ec2180">CHANGELOG_PLUGIN.rdoc</a></td>
+        
+        <td class="age"> <span class="relatize">Fri Oct 02 11:59:50 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94" class="message" title="Merge branch 'master' of github.com:kete/tiny_mce into experimental">Merge branch 'master' of github.com:kete/tiny_m...</a> [<a href="/KieranP">KieranP</a>] </td>
+      </tr>
+    
+      <tr class="alt">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/CHANGELOG_TINYMCE" id="e3339f81e8cd5d3e3249313e48d9806ff4b61e81">CHANGELOG_TINYMCE</a></td>
+        
+        <td class="age"> <span class="relatize">Wed Sep 23 08:12:16 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/2677c11c8d72f491d7150470bfe26423cd04a3bb" class="message" title="Upgrade to 3.2.7">Upgrade to 3.2.7</a> [<a href="/scambra">scambra</a>] </td>
+      </tr>
+    
+      <tr class="">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/DEV_UPGRADE_NOTES.rdoc" id="bb1729fecb3bacc5813db77d0e89a7b2254ea248">DEV_UPGRADE_NOTES.rdoc</a></td>
+        
+        <td class="age"> <span class="relatize">Wed Sep 16 20:34:33 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/4c73c95d2e61e374f996d85bc33b4761c2f3925c" class="message" title="Release: 0.1.0 - Plugin can now be installed as a gem, which auto copies the files into place when server is started. Big thanks to Alexander Semyonov for this work.">Release: 0.1.0 - Plugin can now be installed as...</a> [<a href="/KieranP">KieranP</a>] </td>
+      </tr>
+    
+      <tr class="alt">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/README.rdoc" id="adaad5741383bbe69dd3a33f2c030e2d3dd89df8">README.rdoc</a></td>
+        
+        <td class="age"> <span class="relatize">Wed Sep 23 08:12:16 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/2677c11c8d72f491d7150470bfe26423cd04a3bb" class="message" title="Upgrade to 3.2.7">Upgrade to 3.2.7</a> [<a href="/scambra">scambra</a>] </td>
+      </tr>
+    
+      <tr class="">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/Rakefile" id="ce48ea1a203b5d4af3c9269066e4a0218c353256">Rakefile</a></td>
+        
+        <td class="age"> <span class="relatize">Wed Sep 16 20:34:33 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/4c73c95d2e61e374f996d85bc33b4761c2f3925c" class="message" title="Release: 0.1.0 - Plugin can now be installed as a gem, which auto copies the files into place when server is started. Big thanks to Alexander Semyonov for this work.">Release: 0.1.0 - Plugin can now be installed as...</a> [<a href="/KieranP">KieranP</a>] </td>
+      </tr>
+    
+      <tr class="alt">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/SPELLCHECKING_PLUGIN.rdoc" id="69961393fd5fdf3250accaae825cda3748107070">SPELLCHECKING_PLUGIN.rdoc</a></td>
+        
+        <td class="age"> <span class="relatize">Sun Nov 02 01:20:50 -0700 2008</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/75ae00ca5f1a23570777c0405f860cd2246538c1" class="message" title="the spellchecking readme was showing up instead of the normal readme. Renaming the file">the spellchecking readme was showing up instead...</a> [<a href="/KieranP">KieranP</a>] </td>
+      </tr>
+    
+      <tr class="">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/VERSION" id="6e8bf73aa550d4c57f6f35830f1bcdc7a4a62f38">VERSION</a></td>
+        
+        <td class="age"> <span class="relatize">Mon Sep 14 12:41:04 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/8a24a2c6c2d610a53548520f3e823487b99e4780" class="message" title="Version bump to 0.1.0">Version bump to 0.1.0</a> [<a href="/rotuka">rotuka</a>] </td>
+      </tr>
+    
+      <tr class="alt">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/init.rb" id="6882f28499bedcbafe9bbbc2b62f79d1b8d45c64">init.rb</a></td>
+        
+        <td class="age"> <span class="relatize">Mon Aug 31 19:20:22 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/a1cc2e5ca329e27407f5adeb9a9f0cfd8601da79" class="message" title="moved code to follow require conventions">moved code to follow require conventions</a> [<a href="/rotuka">rotuka</a>] </td>
+      </tr>
+    
+      <tr class="">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/install.rb" id="ade0f26c004c05f581cf86e57ba5d6828d28e195">install.rb</a></td>
+        
+        <td class="age"> <span class="relatize">Sun Feb 22 22:46:55 -0800 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/1293aff0fdaa6033ec0b9dcf1b21424fbce992eb" class="message" title="release : 3.2.1.1-1: Rewritten test suite, documentation, maintainability improvements, bug fixes, and adding extra configuration options.">release : 3.2.1.1-1: Rewritten test suite, docu...</a> [<a href="/KieranP">KieranP</a>] </td>
+      </tr>
+    
+      <tr class="alt">
+        <td class="icon"> <img alt="directory" src="http://assets2.github.com/images/icons/dir.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/tree/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/lib" id="a320c79d5800f8967e5e6c1c81ddb3a80ec6702a">lib/</a></td>
+        
+        <td class="age"> <span class="relatize">Fri Oct 02 11:59:50 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94" class="message" title="Merge branch 'master' of github.com:kete/tiny_mce into experimental">Merge branch 'master' of github.com:kete/tiny_m...</a> [<a href="/KieranP">KieranP</a>] </td>
+      </tr>
+    
+      <tr class="">
+        <td class="icon"> <img alt="directory" src="http://assets2.github.com/images/icons/dir.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/tree/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/test" id="5a72f1a3334afcd40b0ea6a7fc38034357d80bc4">test/</a></td>
+        
+        <td class="age"> <span class="relatize">Sun Jul 05 16:09:07 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/c03ebd23aa41bd8f1cfbcabf1793422065836c39" class="message" title="Updating documentation and tests for last commit">Updating documentation and tests for last commit</a> [<a href="/KieranP">KieranP</a>] </td>
+      </tr>
+    
+      <tr class="alt">
+        <td class="icon"> <img alt="file" src="http://assets3.github.com/images/icons/txt.png?7ad939d173d4570ea03788d947f22a2da46eac7b" /> </td>
+        <td class="content"> <a href="/kete/tiny_mce/blob/5ede17367bfa7c4cdca9a96b544c2a58d3e23a94/tiny_mce.gemspec" id="8acc7435678d4523aa450ab744e03659b5ef7337">tiny_mce.gemspec</a></td>
+        
+        <td class="age"> <span class="relatize">Wed Sep 16 20:34:33 -0700 2009</span> </td>
+        <td class="message"> <a href="/kete/tiny_mce/commit/4c73c95d2e61e374f996d85bc33b4761c2f3925c" class="message" title="Release: 0.1.0 - Plugin can now be installed as a gem, which auto copies the files into place when server is started. Big thanks to Alexander Semyonov for this work.">Release: 0.1.0 - Plugin can now be installed as...</a> [<a href="/KieranP">KieranP</a>] </td>
+      </tr>
+    
+  </table>
+</div>
+    
+    
+  
+
+
+
+  
+
+
+
+  <div id="readme" class="announce"><span class="name">README.rdoc</span><div class="wikistyle"><h1>TinyMCE for Rails</h1>
+<p>
+This plugin provides for the installation and utilization of TinyMCE in
+Ruby on Rails applications.
+</p>
+<p>
+TinyMCE is a WYSIWYG HTML editing component released under the GNU Public
+License 2.1 (GPL 2.1) by Moxiecode Systems (<a href="http://tinymce.moxiecode.com">tinymce.moxiecode.com</a>/).
+</p>
+<h2>Installation</h2>
+<p>
+Installing TinyMCE for Rails takes no more than a few minutes to install.
+</p>
+<h3>Step 1</h3>
+<p>
+Open a console, and in the root of you Rails application, install the
+plugin by running one of the following (depending on the method you use to
+import plugins):
+</p>
+<ul>
+<li>script/plugin install git://github.com/kete/tiny_mce.git
+
+</li>
+<li>piston import git://github.com/kete/tiny_mce.git vendor/plugins/tiny_mce
+
+</li>
+<li>git submodule add git://github.com/kete/tiny_mce.git
+vendor/plugins/tiny_mce
+
+</li>
+<li>Download the latest files ( <a href="http://github.com/kete/tiny_mce/tarball/master">github.com/kete/tiny_mce/tarball/master</a>
+) and extract to vendor/plugins/tiny_mce
+
+</li>
+</ul>
+<p>
+Alternatively, you can use the gem version:
+</p>
+<ul>
+<li>sudo gem install kete-tiny_mce -s <a href="http://gems.github.com">gems.github.com</a>
+
+</li>
+<li>Add this to config/environment.rb of your Rails application:
+
+<p>
+config.gem &#8216;kete-tiny_mce&#8217;, :lib =&gt; &#8216;tiny_mce&#8217;,
+:source =&gt; &#8216;<a href="http://gems.github.com">gems.github.com</a>&#8216;
+</p>
+</li>
+</ul>
+<h3>Step 2</h3>
+<p>
+Add the following to the controller of the page you want to add TinyMCE to.
+</p>
+<pre>
+  uses_tiny_mce
+</pre>
+<p>
+Then append the following to the text area you want to transform into a
+TinyMCE editor. You can change the name by editing the
+&#8216;editor_selector&#8217; param in the controller code options.
+</p>
+<pre>
+  :class =&gt; &quot;mceEditor&quot;
+</pre>
+<p>
+Lastly, add the following line(s) to the &lt;head&gt; element of your
+application view:
+</p>
+<pre>
+  &lt;%= include_tiny_mce_if_needed %&gt;
+</pre>
+<p>
+Now you&#8217;re all set! Start your server. The gem/plugin will
+automatically copy the sources to the public javascripts directory when the
+server is started.
+</p>
+<h2>Configuration</h2>
+<p>
+There are several ways to configure the plugin to get the desirable effect
+you&#8217;re looking for. The following ways can be combined to create
+complex tiny mce setups
+</p>
+<h3>TinyMCE options</h3>
+<p>
+You can change the theme, order/choice of buttons, selectors Id, plugins,
+and many more by passing an :options hash to the uses_tiny_mce declaration.
+</p>
+<p>
+The options hash can contain any number of settings available in
+lib/tiny_mce/valid_tinymce_options.yml (a copy of the settings available
+per version).
+</p>
+<p>
+If an option is misspelled, invalid, or deprecated (no longer in TinyMCE),
+when you go to a page containing your editor, you will receive an
+Exception, which must be dealt with before continuing.
+</p>
+<p>
+You can read about all these options at <a href="http://tinymce.moxiecode.com/documentation.php">tinymce.moxiecode.com/documentation.php</a>
+</p>
+<h4>Example</h4>
+<pre>
+  uses_tiny_mce :options =&gt; {
+                              :theme =&gt; 'advanced',
+                              :theme_advanced_resizing =&gt; true,
+                              :theme_advanced_resize_horizontal =&gt; false,
+                              :plugins =&gt; %w{ table fullscreen }
+                            }
+</pre>
+<h3>Filter options</h3>
+<p>
+If, like most applications, you only need the editor on the new, create,
+edit, and update pages, then tell the uses_tiny_mce declaration this, so it
+doesn&#8217;t load up all the files unnecessarily.
+</p>
+<p>
+The declaration accepts any number of default parameters a normal
+controller filter would.
+</p>
+<h4>Example</h4>
+<pre>
+  uses_tiny_mce :only =&gt; [:new, :create, :edit, :update]
+</pre>
+<h3>Additional Javascript options</h3>
+<p>
+Sometimes, when you need complex arrays of data for plugins or such, the
+plugin helpers aren&#8217;t complex enough to do what you need. But you can
+always fall back to supplying your own options. You can this by passing a
+raw javascript (no &lt;script&gt; tags) to the uses_tiny_mce declaration.
+Consider the following example for the template plugin.
+</p>
+<pre>
+  uses_tiny_mce :raw_options =&gt; &quot;template_templates : [ {
+                                                          title : 'Editor Details',
+                                                          src : 'editor_details.htm',
+                                                          description : 'Adds Editors Name and Staff ID'
+                                                      } ]&quot;
+</pre>
+<h2>Methods</h2>
+<p>
+TinyMCE has a range of convenience methods for loading TinyMCE. Besides the
+uses_tiny_mce shown above, they include:
+</p>
+<pre>
+  using_tiny_mce?
+      Check whether the uses_tiny_mce declaration has been made in the current controller
+
+  raw_tiny_mce_init
+      Creates a string of javascript formed from the options declared to uses_tiny_mce (is not wrapped in a JS tag though, use tiny_mce_init for that)
+
+  tiny_mce_init
+      Creates a javascript tag formed from the options declared to uses_tiny_mce (executes whether uses_tiny_mce was declared or not)
+  tiny_mce_init_if_needed
+      Creates a javascript tag formed from the options declared to uses_tiny_mce (executes only when uses_tiny_mce has been declared)
+
+  include_tiny_mce_js
+      Includes the TinyMCE core javascript file, must be declared before tiny_mce_init (executes whether uses_tiny_mce was declared or not)
+  include_tiny_mce_js_if_needed
+      Includes the TinyMCE core javascript file, must be declared before tiny_mce_init (executes only when uses_tiny_mce has been declared)
+
+  include_tiny_mce_if_needed
+      Includes the TinyMCE core javascript file, and creates a string of javascript formed from the options declared to uses_tiny_mce (executes only when uses_tiny_mce has been declared)
+</pre>
+<h2>Spellchecking</h2>
+<p>
+See SPELLCHECKING_PLUGIN.rdoc
+</p>
+<p>
+<a href="http://github.com/kete/tiny_mce/tree/master/SPELLCHECKING_PLUGIN.rdoc">github.com/kete/tiny_mce/tree/master/SPELLCHECKING_PLUGIN.rdoc</a>
+</p>
+<h2>Testing</h2>
+<p>
+The plugin comes with a test suite that can be run once the plugin is
+installed in an application.
+</p>
+<p>
+Change into the plugins directory and run &#8216;rake&#8217; to start them.
+</p>
+<p>
+Note: The tests require Rails 2.2 or higher, and are currently tested on
+Rails 2.3 (so problems in older versions may arise - please see
+&quot;Reporting an Issue&quot; if they do)
+</p>
+<h2>Reporting an Issue</h2>
+<p>
+If you have a problem, please report it on the tiny_mce plugin ticket
+tracker (on Ligthouseapp)
+</p>
+<p>
+<a href="http://kete.lighthouseapp.com/projects/14744-tiny_mce/tickets">kete.lighthouseapp.com/projects/14744-tiny_mce/tickets</a>
+</p>
+<p>
+Be sure to include Rails version, plugin version, and when possible, a
+sample application that can reproduce the problem. Upload it to one of the
+various file hosting sites and link to it in the ticket. Don&#8217;t
+include vendored rails or the tiny_mce plugin in the archive (if I know the
+versions, I&#8217;ll add these myself).
+</p>
+<h2>Contributing</h2>
+<p>
+If you&#8217;ve added something, why not share it. Fork the repository (<a href="http://github.com/kete/tiny_mce">github.com/kete/tiny_mce</a>), make
+the changes and send a pull request to the maintainers.
+</p>
+<p>
+Changes with tests, and full documentation are preferred.
+</p>
+<h1>Credits</h1>
+<p>
+This plugin was created by Blake Watters &lt;blake@near-time.com&gt;
+</p>
+<p>
+This plugin is currently maintained by Kieran Pilkington
+&lt;kieran@katipo.co.nz&gt;
+</p>
+<p>
+Bundled TinyMCE version: 3.2.7
+</p>
+</div></div>
+
+    </div>
+  
+      
+
+      <div class="push"></div>
+    </div>
+
+    <div id="footer">
+      <div class="site">
+        <div class="info">
+          <div class="links">
+            <a href="http://github.com/blog"><b>Blog</b></a> |
+            <a href="http://support.github.com/">Support</a> |
+            <a href="http://github.com/training">Training</a> |
+            <a href="http://github.com/contact">Contact</a> |
+            <a href="http://develop.github.com">API</a> |
+            <a href="http://twitter.com/github">Status</a> |
+            <a href="http://twitter.com/github">Twitter</a> |
+            <a href="http://help.github.com">Help</a> |
+            <a href="http://github.com/security">Security</a>
+          </div>
+          <div class="company">
+            <span id="_rrt" title="0.03127s from fe3.rs.github.com">GitHub</span>&trade;
+            is <a href="http://logicalawesome.com/" title="Just Awesome">Logical Awesome</a> &copy;2009 | <a href="/site/terms">Terms of Service</a> | <a href="/site/privacy">Privacy Policy</a>
+          </div>
+        </div>
+        <div class="sponsor">
+          <div>
+            Powered by the <a href="http://www.rackspace.com ">Dedicated
+            Servers</a> and<br/> <a href="http://www.rackspacecloud.com">Cloud
+            Computing</a> of Rackspace Hosting<span>&reg;</span>
+          </div>
+          <a href="http://www.rackspace.com">
+            <img alt="Dedicated Server" src="http://assets2.github.com/images/modules/footer/rackspace_logo.png?21d2938637297b502ab2e1ca0b94ad02185ca266" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="coming_soon" style="display:none;">
+      This feature is coming soon.  Sit tight!
+    </div>
+
+    
+    
+    
+  </body>
+</html>
+

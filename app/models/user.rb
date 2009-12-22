@@ -102,12 +102,15 @@ class User < ActiveRecord::Base
   end
   
   def self.isAdmin?(id)
-
-    @user = User.find(:first, :conditions => {:id => id})
-    if(@user[:is_admin] == true)
-      return true
-    else
+    if id == nil
       return false
+    else
+      @user = User.find(:first, :conditions => {:id => id})
+      if(@user[:is_admin] == true)
+        return true
+      else
+        return false
+      end
     end
   end
 
