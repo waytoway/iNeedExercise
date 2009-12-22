@@ -1,0 +1,7 @@
+<%= @page[:content] %>
+<br/>
+<% if @page[:id]!=@page[:parent_id]%>
+	<%= link_to_remote "下一页", :update => "content", :url=>{:action=>"helper_page", :id => @page[:id] }%>
+<%else%>
+	<%= "最后一页" %>
+<% end %>

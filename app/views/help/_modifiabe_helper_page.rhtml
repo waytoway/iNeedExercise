@@ -1,0 +1,19 @@
+<script language="javascript" type="text/javascript">
+	function agree_onclick(){
+		alert('test');
+		document.getElementById("edit_help_page").submit();	
+	}
+</script>
+<% form_tag({:action => 'index'},{:id => "edit_help_page"}) do %>
+	<%=text_field_tag :title, @page[:title] %>
+	<br/>
+	<%=text_area_tag :content, @page[:content] %>
+<% end %>
+<br/>
+<button id="commit" onclick="javascript:agree_onclick()">提交</button>
+<br/>
+<% if @page[:id]!=@page[:parent_id]%>
+	<%= link_to_remote "下一页", :update => "content", :url=>{:action=>"helper_page", :id => @page[:id] }%>
+<%else%>
+	<%= "最后一页" %>
+<% end %>

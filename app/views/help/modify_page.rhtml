@@ -6,17 +6,12 @@
 					<% if @pages.size>0%>
 						<% @pages.each do |f|%>
 							<li>
-		                    	<%=link_to_remote f[:title], :update => "content", :url=>{:action=>"helper_page", :title => f[:title] } %>
+		                    	<%=link_to_remote f[:title], :update => "content", :url=>{:action=>"modifiabe_helper_page", :title => f[:title] } %>
 		                	</li>
 						<% end %>
 					<% end %>
 	            </ul>
-			</div>
-			<hr/>
-			<div style = "width:100px,height:300px" >
-				<%=link_to '编辑帮助信息',:controller => "help", :action=>"modify_page" %>
-			</div>
-			
+			</div>			
 		</td>
 		<td width = "500px" height="100%">
 			<div id = 'content'>

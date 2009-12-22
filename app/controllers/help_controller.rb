@@ -1,15 +1,50 @@
 class HelpController < ApplicationController
   include AuthenticatedSystem
   before_filter :login_from_cookie
+  before_filter :get_page_title
   
   def index
-    @request = Kuaiqian::Request.new('产品名称', # 产品名称
-    1, # 订单ID，必须全局唯一
-    Time.now, # 订单生成时间，格式为20091104174132
-    4500, # 订单金额，以分为单位
-            'http://return', # 通知地址，用户支付成功后快钱会通过此地址通知商户支付结果
-            '00', # 支付类型，00显示所有方式，10只显示银行卡方式，11只显示电话银行方式，12只显示快钱帐户支付方式，13只显示线下方式
-            'attach') #自定义数据，会在返回URL中原样返回
-    redirect_to @request.url
+    
   end
+  
+  def helper_page
+    if params[:title] != nil
+      @page = Page.find(:first, :conditions => {:title => params[:title]})
+    elsif params[:id] != nil
+      @cur_page = Page.find(:first, :conditions => {:id => params[:id]})
+      @page = Page.find(:first, :conditions => {:id => @cur_page[:parent_id]})
+    end
+    render :partial => "helper_page"
+  end
+  
+  def modify_page
+    if request.post?
+      puts "aaaaaaaaaaaaaaaaaaaaa"
+      puts "jinrupost"
+    end
+  end
+  
+  def modifiabe_helper_page
+    unless request.post?
+      puts "ddddddddddddddddddd"
+      puts "jinrupost"
+    else
+      puts "ttttttttttttttttttttt"
+      puts "jinrupost"
+      if params[:title] != nil
+        @page = Page.find(:first, :conditions => {:title => params[:title]})
+      elsif params[:id] != nil
+        @cur_page = Page.find(:first, :conditions => {:id => params[:id]})
+        @page = Page.find(:first, :conditions => {:id => @cur_page[:parent_id]})
+      end
+      render :partial => "modifiabe_helper_page"
+    end
+
+  end
+  
+  protected
+  def get_page_title
+    @pages = Page.find(:all)
+  end
+  
 end
