@@ -37,7 +37,16 @@ class PayController < ApplicationController
   end
   
   def createOrder
-    
+    @orders = TFieldOrder.find(:all)
+    @count = @orders.size
+    @order = TFieldOrder.new
+    @order.ID = @count+1
+    @order.field_id = session[:field_id]
+    @order.VENUE_ID = session[:venue_id]
+    @order.PAYMENT_STATUS = 0
+    @time = Time.now
+    @order.PAYMENT_TIME = @time
+    @order.save!
     puts "create Order"
     render :text=>"create Order"
   end
