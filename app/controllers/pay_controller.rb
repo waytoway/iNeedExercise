@@ -128,6 +128,13 @@ class PayController < ApplicationController
     
   end
   
+  #充值
+  def supplement
+    @card_number=params[:card_number]
+    @amount=params[:amount]
+    
+  end
+  
   protected
   def inilizeValue
     

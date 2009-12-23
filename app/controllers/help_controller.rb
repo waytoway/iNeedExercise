@@ -1,5 +1,6 @@
 class HelpController < ApplicationController
   include AuthenticatedSystem
+  
   uses_tiny_mce( :options => {   
     :theme => 'advanced',  # 皮肤   
     :language => 'zh',  # 中文界面   
@@ -14,28 +15,27 @@ class HelpController < ApplicationController
     :theme_advanced_buttons3 => [],
     :theme_advanced_fonts => %w{宋体=宋体;黑体=黑体;仿宋=仿宋;楷体=楷体;隶书=隶书;幼圆=幼圆;Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats},  
     :plugins => %w{contextmenu paste media emotions table fullscreen inlinepopups }})   
-    # 字体列表中显示的字体   
-    before_filter :login_from_cookie
-    before_filter :get_page_title
-    
-    def index
-      @user_id = session[:user]
-      @is_admin = User.isAdmin?(@user_id)
-    end
-    
-    def save_commit_modify
-      if request.post?
-
-        @content = params[:body]
-        @page = Page.find(:first, :conditions => {:title => "帮助中心"})
-        @page.update_attributes(:content => @content)
-        render :text=>"修改成功"
-      end
-    end
-    
-    protected
-    def get_page_title
-      @page = Page.find(:first, :conditions => {:title => "帮助中心"})
-    end
-    
+  # 字体列表中显示的字体   
+  before_filter :login_from_cookie
+  before_filter :get_page_title
+  
+  def index
+    @user_id = session[:user]
+    @is_admin = User.isAdmin?(@user_id)
   end
+  
+  def save_commit_modify
+    if request.post?
+      
+      @content = params[:body]
+      @page = Page.find(:first, :conditions => {:title => "帮助中心"})
+      @page.update_attributes(:content => @content)
+      render :text=>"修改成功"
+    end
+  end
+  
+  protected
+  def get_page_title
+    @page = Page.find(:first, :conditions => {:title => "帮助中心"})
+  end
+end

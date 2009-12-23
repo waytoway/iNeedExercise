@@ -6,9 +6,10 @@ class TVenueInfo < ActiveRecord::Base
   has_many :t_field_badmintoon_basic_price, :class_name=>"TFieldBadmintoonBasicPrice",:foreign_key=>"VENUE_ID",:primary_key=>"ID"
   has_many :t_field_badmintoon_special_price, :class_name=>"TFieldBadmintoonSpecialPrice",:foreign_key=>"VENUE_ID",:primary_key=>"ID"
   has_many :t_field_badmintoon_weekend_price, :class_name=>"TFieldBadmintoonWeekendPrice",:foreign_key=>"VENUE_ID",:primary_key=>"ID"
+  has_many :t_member_card,:class_name=>"TMemberCard",:foreign_key=>"VENUE_ID",:primary_key=>"ID"
   
   has_many :t_field_order, :class_name=>"TFieldOrder",:foreign_key=>"VENUE_ID",:primary_key=>"ID"
   attr_accessor :venue_name
   attr_accessor :selected_time
-
+  
 end
