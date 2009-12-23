@@ -1,0 +1,75 @@
+div#container{
+	padding: 2px 0 2px 1px; 
+}
+div#tour{
+	width: 99%;
+	height: 200px;
+}
+div#tour img{
+	width: 100%;
+	height: 100%;
+}
+
+div#search-bar, div#main-content{
+	width: 99%;
+	background: url(/images/bei3.png) repeat;
+	margin-top: 10px;
+	overflow:hidden;
+}
+div#search-bar #search-bar-sub{
+	float:left;
+	height:200px;
+	margin-left: 1px;
+	border-right: 1px dashed #CCC;
+}
+div#search-bar #search-bar-sub .step_title {
+	margin: 15px 0 0 20px;
+}
+div#search-bar #search-bar-sub .step_middle_title {
+	margin: 5px 0 0 95px;
+}
+div#search-bar #search-bar-sub .step_content {
+	margin: 5px 0 2px 40px;
+}
+
+div.sub-bar-left{
+	width:200px;
+}
+
+div.sub-bar-middle{
+	width:310px;
+}
+
+div.sub-bar-right{
+	width:310px;
+}
+div#search-bar #search-bar-sub select {
+	width: 140px;
+}
+div#search-bar #search-bar-sub input[type ="text"] {
+	width: 134px;
+}
+.step_button {
+	margin: 5px 0 2px 135px;
+	border: none;
+	background-color: #6b0105;
+	color: #FFFFFF;
+}
+
+div#main-content{
+	height:400px;
+	background: #ccc;
+}
+
+div#main-content-bar{
+	float:left;
+	height:100%;
+}
+div#main-content-bar .img-help{
+	height:80%;
+	width:100%;
+}
+div#main-content-bar ul{
+	margin:0 0 0 30px;
+	list-style:circle;
+}

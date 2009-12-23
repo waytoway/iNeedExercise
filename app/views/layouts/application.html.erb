@@ -4,9 +4,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
         <title>jianshen</title>
         <%= javascript_include_tag :defaults %>
-        <%=javascript_include_tag "prototype" %>
+        <%= javascript_include_tag "prototype" %>
         <%= javascript_include_tag 'lowpro' %>
         <%= javascript_include_tag 'fabtabulous' %>
+		<%= stylesheet_link_tag 'layout' %>
 		<script type="text/javascript" src="javascripts/fabtabulous.js"></script>
         <script language="JavaScript" type="text/javascript" src="/DatePicker/WdatePicker.js">
         </script>
@@ -22,7 +23,7 @@
             margin: 0px;
             padding: 0px;
             font-size: 12px;
-            background: url(images/bei.jpg) top center no-repeat;
+            background: url(/images/bei.jpg) top center no-repeat;
             background-color: #000000;
         }
         * {
@@ -37,8 +38,8 @@
         
         #kuang2 {
             width: 864px;
-            background: url(images/bei1.png) repeat;
-            _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true', sizingMethod='scale', src="images/bei1.png");
+            background: url(/images/bei1.png) repeat;
+            _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true', sizingMethod='scale', src="/images/bei1.png");
                                     _background:none;}
                                     html,body{height:100%; margin:0px;} 
                                     
@@ -66,7 +67,7 @@
                                     width:177px;
                                     height:57px;
                                     float:left;
-                                    background:url(images/logo.jpg);}
+                                    background:url(/images/logo.jpg);}
                                     #logo2{
                                     width:671px;
                                     height:57px;
@@ -85,13 +86,13 @@
                                     position:relative;
                                     background-repeat: repeat;}
                                     html>body #logo3{
-                                    background-repeat: repeat;background-image: url(images/logo3.png);}
-                                    * #logo3{filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src="images/logo3.png");}
+                                    background-repeat: repeat;background-image: url(/images/logo3.png);}
+                                    * #logo3{filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src="/images/logo3.png");}
                                     #logo4{
                                     width:206px;
                                     height:41px;
                                     position: absolute;
-                                    background:url(images/logo3.png);
+                                    background:url(/images/logo3.png);
                                     top:7px;
                                     left:193px;
                                     z-index: 100;}
@@ -129,7 +130,7 @@
                                     margin-top:3px;
                                     float:left;
                                     display:inline;
-                                    background:url(images/dao.jpg);
+                                    background:url(/images/dao.jpg);
                                     padding-left:327px;
                                     line-height:20px;
                                     position: relative;}
@@ -170,7 +171,7 @@
                                     margin-top:20px;
                                     margin-left:31px;
                                     display:inline;
-                                    background:url(images/t1.jpg);}
+                                    background:url(/images/t1.jpg);}
                                     #xiu2{
                                     width:100px;
                                     height:22px;
@@ -211,7 +212,7 @@
                                     height:22px;
                                     border:0px;
                                     position: relative;
-                                    background:url(images/t6.jpg);}
+                                    background:url(/images/t6.jpg);}
                                     #xl{
                                     width:100px;
                                     height:20px;}
@@ -246,16 +247,16 @@
                                     display:inline;
                                     background-repeat: repeat;}
                                     html>body #di4{
-                                    background-repeat: repeat;background-image: url(images/di1.png);}
-                                    * #di4{filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src="images/di1.png");}
+                                    background-repeat: repeat;background-image: url(/images/di1.png);}
+                                    * #di4{filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src="/images/di1.png");}
                                     #di5{
                                     width:272px;
                                     height:21px;
                                     float:left;
                                     background-repeat: repeat;}
                                     html>body #di5{
-                                    background-repeat: repeat;background-image: url(images/di2.png);}
-                                    * #di5{filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src="images/di2.png");}
+                                    background-repeat: repeat;background-image: url(/images/di2.png);}
+                                    * #di5{filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src="/images/di2.png");}
                                     #di6{
                                     width:575px;
                                     float:right;
@@ -288,7 +289,7 @@
                                     font-weight:bold;
                                     float:left;
                                     margin-left:3px;
-                                    background:url(images/bei1.jpg) repeat-x #2d4201;
+                                    background:url(/images/bei1.jpg) repeat-x #2d4201;
                                     display:inline;
                                     padding-top:33px;
                                     padding-left:24px;}
@@ -298,7 +299,7 @@
                                     width:92px;
                                     height:21px;
                                     display:inline;
-                                    background:url(images/tui.jpg);
+                                    background:url(/images/tui.jpg);
                                     border:0px;
                                     position: relative;
                                     margin-left:10px;}
@@ -376,7 +377,7 @@
                                     height:22px;
                                     border:0px;
                                     position: relative;
-                                    background:url(images/q2.jpg);}
+                                    background:url(/images/q2.jpg);}
                                     #d1{
                                     border-right:#000 1px solid;
                                     border-bottom:#FFFFFF 1px solid;

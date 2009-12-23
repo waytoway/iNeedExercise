@@ -9,17 +9,25 @@
         <td width="170">
             余额
         </td>
+        <td width="100">
+            充值
+        </td>
     </tr>
     <%if @users_cards!=nil && @users_cards.size!=0 %>
     <% for users_card in @users_cards %>
+    <%card_number=users_card.t_member_card[:CARD_NUMBER] %>
     <tr>
         <td>
-            <%=users_card.t_member_card[:NAME] %>
+            <%=card_number%>
         </td>
         <td>
+            <%=users_card.t_member_card.t_venue_info[:VENUE_NAME] %>
         </td>
         <td>
-            <%=users_card.t_member_card[:ADDRESS] %>
+            <%=users_card.t_member_card[:BALANCE] %>
+        </td>
+        <td>
+            <%=link_to '充值',:controller=>"pay",:action=>"supplement",:card_number=>card_number %>
         </td>
     </tr>
     <% end %>
@@ -30,5 +38,4 @@
 </table>
 <%= will_paginate @users_cards, :renderer => 'RemoteLinkRenderer' , :previous_label => "上一页", :next_label => "下一页" %>
 <div>
-    test the rest
 </div>
