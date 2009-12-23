@@ -27,6 +27,7 @@ class StatusinfoController < ApplicationController
           end
           #查询第一个项目记录
           @query_records= TFieldBadmintoonActivity.find_by_sql("select * from t_field_badmintoon_activity where VENUE_ID='#{params[:venue_id]}' and FIELD_TYPE='#{@tabs[0]}' and FROM_TIME>='#{params[:from_time]}' and FROM_TIME<'#{@span_time.strftime("%H:%M").to_s}' and USABLE_DATE='#{params[:usable_time]}'")
+          
         end
       end
   else

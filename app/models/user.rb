@@ -100,6 +100,19 @@ class User < ActiveRecord::Base
       errors.add(:current_password, "is incorrect")
     end
   end
+  
+  def self.isAdmin?(id)
+    if id == nil
+      return false
+    else
+      @user = User.find(:first, :conditions => {:id => id})
+      if(@user[:is_admin] == true)
+        return true
+      else
+        return false
+      end
+    end
+  end
 
   protected
     # before filter 

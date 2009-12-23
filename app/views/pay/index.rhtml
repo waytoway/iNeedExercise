@@ -1,3 +1,63 @@
-<div id="orderInfoDiv">
-	<%= render :partial=>"orderInfo"%>
+<script language="javascript" type="text/javascript">
+    function agree_onclick(){
+        var city = document.getElementById("card_name")
+        if (city.options[city.selectedIndex].value == "选择会员卡") {
+            alert('必须选择一个会员卡！');
+            return false;
+        }
+        else{
+			document.getElementById("commit").submit();	
+		}       
+    }
+</script>
+
+<div id ="content">
+    <%form_remote_tag :update=>"abc", :id => 'content' do %>
+    <div class="form_row">
+        <label for="venueName">
+            场馆:
+        </label>
+        <%=hidden_field_tag "venue_name", @venue[0].VENUE_NAME %>
+        <%=hidden_field_tag "venue_id", @venue[0].ID %>
+        <%= @venue[0].VENUE_NAME %>
+    </div>
+    <div class="form_row">
+        <label for="fieldName">
+            场地:
+        </label>
+        <%=hidden_field_tag "field_name", @field[0].NAME %>
+        <%= @field[0].NAME %>
+    </div>
+    <div class="form_row">
+        <label for="user_phone">
+            手机号:
+        </label>
+        <%=hidden_field_tag "user_phone", @user[0].cell %>
+        <%= @user[0].cell %>
+    </div>
+    <div class="form_row">
+        <label for="book_time">
+            预定时间:
+        </label>
+        <%=hidden_field_tag "book_time", @bookTime %>
+        <%= @bookTime %>
+    </div>
+    <div class="form_row">
+        <label for="payment_sum">
+            应支付的金额:
+        </label>
+        <%=hidden_field_tag "price", @price %>
+        <%= @price %>
+    </div>
+	
+    <div id="card">
+        <%= javascript_include_tag :defaults %>
+        <%= select(:card, :name, @cards_names, { :include_blank => false, :selected => "选择会员卡" }) %>
+		
+    </div>
+	<%=submit_to_remote 'submit', "下单", :update=>"abc", :url=>{:action=>:createOrder}%>
+    <%=submit_to_remote 'commit', "支付", :update=>"abc", :url=>{:action=>:paymentFun}%>
+    <% end %>
 </div>
+<div id="abc"></div>
+<!--<button id="commit" onclick="javascript:agree_onclick()">支付</button>-->

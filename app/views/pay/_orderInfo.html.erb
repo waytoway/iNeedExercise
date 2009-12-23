@@ -12,7 +12,7 @@
 </script>
 
 <div id ="content">
-    <%form_remote_tag :id => 'content', :url=>{:action=>:paymentFun} do %>
+    <%form_remote_tag :update=>"abc", :id => 'content', :url=>{:action=>:paymentFun} do %>
     <div class="form_row">
         <label for="venueName">
             场馆:
@@ -54,12 +54,12 @@
         <%= javascript_include_tag :defaults %>
         <%= select :card, :name,  @cards_names, { :include_blank => false, :selected => session[:card]}, :onchange => remote_function(:update => "sub_items",
         :method => "get",
-        :with => "'card_name=' + value",
+        :with => "'card=' + value",
         :url => {:action => :get_sub_items}) %>
     </div>
 	
-    <%=submit_tag "支付" %>
+    <%=submit_tag "支付"%>
     <% end %>
 </div>
-
+<div id="abc"></div>
 <!--<button id="commit" onclick="javascript:agree_onclick()">支付</button>-->
