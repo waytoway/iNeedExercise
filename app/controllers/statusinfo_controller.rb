@@ -31,7 +31,7 @@ class StatusinfoController < ApplicationController
         end
       end
   else
-  redirect_to "http://bbs.nju.edu.cn"
+  redirect_to :controller=>"main",:action=>"index"
 end
 end
 
