@@ -13,10 +13,8 @@ class PayController < ApplicationController
     @bookTime = params[:pay_usable_date]
     @price = params[:price]
     @authenCode = params[:authenCode]
-    @cards_names = []
-    @cards_names[0]=["选择会员卡","选择会员卡"]
-    @cards=TMemberCard.find_by_sql(["select t_member_card.CARD_NUMBER from users_cards, t_member_card where users_cards.card_id=t_member_card.ID and users_cards.user_id=? and t_member_card.VENUE_ID=? and t_member_card.BALANCE >= ?", session[:user], @venue[0].ID, params[:price]])
     
+    session[:activity_id]=params[:ID]
     session[:venue_id]=params[:venue_id]
     session[:field_id]=params[:field_id]
     session[:pay_usable_date]=params[:pay_usable_date]
@@ -24,7 +22,43 @@ class PayController < ApplicationController
     session[:pay_to_time]=params[:pay_to_time]
     session[:pay_from_time]=params[:pay_from_time]
     session[:price]=params[:price]
-    
+  end
+  
+  def get_sub_items
+    session[:card] = params[:card_name]
+  end
+  
+  #创建一个订单，并且锁定activity
+  def createOrder
+    @last = TFieldOrder.find(:last)
+    @count = @last[:ID]
+    @order = TFieldOrder.new
+    @order.ID = @count+1
+    @order.PAYMENT_SUM=params[:price]
+    @order.field_id = session[:field_id]
+    @order.VENUE_ID = session[:venue_id]
+    @order.PAYMENT_STATUS = 0
+    @time = Time.now
+    @order.PAYMENT_TIME = @time
+    @order.save!
+    #锁定activity
+    @activity=TFieldBadmintoonActivity.find(session[:activity_id])
+    @activity.ORDER_ID=@order.ID 
+    @activity.ACTIVITY="已预订"
+    @activity.save!
+    render :update do |page|
+      page.redirect_to :controller=>"pay",:action=>"payment",:order_id=>@order.ID,:price=>@order.PAYMENT_SUM
+      
+    end
+  end
+  
+  
+  def payment
+    @order_id=params[:order_id]
+    @price=params[:price]
+    @cards_names = []
+    @cards_names[0]=["选择会员卡","选择会员卡"]
+    @cards=TMemberCard.find_by_sql(["select t_member_card.CARD_NUMBER from users_cards, t_member_card where users_cards.card_id=t_member_card.ID and users_cards.user_id=? and t_member_card.VENUE_ID=? and t_member_card.BALANCE >= ?", session[:user],session[:venue_id], session[:price]])    
     i=1
     @cards.each do |f|
       @cards_names.push([f.CARD_NUMBER,f.CARD_NUMBER])
@@ -32,33 +66,21 @@ class PayController < ApplicationController
     end
   end
   
-  def get_sub_items
-    session[:card] = params[:card_name]
-  end
-  
-  def createOrder
-    @orders = TFieldOrder.find(:all)
-    @count = @orders.size
-    @order = TFieldOrder.new
-    @order.ID = @count+1
-    @order.field_id = session[:field_id]
-    @order.VENUE_ID = session[:venue_id]
-    @order.PAYMENT_STATUS = 0
-    @time = Time.now
-    @order.PAYMENT_TIME = @time
-    @order.save!
-    puts "create Order"
-    render :text=>"create Order"
-  end
-  
   def paymentFun
     if request.post?
-      if has_card?(params[:venue_id]) && has_enough_money?(session[:venue_id],session[:price])
-       
-        #使用该场馆的会员卡支付
-        if params[:card][:name]=="选择会员卡"
-          render :text => "请选择会员卡！"
-        else
+      #如果没有选择卡，则返回出错信息
+      if params[:pay]=="card" and params[:card][:name]=="选择会员卡"
+        render :js => "alert('请选择一张卡');"  
+      end
+      #如果选择的是99bill，则进入第三方
+      if params[:pay]=="bill"
+        kq_request = Kuaiqian::Request.new(@order.name, params[:order_id],
+          @order.order_time,@order.price*100,'http://url/pay/show_result')
+        redirect_to @request.url
+      end
+      #如果选择的是会员卡,并且选择的卡号正确，则进入卡支付过程
+      if params[:pay]=="card" and params[:card][:name]!="选择会员卡"
+        if has_card?(params[:venue_id]) && has_enough_money?(session[:venue_id],session[:price])
           @card = pay_from_card(params[:card][:name], params[:price])
           #session[:card]=nil
           if @card
@@ -73,23 +95,16 @@ class PayController < ApplicationController
             cardUsageRecord.usage_type = "扣款"
             cardUsageRecord.balance=@card.BALANCE
             cardUsageRecord.save
-            
-            render :text => "会员卡支付成功！"
-          else
-            puts "余额不足！"
+            render :js => "alert('会员卡支付成功！');"
+          else#余额不足
+            render :js => "alert('余额不足，请去个人中心充值');"            
           end
-        end
-        
-      else
-        #使用第三方支付软件支付
-        
-      end
-      
-      #修改activity表中ACTIVITY改为“已预定”和ORDER_ID中加入相应的order_id
-      
-      
+        end  
+      end 
     else
-      
+      render :update do |page|
+        page.redirect_to :controller=>"main",:action=>"index"    
+      end
     end
   end
   
@@ -116,17 +131,7 @@ class PayController < ApplicationController
     @card.size > 0
   end
   
-  def orderInfo
-    #puts params[:venue_id]
-    #puts params[:field_id]
-    #puts params[:period]
-    #puts params[:price]
-    #puts params[:usable]
-    #puts params[:usable_date]
-    #puts params[:authenCode]
-    #puts "In pay function controller"
-    
-  end
+  
   
   #充值
   def supplement
@@ -135,6 +140,20 @@ class PayController < ApplicationController
     
   end
   
+  #显示结果
+  def show_result
+    kq_response = Kuaiqian::Response.new(params)
+    
+    respond_to do |format|
+      if kq_response.successful?
+        render :text => '支付成功'
+        #进行后续数据库操作，发送短信等等
+      else
+        #数据库操作
+        render :text => '对不起，您提交的信息不正确'
+      end
+    end
+  end
   protected
   def inilizeValue
     
