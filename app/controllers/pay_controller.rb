@@ -16,6 +16,11 @@ class PayController < ApplicationController
     @cards_names = []
     @cards_names[0]=["选择会员卡","选择会员卡"]
     @cards=TMemberCard.find_by_sql(["select t_member_card.CARD_NUMBER from users_cards, t_member_card where users_cards.card_id=t_member_card.ID and users_cards.user_id=? and t_member_card.VENUE_ID=? and t_member_card.BALANCE >= ?", session[:user], @venue[0].ID, params[:price]])
+    i=1
+    @cards.each do |f|
+      @cards_names.push([f.CARD_NUMBER,f.CARD_NUMBER])
+      i=i+1
+    end
     
     session[:venue_id]=params[:venue_id]
     session[:field_id]=params[:field_id]
@@ -24,12 +29,7 @@ class PayController < ApplicationController
     session[:pay_to_time]=params[:pay_to_time]
     session[:pay_from_time]=params[:pay_from_time]
     session[:price]=params[:price]
-    
-    i=1
-    @cards.each do |f|
-      @cards_names.push([f.CARD_NUMBER,f.CARD_NUMBER])
-      i=i+1
-    end
+    session[:activity_id]=params[:activity_id]
   end
   
   def get_sub_items
@@ -64,19 +64,25 @@ class PayController < ApplicationController
             cardUsageRecord.usage_type = "扣款"
             cardUsageRecord.balance=@card.BALANCE
             cardUsageRecord.save
-            
             render :text => "会员卡支付成功！"
+            
+            #修改activity表中ACTIVITY改为“已预定”和ORDER_ID中加入相应的order_id
+            
+            TFieldBadmintoonActivity.update_all(["ACTIVITY =?","已预定"], ["ID = ?", session[:activity_id]])
+            
           else
-            puts "余额不足！"
+            render :text => "余额不足！"
           end
         end
         
       else
         #使用第三方支付软件支付
         
+        
+        #如果支付成功，修改activity表中ACTIVITY改为“已预定”和ORDER_ID中加入相应的order_id
       end
       
-      #修改activity表中ACTIVITY改为“已预定”和ORDER_ID中加入相应的order_id
+      
       
       
     else
@@ -85,7 +91,7 @@ class PayController < ApplicationController
   end
   
   def pay_from_card(card_number, price)
-    if has_enough_money?(session[:venue_id],session[:price])
+    if card_has_enough_money?(card_number,price)
       @card=TMemberCard.find(:first, :conditions =>["CARD_NUMBER=?", card_number])
       new_balance=@card.BALANCE-price.to_f
       card_id=@card.ID
@@ -97,9 +103,15 @@ class PayController < ApplicationController
     end
   end
   
+  def card_has_enough_money?(card_no, price)
+    @card=TMemberCard.find_by_sql(["select * from t_member_card where CARD_NUMBER=? and t_member_card.BALANCE >= ?", card_no, price])
+    @card.size > 0
+  end
+  
   def has_enough_money?(venue_id, price)
     #puts price
     @card=TMemberCard.find_by_sql(["select * from users_cards, t_member_card where users_cards.card_id=t_member_card.ID and users_cards.user_id=? and t_member_card.VENUE_ID=? and t_member_card.BALANCE >= ?", session[:user], venue_id, price])
+    @card.size > 0
   end
   
   def has_card?(venue_id)
