@@ -32,14 +32,13 @@ class AccountController < ApplicationController
     end
     @user = User.new(params[:user])
     return unless request.post?
-    puts "jin ru sign up"
     @protect_question = params[:user][:question]
     @question = ProtectQuestion.find_by_question(@protect_question)
     @user.question_id = @question.id
     @user.save!
     self.current_user = @user
     session[:user]=self.current_user.id
-    redirect_back_or_default(:controller => '/account', :action => 'index')
+    redirect_back_or_default(:controller => '/main', :action => 'index')
     flash[:notice] = "Thanks for signing up!"
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'

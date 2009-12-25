@@ -20,7 +20,8 @@
                 当前邮箱:
             </label>
             <label>
-                <%=@user.email %>
+                <%=text_field_tag :old_email,"",:size => User::EMAIL_SIZE,
+            	:maxlength => User::EMAIL_MAX_LENGTH %>
             </label>
             <br>
             <label>
