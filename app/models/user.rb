@@ -1,8 +1,10 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
   
-  has_many :users_cards,:class_name=>"UsersCard",:foreign_key=>"user_id",:primary_key=>"id"
+  has_many :w_user_to_s_user,:class_name=>"WUserToSUser",:foreign_key=>"web_user_id",:primary_key=>"id"
   has_many :users_orders,:class_name=>"UsersOrder",:foreign_key=>"user_id",:primary_key=>"id"
+  
+  
   # Virtual attribute for the unencrypted password
   attr_accessor :password
   attr_accessor :current_password
