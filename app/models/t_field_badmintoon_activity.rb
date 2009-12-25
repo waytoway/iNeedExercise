@@ -6,8 +6,8 @@ class TFieldBadmintoonActivity < ActiveRecord::Base
     self.find_by_sql(["select * from t_field_badmintoon_activity where VENUE_ID=? and FIELD_TYPE=? and FROM_TIME>=? and FROM_TIME<? and USABLE_DATE=?",venue_id,field_type,from_time,span_time,usable_time])
   end
   
-  def ifActivityLocked?(user_id,activity_id)
-    @activity=TFieldBadmintoonActivity.find(session[:activity_id])
+  def self.ifActivityLocked?(activity_id)
+    @activity=TFieldBadmintoonActivity.find(activity_id)
     if @activity.ACTIVITY=="已预订"
       return true
     else
