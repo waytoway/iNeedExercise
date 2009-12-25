@@ -1,5 +1,4 @@
 # Be sure to restart your server when you modify this file
-
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 
@@ -38,19 +37,19 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
-  errors = ActiveRecord::Errors.default_error_messages   
-  errors[:taken] = '已经被使用'  
-  errors[:blank] = '不能为空' 
-  ActiveRecord::Errors.default_error_messages[:inclusion] = " 字段没有包括在列表内！" 
-ActiveRecord::Errors.default_error_messages[:exclusion] = " 字段已被保存过了！" 
-ActiveRecord::Errors.default_error_messages[:invalid] = " 字段是无效的！" 
-ActiveRecord::Errors.default_error_messages[:confirmation] = " 字段不匹配的信息！" 
-ActiveRecord::Errors.default_error_messages[:accepted] = " 字段必须接受此选项！" 
-ActiveRecord::Errors.default_error_messages[:empty] = " 字段不能为空！" 
-ActiveRecord::Errors.default_error_messages[:blank] = " 字段不能为空！" 
-ActiveRecord::Errors.default_error_messages[:too_long] = " 字段太长了(最大是 %d 个英文字符)！" 
-ActiveRecord::Errors.default_error_messages[:too_short] = " 字段太短了(最小是 %d 个英文字符)！" 
-ActiveRecord::Errors.default_error_messages[:wrong_length] = " 字段长度有错误(应该是 %d 个英文字符)！" 
-ActiveRecord::Errors.default_error_messages[:taken] = " 字段已经选择过了！" 
-ActiveRecord::Errors.default_error_messages[:not_a_number] = " 字段不是个数字！" 
+
 end
+
+require 'smtp-tls'
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+  :enable_starttls_auto => true,
+  :address => "smtp.gmail.com",
+  :port => 587,
+  :authentication => :login,
+  :user_name => "abaofmin",
+  :password => "620622jianmin"
+}
+ActionMailer::Base.perform_deliveries = true
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.default_charset = "utf-8" 
