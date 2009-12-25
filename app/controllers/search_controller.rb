@@ -8,7 +8,8 @@ class SearchController < ApplicationController
   
   def index
     if request.post?
-      Payover.deliver_notifyUser("caijia","caijiaddk@sina.com")
+      #测试邮件调用
+#      Payover.deliver_notifyUser("caijia","caijiaddk@sina.com")
       session[:city] = params[:city][:name]
       session[:region] = params[:region][:name]
       session[:sport] = params[:sport][:name]
