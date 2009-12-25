@@ -1,10 +1,10 @@
 class Payover < ActionMailer::Base
   
-  def notifyUser(name,email)
-    @subject = "test"
-    @body = "a lot of tests"
-    @recipients = "caijiaddk@sina.com"
-    @from = "abaofmin@gmail.com"
+  def notifyUser(recipients,body,subject,from)
+    @subject = subject
+    @body = body
+    @recipients = recipients
+    @from = from
     @sent_on = Time.now
     @content_type= "text/html"
   end
