@@ -8,6 +8,7 @@ class SearchController < ApplicationController
   
   def index
     if request.post?
+
       session[:city] = params[:city][:name]
       session[:region] = params[:region][:name]
       session[:sport] = params[:sport][:name]
@@ -28,23 +29,20 @@ class SearchController < ApplicationController
     #mei zuo fei ling pan duan
     @show_records = []
     @venues.each do |f|
-      puts f[:VENUE_NAME]
-
       @min_price
       @max_price
       @price
       
-      @venue_state_1 = "已预定"
-      @venue_state_2 = "已预定"
-      @venue_state_3 = "已预定"
+      @venue_state_1 = "已预订"
+      @venue_state_2 = "已预订"
+      @venue_state_3 = "已预订"
       
       @fields_1 = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{session[:sport]}' AND t.FROM_TIME>='#{session[:search_time]}' AND t.FROM_TIME<'#{@next_hour}'")
-      puts @fields_1.size
       if @fields_1.size > 0
         
         @index = 0
         @fields_1.each do |g|
-          if g.ACTIVITY = "未预定"
+          if g.ACTIVITY == "未预定"
             @venue_state_1 = "未预定"
           end
           if(@index == 0)
@@ -63,12 +61,11 @@ class SearchController < ApplicationController
       end
       
       @fields_2 = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{session[:sport]}' AND t.FROM_TIME>='#{@next_hour}' AND t.FROM_TIME<'#{@next_two_hour}'")
-      puts @fields_2.size
       if @fields_2.size > 0
         
         @index = 0
         @fields_2.each do |g|
-          if g.ACTIVITY = "未预定"
+          if g.ACTIVITY == "未预定"
             @venue_state_2 = "未预定"
           end
           if(@index == 0)
@@ -87,12 +84,11 @@ class SearchController < ApplicationController
       end
       
       @fields_3 = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{session[:sport]}' AND t.FROM_TIME>='#{@next_two_hour}' AND t.FROM_TIME<'#{@next_three_hour}'")
-      puts @fields_3.size
       if @fields_3.size > 0
         
         @index = 0
         @fields_3.each do |g|
-          if g.ACTIVITY = "未预定"
+          if g.ACTIVITY == "未预定"
             @venue_state_3 = "未预定"
           end
           if(@index == 0)
@@ -109,11 +105,7 @@ class SearchController < ApplicationController
           @index = @index+1
         end
       end 
-      
-      puts "eeeeeeeeeeeeeeeeeee"
-      puts @min_price_1
-      puts @min_price_2
-      puts @min_price_3
+
         @min_price = min(@min_price_1,@min_price_2,@min_price_3)
         @max_price = max(@max_price_1,@max_price_2,@max_price_3)
         if @min_price < @max_price
@@ -128,9 +120,6 @@ class SearchController < ApplicationController
 #    @users_cards2 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
 #    @users_cards3 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
     @other_venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{session[:search_date]}' AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预定'!, true], :page => params[:page]||1, :per_page => 7)
-    puts "hhhhhhhhhhhhhhhhhhhhhhhhh"
-    puts @other_venues.size
-    puts @next_three_hour
     
     @show_other_records = []
     @other_venues.each do |f|
@@ -175,17 +164,13 @@ class SearchController < ApplicationController
         @current_hour = @current_hour_time.strftime("%H:%M").to_s
         @next_hour = @next_hour_time.strftime("%H:%M").to_s
       end
-      puts "sdfsfsfsfsfsfsfsf"
-      puts @other_min_price
-      puts @other_max_price
+
       if @other_min_price < @other_max_price
         @price = "#{@other_min_price}-#{@other_max_price}"
       else
         @price = "#{@other_min_price}"
       end
-      puts @price
       @show_other_records.push([session[:search_date],@price,@time_for_unbooking_array])
-      puts @show_other_records[0][1]
     end
     
     #第三部分
