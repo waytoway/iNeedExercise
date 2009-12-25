@@ -105,7 +105,9 @@ class UserController < ApplicationController
   
   def modify_login_infor
     render :text=>"" unless request.post?
-    if params[:email]=="" || params[:email].to_s.size < 3 || params[:cell]=="" || params[:cell].to_s.size < 7
+    if params[:old_email] != @user[:email]
+      render :text=>"当前邮箱信息输入错误！更新失败！" 
+    elsif params[:email]=="" || params[:email].to_s.size < 3 || params[:cell]=="" || params[:cell].to_s.size < 7
       render :text=>"新邮箱或手机号输入不正确，更新失败！" 
       #redirect_to :action => "index"
     else
