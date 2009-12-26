@@ -22,7 +22,6 @@ class HelpController < ApplicationController
   def index
     @user_id = session[:user]
     @is_admin = User.isAdmin?(@user_id)
-   end
    
   end
   
