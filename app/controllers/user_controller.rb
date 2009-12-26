@@ -7,6 +7,11 @@ class UserController < ApplicationController
   def index
   end
   
+  def sys_user
+    render :update do |page|
+      page.replace_html 'content' , :partial => 'sys_user'
+    end
+  end
   
   def paymentFun
     #puts params[:venue_name]

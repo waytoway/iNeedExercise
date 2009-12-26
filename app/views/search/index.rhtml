@@ -74,7 +74,8 @@
 </style>
 <div id="cha">
     <%= link_to "首页",:controller => :main,:action=>"index" %>
-    　 >　 <%= link_to "查询",:controller => :search,:action=>"index" %>
+	&#62;　
+	 <%= link_to "查询",:controller => :search,:action=>"index" %>
 </div>
 <div id="xiu">
     <% form_tag({:action => 'index'},{:id => "search"}) do %>
@@ -144,7 +145,7 @@
             <% if state == 0 %>
             <tr bgcolor="#ffffff">
                 <td height="26">
-                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index" %>
+                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index",:venue_id=>venue_info[:ID]%>
                 </td>
                 <td>
                     <%=@show_records[index][0] %>
@@ -184,14 +185,14 @@
                             </td>
                         </tr>
                     </table>
-                </td>
+                </td>:venuedetail
             </tr>
             <% index=index+1 %>
             <% state = 1 %>
             <% else %>
             <tr bgcolor="#cedfcc">
                 <td height="26">
-                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index" %>
+                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index",:venue_id=> venue_info[:ID]%>
                 </td>
                 <td>
                     <%=@show_records[index][0] %>
@@ -307,7 +308,7 @@
             <% if state == 0 %>
             <tr bgcolor="#ffffff">
                 <td height="26">
-                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index" %>
+                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index",:venue_id=> venue_info[:ID] %>
                 </td>
                 <td>
                     <%=@show_other_records[index][0] %>
@@ -327,7 +328,7 @@
             <% else %>
             <tr bgcolor="#cedfcc">
                 <td height="26">
-                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index" %>
+                    <%=link_to venue_info[:VENUE_NAME],:controller => :venuedetail,:action=>"index" ,:venue_id=> venue_info[:ID]%>
                 </td>
                 <td>
                     <%=@show_other_records[index][0] %>

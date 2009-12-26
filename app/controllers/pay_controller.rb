@@ -94,7 +94,10 @@ class PayController < ApplicationController
             @card = TMemberCard.pay_from_card(params[:card][:name], params[:venue_id],params[:price])
             if @card
               #在卡记录表里插入一条支付记录
+              @last = TCardUsageRecord.find(:last)
+              @count = @last[:id]
               cardUsageRecord = TCardUsageRecord.new
+              cardUsageRecord.id = @count+1
               cardUsageRecord.venue_id = session[:venue_id]
               cardUsageRecord.card_id = @card.ID
               cardUsageRecord.card_no = @card.CARD_NUMBER
@@ -106,6 +109,7 @@ class PayController < ApplicationController
               cardUsageRecord.save
               #更新order记录
               TFieldOrder.update_order(params[:order_id])
+              #进行后续操作，发送短信等等              
               render :js => "alert('会员卡支付成功！');"
             else
               render :js => "alert('会员卡支付失败！');"
@@ -119,18 +123,13 @@ class PayController < ApplicationController
       render :update do |page|
         page.redirect_to :controller=>"main",:action=>"index"
       end
-      
     end
   end
-  
-  
-  
+
   def has_card?(venue_id)
     @card=TMemberCard.find_by_sql(["select * from users_cards, t_member_card where users_cards.card_id=t_member_card.ID and users_cards.user_id=? and t_member_card.VENUE_ID=?", session[:user], venue_id])
     @card.size > 0
   end
-  
-  
   
   #充值
   def supplement
@@ -145,8 +144,9 @@ class PayController < ApplicationController
     
     respond_to do |format|
       if kq_response.successful?
+        TFieldOrder.update_order(params[:order_id])     
+        #进行后续操作，发送短信等等        
         render :text => '支付成功'
-        #进行后续数据库操作，发送短信等等
       else
         #数据库操作
         render :text => '对不起，您提交的信息不正确'
