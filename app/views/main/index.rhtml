@@ -72,6 +72,7 @@
 		var sport = document.getElementById("sport_name")
 		var date = document.getElementById("search_date").value
 		var time = document.getElementById("time")
+		var venue_name = document.getElementById("venue_name").value
 		if (city.options[city.selectedIndex].value == "选择城市") {
 			alert('必须选择一个城市！');
 			return false;
@@ -80,7 +81,7 @@
 			alert('必须选择一个区域！');
 			return false;
 		}
-		else if (sport.options[sport.selectedIndex].value == "运动项目") {
+		else if (sport.options[sport.selectedIndex].value == "运动项目"&&venue_name == "输入运动场馆名称") {
 			alert('必须选择一个项目！');
 			return false;
 		}
