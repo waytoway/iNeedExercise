@@ -3,4 +3,6 @@
 		<%= link_to_remote @venue_name, :update => "venue_edit_box", :url => {:action => "save_selected_venue", :name => @venue_name}%>
 		<br/>
 	<% end %>
+	<%= link_to_remote "关闭窗口", :update => "all_venues", :url => {:action => "quit_without_save"}%>
 </div>
+

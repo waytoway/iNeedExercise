@@ -15,17 +15,14 @@ ActiveRecord::Errors.default_error_messages[:taken] = " 字段已经选择过了
 ActiveRecord::Errors.default_error_messages[:not_a_number] = " 字段不是个数字！" 
   
   def error_messages_for(*params)   
-    #add by glchengang   
+
     key_hash = {}   
     if params.first.is_a?(Hash)   
       key_hash =  params.first   
       params.delete_at(0)   
     end   
-    #add end   
-  
-    options = params.last.is_a?(Hash) ? params.pop.symbolize_keys : {}   
-    fields = options[:fields].nil? ? {} : options[:fields]      #add by cj
-    
+
+    options = params.last.is_a?(Hash) ? params.pop.symbolize_keys : {}       
     objects = params.collect {|object_name| instance_variable_get("@#{object_name}") }.compact   
     count   = objects.inject(0) {|sum, object| sum + object.errors.count }   
     unless count.zero?   
@@ -38,11 +35,10 @@ ActiveRecord::Errors.default_error_messages[:not_a_number] = " 字段不是个�
           html[key] = 'errorExplanation'  
         end   
       end   
-      # change by glchengang   
+
       header_message = "有#{count}个错误"  
 #       header_message = "#{pluralize(count, 'error')} prohibited this #{(options[:object_name] || params.first).to_s.gsub('_', ' ')} from being saved"  
          
-      #add by glchengang   
       error_messages = objects.map do |object|   
         temp = []   
         object.errors.each do |attr, msg|   
