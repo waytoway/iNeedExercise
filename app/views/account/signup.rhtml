@@ -38,7 +38,7 @@
 <% form_for :user, :html => {:id => 'commit'} do |f| -%>
 <p>
     <label for="login">
-        Login
+        注册名称
     </label>
     <br/>
     <%= f.text_field :login %>
@@ -52,21 +52,21 @@
 </p>
 <p>
     <label for="cell">
-        Cell
+        手机号码
     </label>
     <br/>
     <%= f.text_field :cell %>
 </p>
 <p>
     <label for="password">
-        Password
+        密码
     </label>
     <br/>
     <%= f.password_field :password %>
 </p>
 <p>
     <label for="password_confirmation">
-        Confirm Password
+        确认密码
     </label>
     <br/>
     <%= f.password_field :password_confirmation %>
