@@ -30,11 +30,12 @@
                     </li>
                     <%end %>
                 </ul>
-                <hr>
+                <hr><%if @venue[:PHOTO_URL]!=nil %>
                 <div>
                     地图：		点击查看大图<%= link_to image_tag(@venue[:PHOTO_URL], :border=>0,:size => "100x100"), :action => 'show_map',:url=>@venue[:PHOTO_URL] %>
                 </div>
-				<hr>
+                <%end %>
+                <hr>
                 <div>
                     最新信息：<%=@venue[:INTRADUCTION] %>
                 </div>
@@ -47,8 +48,13 @@
             <div>
                 <%=@venue[:INTRADUCTION] %>
             </div>
-			<br><br><br>
-			<%=link_to "返回查询结果", :action=>"return_to_results"%>
+            <br>
+            <br>
+            <br>
+            <div>
+                <%=link_to "注册为场馆会员", :action=>"signup",:venue_id=>@venue[:ID] %>
+            </div>
+            <%=link_to "返回查询结果", :action=>"return_to_results" %>
         </td>
         <td style="width:150px">
             我来推荐

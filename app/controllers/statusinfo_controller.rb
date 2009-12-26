@@ -6,7 +6,6 @@ class StatusinfoController < ApplicationController
   
   def index
     #如果传进来的是查询某项目状态，则返回一个tab
-    
     if params[:venue_id]!=nil && params[:from_time]!=nil 
       @tabs=[]
       @span_time=Time.parse params[:from_time] 

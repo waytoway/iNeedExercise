@@ -219,7 +219,6 @@ class SearchController < ApplicationController
   end
   
   def card_manage
-    puts "jin ru card_manage"
     @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 2,:conditions=>"user_id=#{session[:user]}"
     render :update do |page|
       page.replace_html 'content' , :partial => 'card_manage'

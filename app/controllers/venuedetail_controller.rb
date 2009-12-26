@@ -5,9 +5,13 @@ class VenuedetailController < ApplicationController
   before_filter :login_from_cookie
 
   def index
-    @venue = TVenueInfo.find(1)
+    @venue = TVenueInfo.find(params[:venue_id])
+  end
+  
+  def signup
     
   end
+  
   def show_map
     redirect_to params[:url]
   end
