@@ -1,1 +1,15 @@
-<%= @page[:content]%>
+<table>
+	<tr>
+		<td>
+			<div>
+				<% @pages.each do |f|%>
+					<%=link_to f.title, :action=>"details",:parent_id => @parent_id,:id => f.id %>
+					<br/>
+				<% end %>
+			</div>
+		</td>
+		<td>
+			初始化界面
+		</td>
+	</tr>
+</table>
