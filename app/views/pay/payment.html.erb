@@ -1,0 +1,41 @@
+<script language="javascript" type="text/javascript">
+    function show_action(){
+        var card = document.getElementById("pay_card")
+        if (card.checked == true) {
+            document.getElementById('card').style.display = 'block';
+        }
+        else {
+            document.getElementById('card').style.display = 'none';
+        }
+    }
+</script>
+<div id ="content">
+    <%form_remote_tag  do %>
+    <div class="form_row">
+        <label for="payment_sum">
+            应支付的金额:
+        </label>
+        <%=hidden_field_tag "price", @price %>
+        <%= @price %>
+		<%=hidden_field_tag "order_id", @order_id%>
+    </div>
+    <div class="row">
+        <div class="form_row">
+            <label for="theme">
+                支付方式:
+            </label>
+            <br>
+            <%= radio_button_tag 'pay', 'card', true ,:onclick=>"javascript:show_action()" %>会员卡支付
+            <br>
+            <%= radio_button_tag 'pay', 'bill' ,false,:onclick=>"javascript:show_action()" %>99bill
+        </div>
+    </div>
+    <div id="card">
+        <div id="card">
+            <%= javascript_include_tag :defaults %>
+            <%= select(:card, :name, @cards_names, { :include_blank => false, :selected => "选择会员卡" }) %>
+        </div>
+    </div>
+    <%=submit_to_remote "commit","支付" ,:url=>{:action=>:paymentFun} %>
+    <% end %>
+</div>

@@ -49,7 +49,9 @@
         </td>
 		<td>
 		<%if record[:ACTIVITY]=="未预定"%>
-		 <%=link_to "预定", :controller=>"pay", :action=>"index", :activity_id=>record[:ID], :pay_from_time=>record[:FROM_TIME].strftime("%H:%M").to_s, :pay_to_time=>record[:TO_TIME].strftime("%H:%M").to_s, :field_id=>record[:FIELD_ID], :venue_id=>record[:VENUE_ID], :period=>record[:PERIOD], :price=>record[:PRICE], :usable=>record[:ACTIVITY], :pay_usable_date=>record[:USABLE_DATE], :authenCode=>record[:AUTHENTICODE] %>
+
+		 <%=link_to "预定", :controller=>"pay", :action=>"index", :activity_id=>record[:ID], :pay_from_time=>record[:FROM_TIME].strftime("%H:%M").to_s, :pay_to_time=>record[:TO_TIME].strftime("%H:%M").to_s, :field_id=>record[:FIELD_ID], :venue_id=>record[:VENUE_ID], :period=>record[:PERIOD], :price=>record[:PRICE], :usable=>record[:ACTIVITY], :pay_usable_date=>record[:USABLE_DATE], :authenCode=>record[:AUTHENTICODE],:ID=>record[:ID] %>
+
 		 <%else%>
 		 <%="不可预定"%>
 		<%end%>

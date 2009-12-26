@@ -13,10 +13,10 @@ class StatusinfoController < ApplicationController
       @span_time=@span_time+3600
       if params[:field_type]!=nil
         #查询所有的符合日期，时间，场馆，项目的记录
-        @query_records =TFieldBadmintoonActivity.find_by_sql("select * from t_field_badmintoon_activity where VENUE_ID='#{params[:venue_id]}' and FIELD_TYPE='#{params[:field_type]}' and FROM_TIME>='#{params[:from_time]}' and FROM_TIME<'#{@span_time.strftime("%H:%M").to_s}' and USABLE_DATE='#{params[:usable_time]}'")
+        @query_records=TFieldBadmintoonActivity.find_field(params[:venue_id],params[:field_type],params[:from_time],@span_time.strftime("%H:%M").to_s,params[:usable_time])
         @tabs.push(params[:field_type])  
       else
-      #如果传进来的是查询场馆状态
+        #如果传进来的是查询场馆状态
         @records=TFieldBadmintoonActivity.find_by_sql("select * from t_field_badmintoon_activity where VENUE_ID='#{params[:venue_id]}' and FROM_TIME>='#{params[:from_time]}' and FROM_TIME<'#{@span_time.strftime("%H:%M").to_s}' and USABLE_DATE='#{params[:usable_time]}'")
         if @records!=nil
           #查询所有设施种类
@@ -31,7 +31,7 @@ class StatusinfoController < ApplicationController
         end
       end
   else
-  redirect_to "http://bbs.nju.edu.cn"
+  redirect_to :controller=>"main",:action=>"index"
 end
 end
 

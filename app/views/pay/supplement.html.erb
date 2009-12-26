@@ -1,0 +1,19 @@
+<br>
+<br>
+<%form_remote_tag :update=>"info",:html => {:id => 'commit'}, :url=>{:action=>:modify_login_infor} do %>
+<div>
+    <label>
+        充值卡号：
+    </label>
+    <label>
+        <%=@card_number %>
+    </label>
+    <br>
+    <label>
+        充值金额：
+    </label>
+    <%= hidden_field_tag "card_number",@card_number  %>
+    <%=text_field_tag :amount,"",:maxlength => 5 %>
+</div>
+<%=submit_tag "提交" %>
+<%end %>
