@@ -5,7 +5,7 @@ class PayController < ApplicationController
   before_filter :login_from_cookie
   before_filter :inilizeValue
   
-  def index 
+  def index
     @venue = TVenueInfo.find(:all, :conditions => ["ID = ?", params[:venue_id]])
     #@@field_id = params[:field_id]
     @field = TFieldBadmintoon.find(:all, :conditions => ["ID = ?", params[:field_id]])
@@ -32,7 +32,7 @@ class PayController < ApplicationController
   def createOrder
     #查看数据是否已经被锁定
     if TFieldBadmintoonActivity.ifActivityLocked?(session[:activity_id])
-      render :js => "alert('该场地已经被预定');" 
+      render :js => "alert('该场地已经被预定');"
     else
       @last = TFieldOrder.find(:last)
       @count = @last[:ID]
@@ -47,7 +47,7 @@ class PayController < ApplicationController
       @order.save!
       #锁定activity
       @activity=TFieldBadmintoonActivity.find(session[:activity_id])
-      @activity.ORDER_ID=@order.ID 
+      @activity.ORDER_ID=@order.ID
       @activity.ACTIVITY="已预订"
       @activity.save!
       UsersOrder.add_new(session[:user],@order.ID)
@@ -76,11 +76,11 @@ class PayController < ApplicationController
     if request.post?
       #如果order已经付钱了
       if TFieldOrder.has_paid( params[:order_id])
-        render :js => "alert('请勿重复付款');"          
+        render :js => "alert('请勿重复付款');"
       else
         #如果没有选择卡，则返回出错信息
         if params[:pay]=="card" and params[:card][:name]=="选择会员卡"
-          render :js => "alert('请选择一张卡');"  
+          render :js => "alert('请选择一张卡');"
         end
         #如果选择的是99bill，则进入第三方
         if params[:pay]=="bill"
@@ -111,13 +111,13 @@ class PayController < ApplicationController
               render :js => "alert('会员卡支付失败！');"
             end
           else#余额不足
-            render :js => "alert('余额不足，请去个人中心充值');"  
-          end  
-        end 
+            render :js => "alert('余额不足，请去个人中心充值');"
+          end
+        end
       end
     else
       render :update do |page|
-        page.redirect_to :controller=>"main",:action=>"index"    
+        page.redirect_to :controller=>"main",:action=>"index"
       end
       
     end

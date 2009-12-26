@@ -69,6 +69,10 @@ class MainController < ApplicationController
       render :partial => "update_venues"
     end
     
+    def quit_without_save
+      render :text => ""
+    end
+    
     def most_popular_venues
       @sport_type = params[:sport_type]
       @top10_popular_venues = TFieldOrder.find_by_sql("SELECT COUNT(*) AS NUM,t_field_badmintoon.VENUE_ID  FROM t_field_order,t_field_badmintoon WHERE t_field_order.field_id = t_field_badmintoon.ID AND t_field_badmintoon.ID IN 

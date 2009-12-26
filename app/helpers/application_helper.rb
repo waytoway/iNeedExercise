@@ -1,15 +1,28 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  
+ActiveRecord::Errors.default_error_messages[:inclusion] = " 字段没有包括在列表内！" 
+ActiveRecord::Errors.default_error_messages[:exclusion] = " 字段已被保存过了！" 
+ActiveRecord::Errors.default_error_messages[:invalid] = " 字段是无效的！" 
+ActiveRecord::Errors.default_error_messages[:confirmation] = " 字段不匹配的信息！" 
+ActiveRecord::Errors.default_error_messages[:accepted] = " 字段必须接受此选项！" 
+ActiveRecord::Errors.default_error_messages[:empty] = " 字段不能为空！" 
+ActiveRecord::Errors.default_error_messages[:blank] = " 字段不能为空！" 
+ActiveRecord::Errors.default_error_messages[:too_long] = " 字段太长了(最大是 %d 个英文字符)！" 
+ActiveRecord::Errors.default_error_messages[:too_short] = " 字段太短了(最小是 %d 个英文字符)！" 
+ActiveRecord::Errors.default_error_messages[:wrong_length] = " 字段长度有错误(应该是 %d 个英文字符)！" 
+ActiveRecord::Errors.default_error_messages[:taken] = " 字段已经选择过了！" 
+ActiveRecord::Errors.default_error_messages[:not_a_number] = " 字段不是个数字！" 
+  
   def error_messages_for(*params)   
-    #add by glchengang   
+
     key_hash = {}   
     if params.first.is_a?(Hash)   
       key_hash =  params.first   
       params.delete_at(0)   
     end   
-    #add end   
-  
-    options = params.last.is_a?(Hash) ? params.pop.symbolize_keys : {}   
+
+    options = params.last.is_a?(Hash) ? params.pop.symbolize_keys : {}       
     objects = params.collect {|object_name| instance_variable_get("@#{object_name}") }.compact   
     count   = objects.inject(0) {|sum, object| sum + object.errors.count }   
     unless count.zero?   
@@ -22,17 +35,25 @@ module ApplicationHelper
           html[key] = 'errorExplanation'  
         end   
       end   
-      # change by glchengang   
+
       header_message = "有#{count}个错误"  
 #       header_message = "#{pluralize(count, 'error')} prohibited this #{(options[:object_name] || params.first).to_s.gsub('_', ' ')} from being saved"  
          
-      #add by glchengang   
       error_messages = objects.map do |object|   
         temp = []   
         object.errors.each do |attr, msg|   
+          if attr == "login"
+            key_hash[attr] = "注册名"
+          elsif attr == "email"
+            key_hash[attr] = "Email"
+          elsif attr == "cell"
+            key_hash[attr] = "手机号码"
+          elsif attr == "password"
+            key_hash[attr] = "密码"
+          elsif attr == "password_confirmation"
+            key_hash[attr] = "确认密码"
+          end
           temp << content_tag(:li, (key_hash[attr] || attr) + msg) 
-          puts "ttttttttttttttttt"
-          puts msg
         end   
         temp   
       end   
