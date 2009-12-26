@@ -94,7 +94,10 @@ class PayController < ApplicationController
             @card = TMemberCard.pay_from_card(params[:card][:name], params[:venue_id],params[:price])
             if @card
               #在卡记录表里插入一条支付记录
+              @last = TCardUsageRecord.find(:last)
+              @count = @last[:id]
               cardUsageRecord = TCardUsageRecord.new
+              cardUsageRecord.id = @count+1
               cardUsageRecord.venue_id = session[:venue_id]
               cardUsageRecord.card_id = @card.ID
               cardUsageRecord.card_no = @card.CARD_NUMBER

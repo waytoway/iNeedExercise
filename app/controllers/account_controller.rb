@@ -11,7 +11,6 @@ class AccountController < ApplicationController
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
     @tmp_user = session[:user]
-    puts @tmp_user
     puts self.current_user.id
     if logged_in?
       session[:user]=self.current_user.id
