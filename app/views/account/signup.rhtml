@@ -1,6 +1,30 @@
 <script language="javascript" type="text/javascript">
 	function agree_onclick(){
 		var theCheckBox = document.getElementById("agree_Protocol")
+		if(document.getElementById("user_login").value == ""){
+			alert('必须填写用户名！');
+			return false;
+		}
+		if(document.getElementById("user_email").value == ""){
+			alert('必须填写Email！');
+			return false;
+		}
+		if(document.getElementById("user_cell").value == ""){
+			alert('必须填写手机号码！');
+			return false;
+		}
+		if(document.getElementById("user_password").value == ""){
+			alert('必须填写密码！');
+			return false;
+		}
+		if(document.getElementById("user_password_confirmation").value == ""){
+			alert('必须进行密码确认！');
+			return false;
+		}
+		if(document.getElementById("user_answer").value == ""){
+			alert('必须填写密码保护答案！');
+			return false;
+		}
 		if (!theCheckBox.checked) {
 			alert('必须同意注册条款才可以注册！');
 			return false;
@@ -72,4 +96,4 @@
     <!--<%= submit_tag 'Sign up' %>-->
 </p>
 <% end -%>
-<button id="commit" onclick="javascript:agree_onclick()">Sign up</button>
+<button id="commit" onclick="javascript:agree_onclick()">注册</button>

@@ -461,6 +461,11 @@
                         <%= link_to "帮助中心",:controller => :help,:action=>"index" %>
                         <span>&nbsp</span>
                         <%= link_to "我的锻炼",:controller => :user,:action=>"index" %>
+						<% if session[:user]!= nil && User.isAdmin?(session[:user])%>
+							<span>&nbsp</span>
+                        	<%= link_to "页面管理",:controller => :pagemanage,:action=>"index" %>
+						<% end %>
+							
                     </div>
                 </div>
                 <!--这儿存放中间部分-->
