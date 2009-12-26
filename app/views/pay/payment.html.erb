@@ -17,7 +17,8 @@
         </label>
         <%=hidden_field_tag "price", @price %>
         <%= @price %>
-		<%=hidden_field_tag "order_id", @order_id%>
+        <%=hidden_field_tag "order_id", @order_id %>
+        <%=hidden_field_tag "venue_id", params[:venue_id] %>
     </div>
     <div class="row">
         <div class="form_row">
