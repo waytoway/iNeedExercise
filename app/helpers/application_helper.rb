@@ -24,6 +24,8 @@ ActiveRecord::Errors.default_error_messages[:not_a_number] = " 字段不是个�
     #add end   
   
     options = params.last.is_a?(Hash) ? params.pop.symbolize_keys : {}   
+    fields = options[:fields].nil? ? {} : options[:fields]      #add by cj
+    
     objects = params.collect {|object_name| instance_variable_get("@#{object_name}") }.compact   
     count   = objects.inject(0) {|sum, object| sum + object.errors.count }   
     unless count.zero?   
@@ -44,9 +46,18 @@ ActiveRecord::Errors.default_error_messages[:not_a_number] = " 字段不是个�
       error_messages = objects.map do |object|   
         temp = []   
         object.errors.each do |attr, msg|   
+          if attr == "login"
+            key_hash[attr] = "注册名"
+          elsif attr == "email"
+            key_hash[attr] = "Email"
+          elsif attr == "cell"
+            key_hash[attr] = "手机号码"
+          elsif attr == "password"
+            key_hash[attr] = "密码"
+          elsif attr == "password_confirmation"
+            key_hash[attr] = "确认密码"
+          end
           temp << content_tag(:li, (key_hash[attr] || attr) + msg) 
-          puts "ttttttttttttttttt"
-          puts msg
         end   
         temp   
       end   
