@@ -29,7 +29,7 @@ class SearchController < ApplicationController
     @next_two_hour = @next_two_hour_time.strftime("%H:%M").to_s
     @next_three_hour = @next_three_hour_time.strftime("%H:%M").to_s
     
-    @venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{session[:search_time]}' AND t_field_badmintoon_activity.FROM_TIME<'#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{session[:search_date]}' AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预定'!, true], :page => params[:page]||1, :per_page => 7)
+    @venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{session[:search_time]}' AND t_field_badmintoon_activity.FROM_TIME<'#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{session[:search_date]}' AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
     
     #mei zuo fei ling pan duan
     @show_records = []
@@ -47,8 +47,8 @@ class SearchController < ApplicationController
         
         @index = 0
         @fields_1.each do |g|
-          if g.ACTIVITY == "未预定"
-            @venue_state_1 = "未预定"
+          if g.ACTIVITY == "未预订"
+            @venue_state_1 = "未预订"
           end
           if(@index == 0)
             @min_price_1 = g.PRICE
@@ -70,8 +70,8 @@ class SearchController < ApplicationController
         
         @index = 0
         @fields_2.each do |g|
-          if g.ACTIVITY == "未预定"
-            @venue_state_2 = "未预定"
+          if g.ACTIVITY == "未预订"
+            @venue_state_2 = "未预订"
           end
           if(@index == 0)
             @min_price_2 = g.PRICE
@@ -93,8 +93,8 @@ class SearchController < ApplicationController
         
         @index = 0
         @fields_3.each do |g|
-          if g.ACTIVITY == "未预定"
-            @venue_state_3 = "未预定"
+          if g.ACTIVITY == "未预订"
+            @venue_state_3 = "未预订"
           end
           if(@index == 0)
             @min_price_3 = g.PRICE
@@ -124,7 +124,7 @@ class SearchController < ApplicationController
     
 #    @users_cards2 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
 #    @users_cards3 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
-    @other_venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{session[:search_date]}' AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预定'!, true], :page => params[:page]||1, :per_page => 7)
+    @other_venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{session[:search_date]}' AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
     
     @show_other_records = []
     @other_venues.each do |f|
@@ -144,8 +144,8 @@ class SearchController < ApplicationController
         if @other_fields.size > 0
         
           @other_fields.each do |g|
-            if g.ACTIVITY = "未预定"
-              @other_venue_state = "未预定"
+            if g.ACTIVITY = "未预订"
+              @other_venue_state = "未预订"
             end
             if(@index == 0)
               @other_min_price = g.PRICE

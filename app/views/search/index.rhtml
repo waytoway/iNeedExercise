@@ -171,7 +171,7 @@
                     <table width="293" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][0]=="未预定" %>
+                                <% if @show_records[index][2][0]=="未预订" %>
 								<%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -180,7 +180,7 @@
 								 <% else %>已预定<% end %>
                             </td>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][1]=="未预定" %>
+                                <% if @show_records[index][2][1]=="未预订" %>
 								  <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>@next_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -189,7 +189,7 @@
                                 <% else %>已预定<% end %>
                             </td>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][2]=="未预定" %>
+                                <% if @show_records[index][2][2]=="未预订" %>
                                 <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>@next_two_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -218,7 +218,7 @@
                     <table width="293" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][0]=="未预定" %>
+                                <% if @show_records[index][2][0]=="未预订" %>
                                 <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -227,7 +227,7 @@
 								 <% else %>已预定<% end %>
                             </td>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][1]=="未预定" %>
+                                <% if @show_records[index][2][1]=="未预订" %>
                                 <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>@next_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -236,7 +236,7 @@
 								 <% else %>已预定<% end %>
                             </td>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][2]=="未预定" %>
+                                <% if @show_records[index][2][2]=="未预订" %>
                                 <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>@next_two_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
