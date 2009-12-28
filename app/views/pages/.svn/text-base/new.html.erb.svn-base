@@ -1,8 +1,0 @@
-<h1>新建页面</h1>
-<% form_for(@page) do |f| %>
-<%= render :partial => "edit_form", :locals => { :f => f } %>
-<p>
-    <%= f.submit '新建' %>
-</p>
-<% end %>
-<%= link_to '返回', pages_path %>
