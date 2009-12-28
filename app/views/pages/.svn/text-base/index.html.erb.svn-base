@@ -1,0 +1,5 @@
+<div class="list">
+    <%= render :partial => "list", :locals => {:pages => @pages}%>
+</div>
+<br/>
+<%= link_to '新建页面', new_page_path %>

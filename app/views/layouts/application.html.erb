@@ -135,6 +135,7 @@
                                     padding-left:327px;
                                     line-height:20px;
                                     position: relative;}
+									#dao2 span{margin-right:10px;}
                                     #dao2 a:link{color: #fff;text-decoration: none;}
                                     #dao2 a:visited {color: #fff;text-decoration: none;}
                                     #dao2 a:hover {color: #eec400;text-decoration: none;}
@@ -450,22 +451,9 @@
                         </div>
                     </div>
                     <div id="dao2">
-                        <%= link_to "首页",:controller => :main,:action=>"index" %>
-                        <span>&nbsp</span>
-                        <%= link_to "注册",:controller => :account,:action=>"signup" %>
-                        <span>&nbsp</span>
-                        <%= link_to "关于我们",:controller => :about,:action=>"index" %>
-                        <span>&nbsp</span>
-                        <%= link_to "联系我们",:controller => :contact,:action=>"index" %>
-                        <span>&nbsp</span>
-                        <%= link_to "帮助中心",:controller => :help,:action=>"index" %>
-                        <span>&nbsp</span>
-                        <%= link_to "我的锻炼",:controller => :user,:action=>"index" %>
-						<% if session[:user]!= nil && User.isAdmin?(session[:user])%>
-							<span>&nbsp</span>
-                        	<%= link_to "页面管理",:controller => :pagemanage,:action=>"index" %>
-						<% end %>
-							
+                    	<% @navigators.each do |navigator|%>
+						<span> <%= link_to navigator.title,navigator.page_url %></span>
+						<%end%>
                     </div>
                 </div>
                 <!--这儿存放中间部分-->

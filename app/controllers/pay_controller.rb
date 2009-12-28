@@ -74,8 +74,6 @@ class PayController < ApplicationController
   
   def paymentFun
     if request.post?
-      puts "5555555555555555554444444444444444444444444"
-      puts params[:order_id]
       #如果order已经付钱了
       if TFieldOrder.has_paid( params[:order_id])
         render :js => "alert('请勿重复付款');"

@@ -1,0 +1,8 @@
+<p>
+  <b>Title:</b>
+  <%=h @page.title %>
+</p>
+<%= render :partial => "list", :locals => {:pages => @page.children}%>
+
+<%= link_to 'Edit', edit_page_path(@page) %> |
+<%= link_to 'Back', pages_path %>
