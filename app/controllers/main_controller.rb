@@ -11,10 +11,14 @@ class MainController < ApplicationController
   def index
       if request.post?
         session[:city] = params[:city][:name]
+        session[:region] = params[:region][:name]
         session[:sport] = params[:sport][:name]
         session[:search_date] = params[:search_date]
         session[:search_time] = params[:time]
         session[:check_on_map] =params[:map]
+        puts "kkkkkkkkkkkkkkkkkk"
+        puts params[:region][:name]
+        puts params
         if session[:venue] == nil
           redirect_to :controller => "search", :action => "index", :city_name => params[:city][:name], :region_name => session[:region_name], 
         :sport_type_name => params[:sport][:name], :venue_name => session[:venue], :search_date => session[:search_date]
