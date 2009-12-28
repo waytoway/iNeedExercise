@@ -6,16 +6,13 @@ class TFieldOrder < ActiveRecord::Base
   
   def self.has_paid(order_id)
     @card=self.find(:first, :conditions =>["ID=?", order_id])
-    if @card.PAYMENT_STATUS==1
-      return  true
-    else
-      return false
-    end
+    puts @card.PAYMENT_STATUS
+    return @card.PAYMENT_STATUS
   end
   
   def self.update_order(order_id)
     @card=self.find(:first, :conditions =>["ID=?", order_id])
-    @card.PAYMENT_STATUS=1
+    @card.PAYMENT_STATUS=true
     @card.save
   end
 end

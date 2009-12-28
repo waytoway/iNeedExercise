@@ -84,9 +84,11 @@ class PayController < ApplicationController
         end
         #如果选择的是99bill，则进入第三方
         if params[:pay]=="bill"
-          kq_request = Kuaiqian::Request.new(@order.name, params[:order_id],
-          @order.order_time,@order.price*100,'http://url/pay/show_result')
-          redirect_to @request.url
+          kq_request = Kuaiqian::Request.new("我要锻炼支付",  params[:order_id], 
+          Time.now, params[:price],"http://127.0.0.1:3000/orders/show_result")
+          render :update do |page|
+            page.redirect_to kq_request.url              
+          end
         end
         #如果选择的是会员卡,并且选择的卡号正确，则进入卡支付过程
         if params[:pay]=="card" and params[:card][:name]!="选择会员卡"
@@ -125,7 +127,7 @@ class PayController < ApplicationController
       end
     end
   end
-
+  
   def has_card?(venue_id)
     @card=TMemberCard.find_by_sql(["select * from users_cards, t_member_card where users_cards.card_id=t_member_card.ID and users_cards.user_id=? and t_member_card.VENUE_ID=?", session[:user], venue_id])
     @card.size > 0
@@ -138,6 +140,27 @@ class PayController < ApplicationController
     
   end
   
+  def supplement_commit
+    kq_request = Kuaiqian::Request.new("我要锻炼支付",  params[:order_id], 
+    Time.now, params[:price],"http://127.0.0.1:3000/orders/show_supplement_result")
+    render :update do |page|
+      page.redirect_to kq_request.url              
+    end
+  end
+  
+  def show_supplement_result
+    kq_response = Kuaiqian::Response.new(params)
+    respond_to do |format|
+      if kq_response.successful?
+        TFieldOrder.update_order(params[:order_id])     
+        #进行后续操作，发送短信等等        
+        render :text => '支付成功'
+      else
+        render :text => '对不起，您提交的信息不正确'
+      end
+    end
+  end
+  
   #显示结果
   def show_result
     kq_response = Kuaiqian::Response.new(params)
@@ -148,11 +171,11 @@ class PayController < ApplicationController
         #进行后续操作，发送短信等等        
         render :text => '支付成功'
       else
-        #数据库操作
         render :text => '对不起，您提交的信息不正确'
       end
     end
   end
+  
   protected
   def inilizeValue
     
