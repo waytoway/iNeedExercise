@@ -1,0 +1,38 @@
+<%= link_to "关于我们",:controller => :pagemanage,:action=>"about" %>
+<span>&nbsp</span>
+<%= link_to "联系我们",:controller => :pagemanage,:action=>"contact" %>
+<span>&nbsp</span>
+<%= link_to "帮助中心",:controller => :pagemanage,:action=>"help" %>
+<table>
+	<tr>
+		<td>
+			<div>
+				<% @pages.each do |f|%>
+					<%=link_to f.title, :action=>"modify_help",:parent_id => @parent_id,:id => f.id %>
+					<br/>
+				<% end %>
+			</div>
+			<br/>
+			<br/>
+			<div>
+				 <%=link_to '增加页面',  :action=>"new_help_page",:parent_id => @parent_id %>
+			</div>
+		</td>
+		<td>
+			<% form_remote_tag :update=>"info1", :url => {:action => 'save_help_modify'},:html => {:id => "edit"},:before => "tinyMCE.triggerSave()"  do %>
+				<%= text_field_tag :title, @page[:title]%>
+				<%=text_area_tag :body, @page[:content], :class => 'mceEditor' %>
+				<br/>
+				<input type = "submit" value = "提交" id="commit"></input>
+				<script type="text/javascript">
+			  	//<![CDATA[
+			    	setTextareaToTinyMCE('body');
+			  	//]]>
+			  	</script>
+			<% end %>
+			
+			<div id="info1">
+			</div>
+		</td>
+	</tr>
+</table>

@@ -3,16 +3,23 @@
 <%= link_to "联系我们",:controller => :pagemanage,:action=>"contact" %>
 <span>&nbsp</span>
 <%= link_to "帮助中心",:controller => :pagemanage,:action=>"help" %>
-<% form_remote_tag :update=>"info1", :url => {:action => 'save_contact_modify'},:html => {:id => "edit"},:before => "tinyMCE.triggerSave()"  do %>
-	<%=text_area_tag :body, @page[:content], :class => 'mceEditor' %>
-	<br/>
-	<input type = "submit" value = "提交" id="commit"></input>
-	<script type="text/javascript">
-  	//<![CDATA[
-    	setTextareaToTinyMCE('body');
-  	//]]>
-  	</script>
-<% end %>
-
-<div id="info1">
-</div>
+<table>
+	<tr>
+		<td>
+			<div>
+				<% @pages.each do |f|%>
+					<%=link_to f.title, :action=>"modify_contact", :parent_id => @parent_id,:id => f.id %>
+					<br/>
+				<% end %>
+			</div>
+			<br/>
+			<br/>
+			<div>
+				 <%=link_to '增加页面', :action=>"new_contact_page",:parent_id => @parent_id %>
+			</div>
+		</td>
+		<td>
+			初始化页面
+		</td>
+	</tr>
+</table>

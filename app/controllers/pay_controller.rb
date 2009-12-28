@@ -74,6 +74,8 @@ class PayController < ApplicationController
   
   def paymentFun
     if request.post?
+      puts "5555555555555555554444444444444444444444444"
+      puts params[:order_id]
       #如果order已经付钱了
       if TFieldOrder.has_paid( params[:order_id])
         render :js => "alert('请勿重复付款');"
@@ -83,84 +85,103 @@ class PayController < ApplicationController
           render :js => "alert('请选择一张卡');"
         end
         #如果选择的是99bill，则进入第三方
-        @request = Kuaiqian::Request.new('我要锻炼网支付场地费用', # 产品名称
-        params[:order_id], # 订单ID，必须全局唯一
-        Time.now.strftime("%Y%m%d%H%M%S"), # 订单生成时间，格式为20091104174132
-        params[:price], # 订单金额，以分为单位
-            'http://url/pay/show_result', # 通知地址，用户支付成功后快钱会通过此地址通知商户支付结果
-            '00', # 支付类型，00显示所有方式，10只显示银行卡方式，11只显示电话银行方式，12只显示快钱帐户支付方式，13只显示线下方式
-            'attach') #自定义数据，会在返回URL中原样返回
-        redirect_to @request.url
-      end
-      
-      
-      
-      #如果选择的是会员卡,并且选择的卡号正确，则进入卡支付过程
-      if params[:pay]=="card" and params[:card][:name]!="选择会员卡"
-        if TMemberCard.has_enough_money?(params[:card][:name],params[:venue_id], params[:price])
-          @card = TMemberCard.pay_from_card(params[:card][:name], params[:venue_id],params[:price])
-          if @card
-            #在卡记录表里插入一条支付记录
-            cardUsageRecord = TCardUsageRecord.new
-            cardUsageRecord.venue_id = session[:venue_id]
-            cardUsageRecord.card_id = @card.ID
-            cardUsageRecord.card_no = @card.CARD_NUMBER
-            cardUsageRecord.usage_date = session[:pay_usable_date]
-            cardUsageRecord.usage_time_slice = session[:pay_from_time]+"-"+session[:pay_to_time]
-            cardUsageRecord.option_total = session[:price]
-            cardUsageRecord.usage_type = "扣款"
-            cardUsageRecord.balance=@card.BALANCE
-            cardUsageRecord.save
-            #更新order记录
-            TFieldOrder.update_order(params[:order_id])
-            #进行后续操作，发送短信等等              
-            render :js => "alert('会员卡支付成功！');"
-          else
-            render :js => "alert('会员卡支付失败！');"
+        if params[:pay]=="bill"
+          kq_request = Kuaiqian::Request.new("我要锻炼支付",  params[:order_id], 
+          Time.now, params[:price],"http://127.0.0.1:3000/orders/show_result")
+          render :update do |page|
+            page.redirect_to kq_request.url              
           end
-        else#余额不足
-          render :js => "alert('余额不足，请去个人中心充值');"
+        end
+        #如果选择的是会员卡,并且选择的卡号正确，则进入卡支付过程
+        if params[:pay]=="card" and params[:card][:name]!="选择会员卡"
+          if TMemberCard.has_enough_money?(params[:card][:name],params[:venue_id], params[:price])
+            @card = TMemberCard.pay_from_card(params[:card][:name], params[:venue_id],params[:price])
+            if @card
+              #在卡记录表里插入一条支付记录
+              @last = TCardUsageRecord.find(:last)
+              @count = @last[:id]
+              cardUsageRecord = TCardUsageRecord.new
+              cardUsageRecord.id = @count+1
+              cardUsageRecord.venue_id = session[:venue_id]
+              cardUsageRecord.card_id = @card.ID
+              cardUsageRecord.card_no = @card.CARD_NUMBER
+              cardUsageRecord.usage_date = session[:pay_usable_date]
+              cardUsageRecord.usage_time_slice = session[:pay_from_time]+"-"+session[:pay_to_time]
+              cardUsageRecord.option_total = session[:price]
+              cardUsageRecord.usage_type = "扣款"
+              cardUsageRecord.balance=@card.BALANCE
+              cardUsageRecord.save
+              #更新order记录
+              TFieldOrder.update_order(params[:order_id])
+              #进行后续操作，发送短信等等              
+              render :js => "alert('会员卡支付成功！');"
+            else
+              render :js => "alert('会员卡支付失败！');"
+            end
+          else#余额不足
+            render :js => "alert('余额不足，请去个人中心充值');"
+          end
         end
       end
-    end
-  else
-    render :update do |page|
-      page.redirect_to :controller=>"main",:action=>"index"
-    end
-  end
-end
-
-def has_card?(venue_id)
-  @card=TMemberCard.find_by_sql(["select * from users_cards, t_member_card where users_cards.card_id=t_member_card.ID and users_cards.user_id=? and t_member_card.VENUE_ID=?", session[:user], venue_id])
-  @card.size > 0
-end
-
-#充值
-def supplement
-  @card_number=params[:card_number]
-  @amount=params[:amount]
-  
-end
-
-#显示结果
-def show_result
-  kq_response = Kuaiqian::Response.new(params)
-  
-  respond_to do |format|
-    if kq_response.successful?
-      TFieldOrder.update_order(params[:order_id])     
-      #进行后续操作，发送短信等等        
-      render :text => '支付成功'
     else
-      render :text => '对不起，您提交的信息不正确'
+      render :update do |page|
+        page.redirect_to :controller=>"main",:action=>"index"
+      end
     end
   end
-end
-
-protected
-def inilizeValue
   
+  def has_card?(venue_id)
+    @card=TMemberCard.find_by_sql(["select * from users_cards, t_member_card where users_cards.card_id=t_member_card.ID and users_cards.user_id=? and t_member_card.VENUE_ID=?", session[:user], venue_id])
+    @card.size > 0
+  end
   
-end
-
+  #充值
+  def supplement
+    @card_number=params[:card_number]
+    @amount=params[:amount]
+    
+  end
+  
+  def supplement_commit
+    kq_request = Kuaiqian::Request.new("我要锻炼支付",  params[:order_id], 
+    Time.now, params[:price],"http://127.0.0.1:3000/orders/show_supplement_result")
+    render :update do |page|
+      page.redirect_to kq_request.url              
+    end
+  end
+  
+  def show_supplement_result
+    kq_response = Kuaiqian::Response.new(params)
+    respond_to do |format|
+      if kq_response.successful?
+        TFieldOrder.update_order(params[:order_id])     
+        #进行后续操作，发送短信等等        
+        render :text => '支付成功'
+      else
+        render :text => '对不起，您提交的信息不正确'
+      end
+    end
+  end
+  
+  #显示结果
+  def show_result
+    kq_response = Kuaiqian::Response.new(params)
+    
+    respond_to do |format|
+      if kq_response.successful?
+        TFieldOrder.update_order(params[:order_id])     
+        #进行后续操作，发送短信等等        
+        render :text => '支付成功'
+      else
+        render :text => '对不起，您提交的信息不正确'
+      end
+    end
+  end
+  
+  protected
+  def inilizeValue
+    
+    
+  end
+  
 end

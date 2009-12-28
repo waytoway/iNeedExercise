@@ -72,6 +72,12 @@
 		var sport = document.getElementById("sport_name")
 		var date = document.getElementById("search_date").value
 		var time = document.getElementById("time")
+		var venue_name = document.getElementById("venue_name").value
+		var cur_date = new Date()
+		var cur_hour = cur_date.getHours
+		cur_date.setHours(0)
+		cur_date.setMinutes(0)
+		cur_date.setSeconds(0)
 		if (city.options[city.selectedIndex].value == "选择城市") {
 			alert('必须选择一个城市！');
 			return false;
@@ -80,15 +86,26 @@
 			alert('必须选择一个区域！');
 			return false;
 		}
-		else if (sport.options[sport.selectedIndex].value == "运动项目") {
+		else if (sport.options[sport.selectedIndex].value == "运动项目"&&venue_name == "输入运动场馆名称") {
 			alert('必须选择一个项目！');
 			return false;
 		}
 		else if (date == "") {
-			alert('必须选择日期！');
+			total_time
 			return false;
 		}
 		else {
+			var total_time = Date.parse(date)
+			var now_time = cur_date.getTime()
+			var minutes = 1000*60
+			var hours = minutes*60
+			var days = hours*24
+			if(total_time+days<now_time){
+				alert('日期不符，必须选择以后的日期！');
+				return false
+			}
+
+			
 		    document.getElementById("search").submit();	
 		}
 	}

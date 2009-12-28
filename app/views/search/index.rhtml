@@ -5,13 +5,18 @@
         var sport = document.getElementById("sport_name")
         var date = document.getElementById("search_date").value
         var time = document.getElementById("time")
+		var cur_date = new Date()
+		var cur_hour = cur_date.getHours
+		cur_date.setHours(0)
+		cur_date.setMinutes(0)
+		cur_date.setSeconds(0)
         if (city.options[city.selectedIndex].value == "选择城市") {
             alert('必须选择一个城市！');
             return false;
         }
         else 
             if (region.options[region.selectedIndex].value == "选择区域") {
-                alert('必须选择一个项目！');
+                alert('必须选择一个区域！');
                 return false;
             }
             else 
@@ -24,6 +29,15 @@
                         return false;
                     }
                     else {
+						var total_time = Date.parse(date)
+						var now_time = cur_date.getTime()
+						var minutes = 1000*60
+						var hours = minutes*60
+						var days = hours*24
+						if(total_time+days<now_time){
+							alert('日期不符，必须选择以后的日期！');
+							return false
+						}
                         document.getElementById("search").submit();
                     }
     }
@@ -157,7 +171,7 @@
                     <table width="293" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][0]=="未预定" %>
+                                <% if @show_records[index][2][0]=="未预订" %>
 								<%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -166,7 +180,7 @@
 								 <% else %>已预定<% end %>
                             </td>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][1]=="未预定" %>
+                                <% if @show_records[index][2][1]=="未预订" %>
 								  <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>@next_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -175,7 +189,7 @@
                                 <% else %>已预定<% end %>
                             </td>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][2]=="未预定" %>
+                                <% if @show_records[index][2][2]=="未预订" %>
                                 <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>@next_two_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -204,7 +218,7 @@
                     <table width="293" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][0]=="未预定" %>
+                                <% if @show_records[index][2][0]=="未预订" %>
                                 <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -213,7 +227,7 @@
 								 <% else %>已预定<% end %>
                             </td>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][1]=="未预定" %>
+                                <% if @show_records[index][2][1]=="未预订" %>
                                 <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>@next_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )
@@ -222,7 +236,7 @@
 								 <% else %>已预定<% end %>
                             </td>
                             <td width="97" height="26">
-                                <% if @show_records[index][2][2]=="未预定" %>
+                                <% if @show_records[index][2][2]=="未预订" %>
                                 <%=
 								     link_to_if(logged_in?, image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index" ,:venue_id=>venue_info[:ID],:from_time=>@next_two_hour,:field_type=>session[:sport],:usable_time=>@show_records[index][0] }) do
 								       link_to(image_tag("yu.jpg"), { :controller => "statusinfo", :action => "index"},:confirm => "未登录，是否先登录？",:venue_id=>venue_info[:ID],:from_time=>session[:search_time],:field_type=>session[:sport],:usable_time=>@show_records[index][0] )

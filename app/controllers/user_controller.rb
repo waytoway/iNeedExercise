@@ -7,6 +7,11 @@ class UserController < ApplicationController
   def index
   end
   
+  def sys_user
+    render :update do |page|
+      page.replace_html 'content' , :partial => 'sys_user'
+    end
+  end
   
   def paymentFun
     #puts params[:venue_name]
@@ -105,19 +110,29 @@ class UserController < ApplicationController
   
   def modify_login_infor
     render :text=>"" unless request.post?
-    if params[:old_email] != @user[:email]
-      render :text=>"当前邮箱信息输入错误！更新失败！" 
-    elsif params[:email]=="" || params[:email].to_s.size < 3 || params[:cell]=="" || params[:cell].to_s.size < 7
-      render :text=>"新邮箱或手机号输入不正确，更新失败！" 
-      #redirect_to :action => "index"
-    else
-      unless @user.update_attributes!(:email => params[:email])
-        render :text=>"too short"
-      end
-      unless @user.update_attributes!(:cell => params[:cell])
-        render :text=>"too short"
-      end
-      render :text=>"邮箱和手机号更新成功！" 
+    attribute = params[:attribute]
+    case attribute
+      when "modify_email"
+        if params[:old_email] != @user[:email]
+          render :text=>"当前邮箱信息输入错误！更新失败！"
+        elsif params[:email]=="" || params[:email].to_s.size < 3 
+          render :text=>"新邮箱输入不正确，更新失败！" 
+        else
+          unless @user.update_attributes!(:email => params[:email])
+            render :text=>"too short"
+          end
+          render :text=>"邮箱更新成功！" 
+        end
+      when "modify_cell"
+        if params[:cell]=="" || params[:cell].to_s.size < 7
+          render :text=>"新手机号输入不正确，更新失败！" 
+          #redirect_to :action => "index"
+        else
+          unless @user.update_attributes!(:cell => params[:cell])
+            render :text=>"too short"
+          end
+          render :text=>"手机号更新成功！" 
+        end
     end
   end
   
