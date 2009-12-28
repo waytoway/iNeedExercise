@@ -2,11 +2,23 @@ class SearchController < ApplicationController
   include AuthenticatedSystem
   before_filter :login_from_cookie
   before_filter :get_user_cards
-  before_filter :get_initial_cities
-  before_filter :get_initial_regions
-  before_filter :get_initial_sports
+
   
   def index
+    @city_name = params[:city_name]
+    if @city_name == nil
+      @region_name = '选择区域'
+      @sport_name = '运动项目'
+      @search_date = ''
+      @search_time = '12:00'
+      @check_on_map = false
+    else
+      @region_name = params[:region_name]
+      @sport_name = params[:sport_type_name]
+      @search_date = params[:search_date]
+      @search_time = params[:search_time]
+      @check_on_map = params[:check_on_map]
+    end
     if request.post?
       #测试邮件调用
 #      @recipients = "caijiaddk@sina.com"
@@ -14,14 +26,16 @@ class SearchController < ApplicationController
 #      @subject = "anthen code"
 #      @from = "berlin.for.ruby@gmail.com"
 #      Payover.deliver_notifyUser(@recipients,@body,@subject,@from)
-      session[:city] = params[:city][:name]
-      session[:region] = params[:region][:name]
-      session[:sport] = params[:sport][:name]
-      session[:search_date] = params[:search_date]
-      session[:search_time] = params[:time]
-    end    
+      @city_name = params[:city][:name]
+      @region_name = params[:region][:name]
+      @sport_name = params[:sport][:name]
+      @search_date = params[:search_date]
+      @search_time = params[:time]
+    end 
+
+    
     #  @photos = Photo.paginate(:all, :conditions => ["photos.user_id = ?", current_user.id], :page => params[:page])
-    @cur_time=Time.parse session[:search_time]
+    @cur_time=Time.parse @search_time
     @next_hour_time = @cur_time+3600
     @next_two_hour_time = @cur_time+7200
     @next_three_hour_time = @cur_time+10800
@@ -29,7 +43,7 @@ class SearchController < ApplicationController
     @next_two_hour = @next_two_hour_time.strftime("%H:%M").to_s
     @next_three_hour = @next_three_hour_time.strftime("%H:%M").to_s
     
-    @venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{session[:search_time]}' AND t_field_badmintoon_activity.FROM_TIME<'#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{session[:search_date]}' AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
+    @venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{@sport_name}" AND t_field_badmintoon_activity.FROM_TIME>='#{@search_time}' AND t_field_badmintoon_activity.FROM_TIME<'#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{@search_date}' AND t_venue_info.CITY="#{@city_name}" AND t_venue_info.DISTRICT='#{@region_name}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
     
     #mei zuo fei ling pan duan
     @show_records = []
@@ -42,7 +56,7 @@ class SearchController < ApplicationController
       @venue_state_2 = "已预订"
       @venue_state_3 = "已预订"
       
-      @fields_1 = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{session[:sport]}' AND t.FROM_TIME>='#{session[:search_time]}' AND t.FROM_TIME<'#{@next_hour}'")
+      @fields_1 = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{@sport_name}' AND t.FROM_TIME>='#{@search_time}' AND t.FROM_TIME<'#{@next_hour}'")
       if @fields_1.size > 0
         
         @index = 0
@@ -65,7 +79,7 @@ class SearchController < ApplicationController
         end
       end
       
-      @fields_2 = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{session[:sport]}' AND t.FROM_TIME>='#{@next_hour}' AND t.FROM_TIME<'#{@next_two_hour}'")
+      @fields_2 = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{@sport_name}' AND t.FROM_TIME>='#{@next_hour}' AND t.FROM_TIME<'#{@next_two_hour}'")
       if @fields_2.size > 0
         
         @index = 0
@@ -88,7 +102,7 @@ class SearchController < ApplicationController
         end
       end
       
-      @fields_3 = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{session[:sport]}' AND t.FROM_TIME>='#{@next_two_hour}' AND t.FROM_TIME<'#{@next_three_hour}'")
+      @fields_3 = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{@sport_name}' AND t.FROM_TIME>='#{@next_two_hour}' AND t.FROM_TIME<'#{@next_three_hour}'")
       if @fields_3.size > 0
         
         @index = 0
@@ -119,12 +133,12 @@ class SearchController < ApplicationController
           @price = "#{@min_price}"
         end
 
-      @show_records.push([session[:search_date],@price,[@venue_state_1,@venue_state_2,@venue_state_3]])
+      @show_records.push([@search_date,@price,[@venue_state_1,@venue_state_2,@venue_state_3]])
     end
     
 #    @users_cards2 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
 #    @users_cards3 = UsersCard.paginate :page => params[:page]||1, :per_page => 7,:conditions=>"user_id=#{session[:user]}"
-    @other_venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{session[:sport]}" AND t_field_badmintoon_activity.FROM_TIME>='#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{session[:search_date]}' AND t_venue_info.CITY="#{session[:city]}" AND t_venue_info.DISTRICT='#{session[:region]}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
+    @other_venues = TFieldOrder.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{@sport_name}" AND t_field_badmintoon_activity.FROM_TIME>='#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{@search_date}' AND t_venue_info.CITY="#{@city_name}" AND t_venue_info.DISTRICT='#{@region_name}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
     
     @show_other_records = []
     @other_venues.each do |f|
@@ -140,7 +154,7 @@ class SearchController < ApplicationController
       @time_for_unbooking_array = []
       @index = 0
       while @current_hour_time.hour < @final_hour.hour     #不确定可否比较
-         @other_fields = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{session[:sport]}' AND t.FROM_TIME>='#{@current_hour}' AND t.FROM_TIME<'#{@next_hour}' AND t.ACTIVITY='未预定'")
+         @other_fields = TFieldBadmintoonActivity.find_by_sql("SELECT t.ID,t.PRICE,t.ACTIVITY FROM `exercise-test`.t_field_badmintoon_activity t WHERE t.VENUE_ID='#{f[:ID]}' AND t.FIELD_TYPE='#{@sport_name}' AND t.FROM_TIME>='#{@current_hour}' AND t.FROM_TIME<'#{@next_hour}' AND t.ACTIVITY='未预定'")
         if @other_fields.size > 0
         
           @other_fields.each do |g|
@@ -175,7 +189,7 @@ class SearchController < ApplicationController
       else
         @price = "#{@other_min_price}"
       end
-      @show_other_records.push([session[:search_date],@price,@time_for_unbooking_array])
+      @show_other_records.push([@search_date,@price,@time_for_unbooking_array])
     end
     
     #第三部分
@@ -283,45 +297,6 @@ class SearchController < ApplicationController
   
   protected
   def get_user_cards
-  end
-  
-  def get_initial_cities
-    @cities = City.find(:all)
-    @city_names = []
-    @city_names[0]=["选择城市","选择城市"]
-    i=1
-    @cities.each do |f|
-      @city_names.push([f.name,f.name])
-      i=i+1
-    end
-  end
-  
-  def get_initial_regions
-    if session[:city] == "选择城市"
-      @regions_name = []
-      @regions_name[0] = ["选择区域","选择区域"]
-    else
-      @city = City.find(:first,:conditions => {:name => session[:city]})
-      @regions_name = []
-      @regions = @city.regions
-      @regions_name[0] = ["选择区域","选择区域"]
-      i=1
-      @regions.each do |f|
-        @regions_name.push([f.name,f.name])
-        i=i+1
-      end 
-    end
-  end
-  
-  def get_initial_sports
-    @sports = SportType.find(:all)
-    @sport_type_names = []
-    @sport_type_names[0]=["运动项目","运动项目"]
-    i=1
-    @sports.each do |f|   
-      @sport_type_names.push([f.sport_type,f.sport_type])
-      i=i+1
-    end
   end
 end  
 
