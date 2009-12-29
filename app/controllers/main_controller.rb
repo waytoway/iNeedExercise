@@ -81,44 +81,8 @@ class MainController < ApplicationController
       render :partial => "most_popular_venues"
     end
     
-    protected
-    def get_regions_full_name
-      @cities_and_regions = Array.new
-      @cities = City.find(:all)
-      @cities.each do |f|
-        @city_id = f.id
-        @city_name = f.name
-        @regions = f.regions
-        @regions.each do |g|
-          @cities_and_region = @city_name + " " + g.name
-          @cities_and_regions.push(@cities_and_region)
-        end
-      end
-    end
-    
-    def get_initial_cities
-      @cities = City.find(:all)
-      @city_names = Array.new
-      @city_names.push("选择城市")
-      @cities.each do |f|
-        @city_names.push(f.name)
-      end
-    end
-    
-    def get_initial_regions
-      @regions_name = Array.new
-      @regions_name.push("选择区域")
-    end
-    
-    def get_initial_sports
-      @sports = SportType.find(:all)
-      @sport_type_names = Array.new
-      @sport_type_names.push("运动项目")
-      @sports.each do |f|   
-        @sport_type_names.push(f.sport_type)
-      end
-    end
-    
+    protected   
+  
     def get_initial_popular
       @sport_type = "足球"
       @top10_popular_venues = TFieldOrder.find_by_sql("SELECT COUNT(*) AS NUM,t_field_badmintoon.VENUE_ID  FROM t_field_order,t_field_badmintoon WHERE t_field_order.field_id = t_field_badmintoon.ID AND t_field_badmintoon.ID IN 

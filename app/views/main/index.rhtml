@@ -125,14 +125,14 @@
             </div>
             <div class="step_content">
                 <%= javascript_include_tag :defaults %>
-                城市:<%= select :city, :name,  @city_names, { :include_blank => false, :selected => "选择城市" }, :onchange => remote_function(:update => "sub_items",
+                城市:<%= select :city, :name,  create_cities, { :include_blank => false, :selected => "选择城市" }, :onchange => remote_function(:update => "sub_items",
                 :method => "get",
                 :with => "'city_name=' + value",
                 :url => { :controller => :main, :action => :get_sub_items}) %>
             </div>
             <div id="xiu22" class="step_content">
                 <div id="sub_items">
-                    区域:<%= select :region, :name, @regions_name, { :include_blank => false, :selected => "选择区域" }, :onchange => remote_function(:update => "jump_for_sub_item",
+                    区域:<%= select :region, :name, initial_regions, { :include_blank => false, :selected => "选择区域" }, :onchange => remote_function(:update => "jump_for_sub_item",
                     :method => "get",
                     :with => "'region_name=' + value",
                     :url => { :controller => :main, :action => :jump_for_sub_item}) %>
@@ -147,7 +147,7 @@
                 2.选择项目
             </div>
             <div class="step_content">
-                <%= select(:sport, :name, @sport_type_names, { :include_blank => false, :selected => "运动项目"  }, :onchange => "clear_venue()") %>
+                <%= select(:sport, :name, create_sports, { :include_blank => false, :selected => "运动项目"  }, :onchange => "clear_venue()") %>
             </div>
             <div class="step_middle_title">
                 -OR-
