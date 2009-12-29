@@ -2,10 +2,6 @@ class MainController < ApplicationController
   session :session_key => '_iNeedExercise_session_id'
   include AuthenticatedSystem
   before_filter :login_from_cookie  
-  before_filter :get_regions_full_name
-  before_filter :get_initial_cities
-  before_filter :get_initial_regions
-  before_filter :get_initial_sports
   before_filter :get_initial_popular
   
   def index

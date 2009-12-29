@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+  include UserHelper
   include AuthenticatedSystem
   before_filter :login_required
   before_filter :login_from_cookie
@@ -7,27 +8,28 @@ class UserController < ApplicationController
   def index
   end
   
-  
-  def order_detail
-    @venue_name = params[:venue_name]
-    @field_name = params[:field_name]
-    @order = TFieldOrder.find(:all, :conditions=>["ID=?", params[:order_id]])
-    #puts @order.size
-    render :update do |page|
-      page.replace_html 'content' , :partial => 'order_info'
-    end
-  end
-  
+  #order page
   def order_now
-    @user_orders = TFieldOrder.paginate_by_sql([%!select t_field_order.ID, t_field_order.field_id, VENUE_NAME, t_field_badmintoon.NAME, t_field_order.CARD_ID, t_field_order.USER_CODE, t_field_order.PHONE, t_field_order.PAYMENT_STATUS, t_field_order.BOOK_TIME, t_field_order.PAYMENT_TIME, t_field_order.PAYMENT_SUM, t_field_order.STANDARD_PRICE, t_field_order.PAYMENT_STYLE  from t_field_order, users_orders, t_venue_info, t_field_badmintoon  where t_field_badmintoon.ID = t_field_order.field_id AND t_venue_info.ID = t_field_order.VENUE_ID  AND users_orders.order_id = t_field_order.ID AND users_orders.user_id = #{session[:user]}!, true], :page => params[:page]||1, :per_page => 2)    
+    @user_orders = TFieldOrder.get_orders(session[:user],params[:page])    
     render :update do |page|
       page.replace_html 'content' , :partial => 'order_now'
     end
   end
   
+  #order detail page
+  def order_detail
+    @venue_name = params[:venue_name]
+    @field_name = params[:field_name]
+    @field_type = params[:field_type]
+    @order = TFieldOrder.get_order(params[:order_id])[0]
+    render :update do |page|
+      page.replace_html 'content' , :partial => 'order_info'
+    end
+  end
+  
   #this is the card manage loader
   def card_manage
-    @users_cards = UsersCard.paginate :page => params[:page]||1, :per_page => 2,:conditions=>"user_id=#{session[:user]}"
+    @cards = TMemberCard.find_all_cards(session[:user], params[:page])    
     render :update do |page|
       page.replace_html 'content' , :partial => 'card_manage'
     end
@@ -44,7 +46,7 @@ class UserController < ApplicationController
   #this is the pwd loader    
   def modify_pwd
     @user = User.find(session[:user])
-    @questions = get_question_items
+    @questions = ProtectQuestion.get_question_items
     render :update do |page|        
       page.replace_html 'content' , :partial => 'modify_pwd'
     end
@@ -58,23 +60,24 @@ class UserController < ApplicationController
       case attribute
         when "modify_pwd"
         if @user.correct_password?(params)
-          if params[:password] != params[:password_confirmation]&&params[:password]!=""
-            render :text=>"两次密码输入不同"
-          elsif params[:password]==""
-            render :text=>"密码过短"
+          if pass_too_short?params[:password],params[:password_confirmation]
+            render :text=>"密码不能为空并且必须不少于6位"
           else
-            @user.update_attributes(:crypted_password => @user.encrypt(params[:password]))
-            render :text=>"修改成功"
-          end
+            if pass_not_equal?params[:password],params[:password_confirmation]
+              render :text=>"两次密码输入不同"
+            else
+              @user.update_attributes(:crypted_password => @user.encrypt(params[:password]))
+              render :text=>"修改成功"
+            end
+          end  
         else
-          render :text=>"输入密码错误"
+          render :text=>"输入密码错误"   
         end
         when "pwd_protect"
         if @user.authenticated?(params[:password]) && @user.email_equal?(params[:email])
-          @protect_question = params[:question]
-          @question = ProtectQuestion.find_by_question(@protect_question)
+          @question = ProtectQuestion.find_by_question(params[:question])
           @user.update_attributes({:question_id => @question.id, :answer => params[:answer]})
-          render :text => "成功发送"
+          render :text => "修改成功"
         else
           render :text => "Email或者密码错误!"
         end
@@ -99,21 +102,20 @@ class UserController < ApplicationController
       when "modify_email"
       if params[:old_email] != @user[:email]
         render :text=>"当前邮箱信息输入错误！更新失败！"
-      elsif params[:email]=="" || params[:email].to_s.size < 3 
+      elsif params[:email].to_s.size < 5
         render :text=>"新邮箱输入不正确，更新失败！" 
       else
         unless @user.update_attributes!(:email => params[:email])
-          render :text=>"too short"
+          render :text=>"更新失败！"
         end
         render :text=>"邮箱更新成功！" 
       end
       when "modify_cell"
-      if params[:cell]=="" || params[:cell].to_s.size < 7
+      if params[:cell].to_s.size < 7
         render :text=>"新手机号输入不正确，更新失败！" 
-        #redirect_to :action => "index"
       else
         unless @user.update_attributes!(:cell => params[:cell])
-          render :text=>"too short"
+          render :text=>"更新失败！"
         end
         render :text=>"手机号更新成功！" 
       end
@@ -130,10 +132,5 @@ class UserController < ApplicationController
   protected
   def get_user
     @user = User.find(session[:user])
-    @questions = ProtectQuestion.find(:all)
-    @question_items = Array.new
-    @questions.each do |f|   
-      @question_items.push(f.question)
-    end 
   end
 end

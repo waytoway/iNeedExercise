@@ -27,7 +27,7 @@
     <%form_remote_tag :update=>"info2",:html => {:id => 'commit'}, :url=>{:action=>:modify} do %>
     <div>
         密码保护问题<%= hidden_field_tag "attribute", "pwd_protect", :id => nil %>
-        选择保护问题：<%= select(:question, "", @question_items, { :include_blank => false }) %>
+        选择保护问题：<%= select(:question, "", @questions, { :include_blank => false }) %>
         <br>
         <label>
             问题答案:

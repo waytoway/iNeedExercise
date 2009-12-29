@@ -10,6 +10,10 @@ class TMemberCard < ActiveRecord::Base
     @cards=self.find_by_sql(["select t_member_card.CARD_NUMBER from users,w_user_to_s_users,t_sys_user,users_cards,t_member_card,t_card_type where users.id=? and users.id=w_user_to_s_users.web_user_id and w_user_to_s_users.sys_user_id=t_sys_user.ID and t_sys_user.ID=users_cards.user_id and users_cards.card_id=t_member_card.ID and t_member_card.VENUE_ID=? and t_member_card.CARD_TYPE_ID=t_card_type.id and t_card_type.type_name=?", user_id,venue_id,type]) 
   end
   
+  def self.find_all_cards(user_id,start_page)
+        @cards=self.paginate_by_sql(["select t_member_card.CARD_NUMBER,t_venue_info.VENUE_NAME,t_card_type.type_name,t_member_card.BALANCE from users,w_user_to_s_users,t_sys_user,users_cards,t_member_card,t_card_type,t_venue_info where users.id=? and users.id=w_user_to_s_users.web_user_id and w_user_to_s_users.sys_user_id=t_sys_user.ID and t_sys_user.ID=users_cards.user_id and users_cards.card_id=t_member_card.ID and t_member_card.CARD_TYPE_ID=t_card_type.id and t_venue_info.ID=t_member_card.VENUE_ID", user_id], :page => start_page||1, :per_page => 5) 
+  end
+  
   def self.has_enough_money?(card_number,venue_id, price)
     @card=self.find_by_sql(["select * from t_member_card where CARD_NUMBER=? and VENUE_ID=? and BALANCE>=?", card_number,venue_id, price])
     if @card!=nil && @card.size!=0
