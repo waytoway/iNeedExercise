@@ -58,8 +58,10 @@ class UserController < ApplicationController
       case attribute
         when "modify_pwd"
         if @user.correct_password?(params)
-          if params[:password] != params[:password_confirmation]
+          if params[:password] != params[:password_confirmation]&&params[:password]!=""
             render :text=>"两次密码输入不同"
+          elsif params[:password]==""
+            render :text=>"密码过短"
           else
             @user.update_attributes(:crypted_password => @user.encrypt(params[:password]))
             render :text=>"修改成功"

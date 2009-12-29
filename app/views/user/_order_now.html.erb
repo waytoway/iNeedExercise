@@ -1,93 +1,90 @@
-<table  width="354" border="1">
+<table width="354" border="1">
     <tr>
         <td width="85">
             场馆
         </td>
-		<td width="85">
+        <td width="85">
             场地
         </td>
-		<td width="85">
+        <td width="85">
             CARD_ID
         </td>
-		<td width="85">
+        <td width="85">
             USER_CODE
         </td>
-		<td width="70">
+        <td width="70">
             联系方式
         </td>
         <td width="100">
             电话
         </td>
-		<td width="100">
+        <td width="100">
             付款否
         </td>
-		<td width="100">
+        <td width="100">
             预定时间
         </td>
-		<td width="100">
+        <td width="100">
             付款时间
         </td>
-		<td width="100">
+        <td width="100">
             付款金额
         </td>
-		
-		<td width="100">
+        <td width="100">
             应付金额
         </td>
-		<td width="100">
+        <td width="100">
             付款方式
         </td>
-		<td width="100">
-           详情
+        <td width="100">
+            详情
         </td>
-        
     </tr>
     <%if @user_orders!=nil && @user_orders.size!=0 %>
     <% for users_order in @user_orders %>
     <tr>
         <td>
-            <%=users_order[:VENUE_NAME]%>
+            <%=users_order[:VENUE_NAME] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:NAME] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:CARD_ID] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:USER_CODE] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:CONTACT] %>
         </td>
         <td>
-        	<%=users_order[:PHONE] %>
+            <%=users_order[:PHONE] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:PAYMENT_STATUS] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:BOOK_TIME] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:PAYMENT_TIME] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:PAYMENT_SUM] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:STANDARD_PRICE] %>
         </td>
-		<td>
+        <td>
             <%=users_order[:PAYMENT_STYLE] %>
         </td>
-		<td>
+        <td>
             <%=link_to_remote '查看',  :url=>{:action=>"order_detail", :order_id=>users_order[:ID], :venue_name=>users_order[:VENUE_NAME], :field_name=>users_order[:NAME] } %>
         </td>
-		<td>
-			<%=link)to_remote '取消预定', :url=>{:action=>"cancel_order",:order_id=>users_order[:ID]}%>
-		</td>
-        
+        <td>
+            <%=link_to_remote '取消预定', :url=>{:action=>"cancel_order",:order_id=>users_order[:ID]} %>
+        </td>
     </tr>
     <% end %>
     <%end %>
