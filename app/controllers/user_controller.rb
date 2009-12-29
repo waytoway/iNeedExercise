@@ -1,29 +1,14 @@
 class UserController < ApplicationController
-  before_filter :login_required
   include AuthenticatedSystem
+  before_filter :login_required
   before_filter :login_from_cookie
   before_filter :get_user
   
   def index
   end
   
-  def sys_user
-    render :update do |page|
-      page.replace_html 'content' , :partial => 'sys_user'
-    end
-  end
-  
-  def paymentFun
-    #puts params[:venue_name]
-    render :update do |page|
-      page.replace_html 'content' , :partial => 'payment'
-    end
-  end
   
   def order_detail
-    #puts params[:order_id]
-    #puts params[:venue_name]
-    #puts params[:field_name]
     @venue_name = params[:venue_name]
     @field_name = params[:field_name]
     @order = TFieldOrder.find(:all, :conditions=>["ID=?", params[:order_id]])
@@ -47,28 +32,25 @@ class UserController < ApplicationController
       page.replace_html 'content' , :partial => 'card_manage'
     end
   end
+  
   #this is the my records loader    
   def my_records
-    @my_records = TFieldOrder.paginate_by_sql([%!select VENUE_NAME,count(*) as COUNT,SUM(t_field_order.PAYMENT_SUM) as SUM  from t_field_order, users_orders, t_venue_info  where t_venue_info.ID = t_field_order.VENUE_ID  AND users_orders.order_id = t_field_order.ID AND users_orders.user_id = #{session[:user]} and PAYMENT_STATUS=1 and YEAR(BOOK_TIME)=YEAR(NOW()) and MONTH(BOOK_TIME)=MONTH(NOW()) group by t_field_order.VENUE_ID!, true], :page => params[:page]||1, :per_page => 2)    
-    render :update do |page|        
+    @my_records = TFieldOrder.get_records_by_month(session[:user],params[:page])
+    render :update do |page|
       page.replace_html 'content' , :partial => 'my_records'
     end
   end
   
-  #this is the pwd  loader    
+  #this is the pwd loader    
   def modify_pwd
     @user = User.find(session[:user])
-    #@questions = ["where is your home?","what is your first teacher name?"]
-    @questions = ProtectQuestion.find(:all)
-    @question_items = Array.new
-    @questions.each do |f|   
-      @question_items.push(f.question)
-    end 
+    @questions = get_question_items
     render :update do |page|        
       page.replace_html 'content' , :partial => 'modify_pwd'
     end
   end
   
+  #this is pwd modify action
   def modify 
     @user = User.find(session[:user])
     if request.post?
@@ -95,7 +77,7 @@ class UserController < ApplicationController
           render :text => "Email或者密码错误!"
         end
       else
-        render :text=>"无修改"
+        render :text=>""
       end
     end
     @user.clear_password!
@@ -113,26 +95,26 @@ class UserController < ApplicationController
     attribute = params[:attribute]
     case attribute
       when "modify_email"
-        if params[:old_email] != @user[:email]
-          render :text=>"当前邮箱信息输入错误！更新失败！"
-        elsif params[:email]=="" || params[:email].to_s.size < 3 
-          render :text=>"新邮箱输入不正确，更新失败！" 
-        else
-          unless @user.update_attributes!(:email => params[:email])
-            render :text=>"too short"
-          end
-          render :text=>"邮箱更新成功！" 
+      if params[:old_email] != @user[:email]
+        render :text=>"当前邮箱信息输入错误！更新失败！"
+      elsif params[:email]=="" || params[:email].to_s.size < 3 
+        render :text=>"新邮箱输入不正确，更新失败！" 
+      else
+        unless @user.update_attributes!(:email => params[:email])
+          render :text=>"too short"
         end
+        render :text=>"邮箱更新成功！" 
+      end
       when "modify_cell"
-        if params[:cell]=="" || params[:cell].to_s.size < 7
-          render :text=>"新手机号输入不正确，更新失败！" 
-          #redirect_to :action => "index"
-        else
-          unless @user.update_attributes!(:cell => params[:cell])
-            render :text=>"too short"
-          end
-          render :text=>"手机号更新成功！" 
+      if params[:cell]=="" || params[:cell].to_s.size < 7
+        render :text=>"新手机号输入不正确，更新失败！" 
+        #redirect_to :action => "index"
+      else
+        unless @user.update_attributes!(:cell => params[:cell])
+          render :text=>"too short"
         end
+        render :text=>"手机号更新成功！" 
+      end
     end
   end
   

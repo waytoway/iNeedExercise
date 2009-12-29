@@ -11,10 +11,10 @@ User.create(:login => "admin",:email => "admin@51duanlian.com",:crypted_password
             :salt => "5c6c2e4f32a1c8984cbc2d4a2e74503131986912",:is_admin => 1,:cell => "12345678901")
 
 #
-Page.create(:title => '首页', :url => "/main")
-Page.create(:title => '注册', :url => "/account/signup",:is_login => 1)
-Page.create(:title => '关于我们')
-Page.create(:title => '联系我们')
-Page.create(:title => '帮助中心')
-Page.create(:title => '我的锻炼',:url => "/user")
-Page.create(:title => '页面管理', :url => "/pages", :is_admin => 1)
+Page.create(:title => '首页', :url => "/main",:is_login => 0,:is_admin => 0)
+Page.create(:title => '注册', :url => "/account/signup",:is_login => 1,:is_admin => 0)
+Page.create(:title => '关于我们',:url => "/about",:is_login => 0,:is_admin => 0)
+Page.create(:title => '联系我们',:url => "/contact",:is_login => 0,:is_admin => 0)
+Page.create(:title => '帮助中心',:url => "/help",:is_login => 0,:is_admin => 0)
+Page.create(:title => '我的锻炼',:url => "/user",:is_login => 0,:is_admin => 0)
+Page.create(:title => '页面管理', :url => "/pages", :is_admin => 1,:is_login => 0)

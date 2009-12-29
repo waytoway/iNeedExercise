@@ -84,12 +84,15 @@
 		<td>
             <%=link_to_remote '查看',  :url=>{:action=>"order_detail", :order_id=>users_order[:ID], :venue_name=>users_order[:VENUE_NAME], :field_name=>users_order[:NAME] } %>
         </td>
+		<td>
+			<%=link)to_remote '取消预定', :url=>{:action=>"cancel_order",:order_id=>users_order[:ID]}%>
+		</td>
         
     </tr>
     <% end %>
     <%end %>
     <%if @user_orders.size==0 %>
-    <%="无会员卡记录" %>
+    <%="无预定记录" %>
     <%end %>
     <%= will_paginate @user_orders, :renderer => 'RemoteLinkRenderer' , :previous_label => "上一页", :next_label => "下一页" %>
 </table>

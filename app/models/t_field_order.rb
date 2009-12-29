@@ -15,4 +15,9 @@ class TFieldOrder < ActiveRecord::Base
     @card.PAYMENT_STATUS=true
     @card.save
   end
+  
+  #get records by month
+  def self.get_records_by_month(user_id,start_page)
+    @records = self.paginate_by_sql(["select VENUE_NAME,count(*) as COUNT,SUM(t_field_order.PAYMENT_SUM) as SUM  from t_field_order, users_orders, t_venue_info  where t_venue_info.ID = t_field_order.VENUE_ID  AND users_orders.order_id = t_field_order.ID AND users_orders.user_id =? and PAYMENT_STATUS=1 and YEAR(BOOK_TIME)=YEAR(NOW()) and MONTH(BOOK_TIME)=MONTH(NOW()) group by t_field_order.VENUE_ID",user_id], :page => start_page||1, :per_page => 5)    
+  end
 end

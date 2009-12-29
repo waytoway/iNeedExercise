@@ -24,11 +24,8 @@
         </td>
     </tr>
     <% end %>
-    <%end %>
-    <%if @my_records.size==0 %>
+    <%else %>
     <%="无记录" %>
     <%end %>
 </table>
 <%= will_paginate @my_records, :renderer => 'RemoteLinkRenderer' , :previous_label => "上一页", :next_label => "下一页" %>
-<div>
-</div>
