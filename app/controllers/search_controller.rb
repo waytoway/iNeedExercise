@@ -28,14 +28,17 @@ class SearchController < ApplicationController
     end 
     
     @cur_time=Time.parse @search_time
-    @next_three_hour_time = @cur_time+10800
-    @next_three_hour = @next_three_hour_time.strftime("%H:%M").to_s
-    
-    @venues = TFieldBadmintoonActivity.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{@sport_name}" AND t_field_badmintoon_activity.FROM_TIME>='#{@search_time}' AND t_field_badmintoon_activity.FROM_TIME<'#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{@search_date}' AND t_venue_info.CITY="#{@city_name}" AND t_venue_info.DISTRICT='#{@region_name}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
-    @show_records = get_assign_time_record(@sport_name,@search_date,@search_time,@venues)
-    
-    @other_venues = TFieldBadmintoonActivity.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{@sport_name}" AND t_field_badmintoon_activity.FROM_TIME>='#{@next_three_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{@search_date}' AND t_venue_info.CITY="#{@city_name}" AND t_venue_info.DISTRICT='#{@region_name}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
-    @show_other_records = get_other_time_record(@sport_name,@search_date,@next_three_hour_time,@other_venues)
+    @befor_hour_time = @cur_time-3600
+    @befor_hour = @befor_hour_time.strftime("%H:%M").to_s
+    @next_hour_time_for_label = (@cur_time+3600).strftime("%H:%M").to_s
+    @extern_next_two_hour_time = @cur_time+7200
+    @extern_next_two_hour = @extern_next_two_hour_time.strftime("%H:%M").to_s
+
+    @venues = TFieldBadmintoonActivity.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{@sport_name}" AND t_field_badmintoon_activity.FROM_TIME>='#{@befor_hour}' AND t_field_badmintoon_activity.FROM_TIME<'#{@extern_next_two_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{@search_date}' AND t_venue_info.CITY="#{@city_name}" AND t_venue_info.DISTRICT='#{@region_name}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
+    @show_records = get_assign_time_record(@sport_name,@search_date,@befor_hour,@venues)
+
+    @other_venues = TFieldBadmintoonActivity.paginate_by_sql([%!SELECT DISTINCT t_venue_info.ID, t_venue_info.VENUE_NAME FROM t_field_badmintoon_activity, t_venue_info WHERE t_field_badmintoon_activity.FIELD_TYPE="#{@sport_name}" AND t_field_badmintoon_activity.FROM_TIME>='#{@extern_next_two_hour}' AND t_field_badmintoon_activity.VENUE_ID=t_venue_info.ID AND t_field_badmintoon_activity.USABLE_DATE='#{@search_date}' AND t_venue_info.CITY="#{@city_name}" AND t_venue_info.DISTRICT='#{@region_name}' AND t_field_badmintoon_activity.ACTIVITY='未预订'!, true], :page => params[:page]||1, :per_page => 7)
+    @show_other_records = get_other_time_record(@sport_name,@search_date,@extern_next_two_hour_time,@other_venues)
     
     #第三部分
     @unnegotiated_venues = TVenueMemberInfo.paginate_by_sql([%!SELECT DISTINCT t.VENUE_NAME FROM `exercise-test`.t_venue_member_info t!, true], :page => params[:page]||1, :per_page => 7)
@@ -133,25 +136,26 @@ class SearchController < ApplicationController
     end
   end
   
-  def min(*elements)
-    
-    @index =0
-    while elements[@index] == nil
-      @index = @index + 1
-    end
-    @min_element = elements[@index]
-    elements.each do |f|
-      unless f == nil
-        if f<@min_element
-          @min_element = f
+  def min(elements)
+    if elements.size != 0
+      @index =0
+      while elements[@index] == nil
+        @index = @index + 1
+      end
+      @min_element = elements[@index]
+      elements.each do |f|
+        unless f == nil
+          if f<@min_element
+            @min_element = f
+          end
         end
       end
+      return @min_element
     end
-    return @min_element
-    en
+
   end
   
-  def max(*elements)
+  def max(elements)
     @index =0
     while elements[@index] == nil
       @index = @index + 1
@@ -230,8 +234,8 @@ class SearchController < ApplicationController
       @min_price_3 = part3_record[0][1]
       @max_price_3 = part3_record[0][2]
 
-      @min_price = min(@min_price_1,@min_price_2,@min_price_3)
-      @max_price = max(@max_price_1,@max_price_2,@max_price_3)
+      @min_price = min([@min_price_1,@min_price_2,@min_price_3])
+      @max_price = max([@max_price_1,@max_price_2,@max_price_3])
       @price = joint_price(@min_price,@max_price)
 
 
@@ -253,7 +257,8 @@ class SearchController < ApplicationController
       @final_hour = Time.parse('23:00') 
       @time_for_unbooking_array = []
       @index = 0
-      while @current_hour_time.hour < @final_hour.hour     #不确定可否比较
+      puts @current_hour_time.hour
+      while @current_hour_time.hour < @final_hour.hour 
         @other_fields = TFieldBadmintoonActivity.all_inactivicy_fields f[:ID],sport,date,@current_hour,@next_hour
         part_record = fields_activity_and_price(@other_fields)
         if part_record[0][0] == '未预订'
@@ -266,7 +271,6 @@ class SearchController < ApplicationController
         @current_hour = @current_hour_time.strftime("%H:%M").to_s
         @next_hour = @next_hour_time.strftime("%H:%M").to_s
       end
-
       @min_price = min(@min_price_array)
       @max_price = max(@max_price_array)
       if @min_price < @max_price
