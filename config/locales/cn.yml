@@ -2,11 +2,14 @@ cn:
     activerecord:
         models:
             user: "用户"
+            page: "页面"
         attributes:
             user:
                 login:  "用户名"
                 email:  "电邮"
                 cell:   "手机号码"
+            page:
+                tilte: "标题"
                 
         errors:
             models:

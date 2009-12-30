@@ -3,7 +3,6 @@ class PagesController < ApplicationController
   before_filter :login_from_cookie
   uses_tiny_mce  :options => {  
                                 :theme => 'advanced',  
-                                :language => 'zh',  
                                 :theme_advanced_resizing => true,                                 
                                 :theme_advanced_resize_horizontal => false,  
                                 :plugins => %w{ table fullscreen }  

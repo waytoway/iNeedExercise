@@ -41,7 +41,7 @@ class SearchController < ApplicationController
     @show_other_records = get_other_time_record(@sport_name,@search_date,@extern_next_two_hour_time,@other_venues)
     
     #第三部分
-    @unnegotiated_venues = TVenueMemberInfo.paginate_by_sql([%!SELECT DISTINCT t.VENUE_NAME FROM `exercise-test`.t_venue_member_info t!, true], :page => params[:page]||1, :per_page => 7)
+    @unnegotiated_venues = TVenueMemberInfo.paginate_by_sql([%!SELECT DISTINCT t.VENUE_NAME FROM t_venue_member_info t!, true], :page => params[:page]||1, :per_page => 7)
   end  
   
   def get_sub_items   
