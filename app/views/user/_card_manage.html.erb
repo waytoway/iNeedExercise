@@ -6,6 +6,9 @@
         <td width="100">
             场馆
         </td>
+	    <td width="170">
+            项目
+        </td>	
         <td width="170">
             余额
         </td>
@@ -13,29 +16,31 @@
             充值
         </td>
     </tr>
-    <%if @users_cards!=nil && @users_cards.size!=0 %>
-    <% for users_card in @users_cards %>
-    <%card_number=users_card.t_member_card[:CARD_NUMBER] %>
+    <%if @cards!=nil && @cards.size!=0 %>
+    <% for card in @cards %>
     <tr>
         <td>
-            <%=card_number%>
+            <%=card[:CARD_NUMBER]%>
         </td>
         <td>
-            <%=users_card.t_member_card.t_venue_info[:VENUE_NAME] %>
+            <%=card[:VENUE_NAME]%>
         </td>
         <td>
-            <%=users_card.t_member_card[:BALANCE] %>
+            <%=card[:type_name] %>
+        </td>
+		<td>
+            <%=card[:BALANCE] %>
         </td>
         <td>
-            <%=link_to '充值',:controller=>"pay",:action=>"supplement",:card_number=>card_number %>
+            <%=link_to '充值',:controller=>"pay",:action=>"supplement",:card_number=>card[:CARD_NUMBER] %>
         </td>
     </tr>
     <% end %>
     <%end %>
-    <%if @users_cards.size==0 %>
+    <%if @cards.size==0 %>
     <%="无会员卡记录" %>
     <%end %>
 </table>
-<%= will_paginate @users_cards, :renderer => 'RemoteLinkRenderer' , :previous_label => "上一页", :next_label => "下一页" %>
+<%= will_paginate @cards, :renderer => 'RemoteLinkRenderer' , :previous_label => "上一页", :next_label => "下一页" %>
 <div>
 </div>

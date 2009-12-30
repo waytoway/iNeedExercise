@@ -1,7 +1,7 @@
 class ProtectQuestion < ActiveRecord::Base
   
   #put questions to array
-  def get_question_items
+  def self.get_question_items
     @questions = ProtectQuestion.find(:all)
     @question_items = Array.new
     @questions.each do |f|   
