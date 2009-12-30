@@ -257,7 +257,6 @@ class SearchController < ApplicationController
       @final_hour = Time.parse('23:00') 
       @time_for_unbooking_array = []
       @index = 0
-      puts @current_hour_time.hour
       while @current_hour_time.hour < @final_hour.hour 
         @other_fields = TFieldBadmintoonActivity.all_inactivicy_fields f[:ID],sport,date,@current_hour,@next_hour
         part_record = fields_activity_and_price(@other_fields)
