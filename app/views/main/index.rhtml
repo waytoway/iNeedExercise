@@ -1,67 +1,22 @@
-<style type="text/css">
-    
-    .search {
-        width: 300px;
-    }
-    
-    .sel {
-        height: 18px;
-        width: 60px;
-        overflow: hidden;
-    }
-    
-    .option {
-        width: 50px;
-        height: 16px;
-        padding: 2px 0 0 6px;
-        color: black;
-        font-size: 12px;
-        position: absolute;
-        z-index: 10;
-        cursor: pointer;
-    }
-    
-    #sel_time {
-        display: none;
-        position: absolute;
-    }
-    
-    #sbArea_h {
-        width: 60px;
-        font-size: 14px;
-        color: #9ab032;
-        padding: 1px 0 1px 0px;
-        margin: 18px 0 0 0px;
-        border: #9ab032 1px solid;
-        position: absolute;
-        z-index: 20;
-        background: #fff;
-    }
-    
-    #sbArea_h a {
-        float: left;
-        color: #666;
-        text-decoration: none;
-    }
-    
-    #sbArea_h a:hover {
-        color: #fff;
-        background: #9ab032 no-repeat -625px -4px;
-    }
-    
-    #sbArea_h div {
-        float: left;
-        width: 43px;
-        padding: 2px 0 2px 5px;
-        -padding: 3px 0 0 5px;
-        cursor: pointer;
-    }
-    
-    #jump_for_sub_item {
-        position: absolute;
-        overflow: hidden;
-    }
-</style>
+<script>
+function ff(obj){
+var ul  = document.getElementById("ul")
+var div = document.getElementById("div")
+for(var i=0;i<ul.getElementsByTagName("li").length;i++)
+{
+if(ul.getElementsByTagName("li")[i]==obj)
+{
+ul.getElementsByTagName("li")[i].className="li2"
+div.getElementsByTagName("div")[i].style.display="block"
+}
+else
+{
+ul.getElementsByTagName("li")[i].className="li1"
+div.getElementsByTagName("div")[i].style.display="none"
+} 
+}
+}
+</script>
 <script language="javascript" type="text/javascript">
 	
 	
@@ -114,116 +69,157 @@
 		document.getElementById("venue_name").value = "输入运动场馆名称"
 	}
 </script>
-<div id="container">
-    <div id="tour">
-        <img src="/images/tour.png">
-    </div><% form_tag({:action => 'index'},{:id => "search"}) do %>
-    <div id="search-bar">
-        <div id="search-bar-sub" class="sub-bar-left">
-            <div class="step_title">
-                1.选择地域
-            </div>
-            <div class="step_content">
-                <%= javascript_include_tag :defaults %>
-                城市:<%= select :city, :name,  create_cities, { :include_blank => false, :selected => "选择城市" }, :onchange => remote_function(:update => "sub_items",
+<style>
+    
+	#z23{
+		height:14px;
+		line-height:14px;
+		margin-top:15px;
+		color:#FFFFFF;}
+		
+	#z24{
+		height:20px;
+		padding-left:20px;
+		padding-top:8px;}
+
+	#city_name
+	{
+		width:156px;
+		height:20px;
+		}
+	
+	#sport_name
+	{
+
+		width:262px;
+		height:20px;
+		}
+		
+	#venue_name{
+		width:262px;
+		height:14px;
+		position:relative;
+		padding-top:2px;}
+		
+	#search_date{
+		width:70px;
+		height:16px;
+		position:relative;
+		}
+		
+	#time{
+		width:80px;
+		}
+	
+</style>
+
+<div id="zzz1">
+<div id="zzz11"><a href="#"><img src="images/zhu.gif" border="0" /></a></div>
+</div>
+<div id="zzz2">
+<% form_tag({:action => 'index'},{:id => "search"}) do %>
+<div id="zzzz1"></div>
+<div id="zzzz2">
+<div id="z21">　　选择城市</div>
+<div id="z22">
+<%= select :city, :name,  create_cities, { :include_blank => false, :selected => "选择城市" }, :onchange => remote_function(:update => "sub_items",
                 :method => "get",
                 :with => "'city_name=' + value",
                 :url => { :controller => :main, :action => :get_sub_items}) %>
-            </div>
-            <div id="xiu22" class="step_content">
-                <div id="sub_items">
-                    区域:<%= select :region, :name, initial_regions, { :include_blank => false, :selected => "选择区域" }, :onchange => remote_function(:update => "jump_for_sub_item",
+</div>
+<div id="z23">　　选择区域</div>
+<div id="z24">
+<div id="sub_items">
+                    <%= select :region, :name, initial_regions, { :include_blank => false, :selected => "选择区域" }, :onchange => remote_function(:update => "jump_for_sub_item",
                     :method => "get",
                     :with => "'region_name=' + value",
                     :url => { :controller => :main, :action => :jump_for_sub_item}) %>
-                </div>
-                <div id="jump_for_sub_item">
-                    &nbsp;
-                </div>
-            </div>
-        </div>
-        <div id="search-bar-sub" class="sub-bar-middle">
-            <div class="step_title">
-                2.选择项目
-            </div>
-            <div class="step_content">
+</div>
+<div id="jump_for_sub_item">
+</div>
+</div>
+</div>
+<div id="zzzz3">
+<div id="z31">　　选择运动项目</div>
+<div id="z32">
                 <%= select(:sport, :name, create_sports, { :include_blank => false, :selected => "运动项目"  }, :onchange => "clear_venue()") %>
-            </div>
-            <div class="step_middle_title">
-                -OR-
-            </div>
-            <div>
-                <div id = "venue_edit_box" class="step_content">
-                    <%= text_field_tag :venue_name, "输入运动场馆名称" %>
-                </div>
-                <div class="step_content">
-                    <%= link_to_remote "查看该地域所有运动场馆", :update =>"all_venues",
+
+</div>
+<div id="z33">- OR -</div>
+<div id="z34">
+	<%= text_field_tag :venue_name, "输入运动场馆名称" %>
+</div>
+<div id="z35">
+	<%= link_to_remote "查看该地域所有运动场馆", :update =>"all_venues",
                     :url => { :action => "show_all_venues"} %>
-                </div>
                 <div id = "cur_venue">
                 </div>
-                <div id = "all_venues">
+				<div id = "all_venues">
                 </div>
-            </div>
-        </div>
-        <div id="search-bar-sub" class="sub-bar-right">
-            <div class="step_title">
-                3.选择时间
-            </div>
-            <div class="step_content">
-                <%= text_field_tag :search_date, "", :onClick => "WdatePicker()", :size=>10 %>
-            </div>
-            <div class="step_content">
-                <%= select_tag(:time, options_for_select([['1:00', '1:00'], ['2:00', '2:00'],['3:00','3:00'],['4:00','4:00'],['5:00','5:00'],['6:00','6:00'],
+	</div>
+</div>
+<div id="zzzz4">
+<div id="z41">　　选择日期时间</div>
+<div id="z42">
+	<%= text_field_tag :search_date, "", :onClick => "WdatePicker()", :size=>10 %>
+<%= select_tag(:time, options_for_select([['1:00', '1:00'], ['2:00', '2:00'],['3:00','3:00'],['4:00','4:00'],['5:00','5:00'],['6:00','6:00'],
                 ['7:00','7:00'],['8:00','8:00'],['9:00','9:00'],['10:00','10:00'],['11:00','11:00'],['12:00','12:00'],['13:00','13:00'],['14:00','14:00'],
                 ['15:00','15:00'],['16:00','16:00'],['17:00','17:00'],['18:00','18:00'],['19:00','19:00'],['20:00','20:00'],['21:00','21:00'],['22:00','22:00'],
                 ['23:00','23:00'],['24:00','24:00']],'12:00')) %>
-            </div>
-            <div class="step_content">
-                <p>
-                    <%= check_box_tag("map", "yes", false) %>
-                    <label>
-                        在地图上查看查询结果
-                    </label>
-                </p>
-            </div>
-			<%end %>
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <div>
-                <input type = "button" id="bi" class="step_button" onclick="javascript:agree_onclick()">
-                </input>
-            </div>
-        </div>
-    </div>
+</div>
+<div id="z43">mm/dd/yyyy 　
+<%= check_box_tag("map", "yes", false) %> 地图上查询结果　<img src="images/new.gif" /></div>
+<% end %>
+<div id="z44">
+	<input type = "button" id="qqq6" value="查找场地" onclick="javascript:agree_onclick()">
+</div>
+</div>
+<div id="zzzz5"></div>
+</div>
+<div id="zzz3"></div>
+<div id="zzz4">
+<div id="zzz41">
+<div id="d11">
+我要锻炼网<br/>
+是一个免费的运动场地管理系统<br/>
+现在您只需注册登陆就可以在网<br/>
+上预定适合您的运动场地<br/>
+<br/>
+预定成功即有温磬短信提示，并<br/>
+告知您现场验证码。<br/>
+<br/>
+如果您熟悉的运动场馆还不在我<br/>
+们的管理系统内，您还可以推荐<br/>
+他们加入我们，具体实施办法请<br/>
+参看。</div>
+<div id="d12"><input type="button" value="帮助中心"  id="qqq7"/>
+</div>
+</div>
+<div id="zzz42">
+<div id="bac">
+<div id="bac1">
+<ul id="ul">
+<li onClick="ff(this)" class="li2"><img src="images/q1.gif" /></li>
+<li onClick="ff(this)" class="li1"><img src="images/q2.gif" /></li>
+<li onClick="ff(this)" class="li1"><img src="images/q3.gif" /></li>
+<li onClick="ff(this)" class="li1"><img src="images/q4.gif" /></li>
+<li onClick="ff(this)" class="li1"><img src="images/q5.gif" /></li>
+</ul>
+</div>
+<div id="div">
+<div id="divk1">1</div>
+<div id="divk2">2</div>
+<div id="divk2">3</div>
+<div id="divk2">4</div>
+<div id="divk2">5</div>
+</div>
 </div>
 
-<div id="main-content">
-    <div id="main-content-bar" class="sub-bar-left">
-        <img src="/images/help.png" class="img-help">
-    </div>
-    <div id="main-content-bar" class="sub-bar-middle">
-        <ul>
-            <li>
-                <%=link_to_remote '足球',  :update => "content", :url=>{:action=>"most_popular_venues", :sport_type => '足球'} %>
-            </li>
-            <li>
-                <%=link_to_remote '篮球',  :update => "content",  :url=>{:action=>"most_popular_venues", :sport_type => '篮球'} %>
-            </li>
-            <li>
-                <%=link_to_remote '网球',  :update => "content",  :url=>{:action=>"most_popular_venues", :sport_type => '网球'} %>
-            </li>
-            <li>
-                <%=link_to_remote '排球',  :update => "content",  :url=>{:action=>"most_popular_venues", :sport_type => '排球'} %>
-            </li>
-            <li>
-                <%=link_to_remote '羽毛球',  :update => "content",  :url=>{:action=>"most_popular_venues", :sport_type => '羽毛球'} %>
-            </li>
-        </ul>
-        <div id = "content">
-            <%= render :partial => 'most_popular_venues' %>
-        </div>
-    </div>
-    <div id="main-content-bar" class="sub-bar-right">
-        最新预告
-    </div>
 </div>
+<div id="zzz43">
+<div id="y11"></div>
+<div id="y12"><img src="images/tu.gif" /></div>
+</div>
+</div>
+<div id="nei3"></div>
+
