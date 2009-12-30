@@ -72,7 +72,37 @@ class SearchController < ApplicationController
   end
   
   def recommend
-    
+    if request.post?
+      if params[:venue_name]== ''||params[:city]== ''||params[:region]== ''
+        @error_info = ''
+        if params[:venue_name]== ''
+          @error_info = @error_info+'场地注册名称'+' '
+        end
+        if params[:city]== ''
+          @error_info = @error_info+'所在地'+' '
+        end
+        if params[:region]== ''
+          @error_info = @error_info+'服务区域'+' '
+        end
+        @error_info=@error_info+'不能为空'
+        render :update do |page|
+          page.replace_html 'commit_error', @error_info
+        end
+      else  
+        @last_venue = TVenueMemberInfo.find(:last)
+        @id_num = 0
+        if @last_venue!=nil
+          @id_num = FourLengthStrToNum(@last_venue.ID[6,9])
+        end
+        @new_id_num = NumToFourLengthStr(@id_num+1)
+        @new_id = 'RCSHSO' + @new_id_num
+        @venue_member_info = TVenueMemberInfo.new_venue(params,@new_id)
+        @venue_member_info.save
+        render :update do |page|
+          page.redirect_to :controller=>'search',:action=>'index'
+        end
+      end
+    end
   end
   
   def card_manage
@@ -257,6 +287,34 @@ class SearchController < ApplicationController
       end
   end
   
+  def FourLengthStrToNum(str)
+    @local_str = str
+    @index = 0
+    while(@local_str[@index,1]=='0')
+      @index = @index +1
+    end
+    if @index < @local_str.size
+      return str[@index,@local_str.size-@index].to_i
+    else
+      return 0
+    end 
+  end
+  
+  def NumToFourLengthStr(num)
+    @local_num = num
+    @str = ''
+    4.times do
+      if @local_num >0
+        @lowNum = @local_num%10
+        @str = @lowNum.to_s+@str
+        @local_num = @local_num/10
+      else
+        @str = '0'+@str
+      end
+    end
+    return @str
+  end
+ 
   protected
   def get_user_cards
   end

@@ -1,7 +1,123 @@
+<script language="javascript" type="text/javascript">
+	function agree_onclick(){
+		if(document.getElementById("venue_name").value == ""){
+			alert('必须填写场地名称！');
+			return false;
+		}
+		if(document.getElementById("city").value == ""){
+			alert('必须填写所在地！');
+			return false;
+		}
+		if(document.getElementById("region").value == ""){
+			alert('必须填写服务区域！');
+			return false;
+		}
+		else {
+		    document.getElementById("commit").submit();	
+		}
+	}
+</script>
 <div >
     <%= link_to "首页",:controller => :main,:action=>"index" %>
     <span>></span>
     <%= link_to "查询",:controller => :search,:action=>"index" %>
     <span>></span>
 	<%= link_to "推荐",:controller => :search,:action=>"recommend" %>
+</div>
+<span id="commit_error" class="error"></span>
+    <% form_remote_tag :html => {:id => 'commit'}, :url=>{:action=>:recommend} do %>
+    <div>
+        <label>
+            场地注册名称:
+        </label>
+        <%=text_field_tag :venue_name,"" %>
+        <br>
+        <label>
+            场地工商号:
+        </label>
+        <%=text_field_tag :venue_icno,"" %>
+        <br>
+        <label>
+            所在地:
+        </label>
+        <%= text_field_tag :city,"" %>
+        <br>
+        <label>
+            服务区域:
+        </label>
+        <%= text_field_tag :region,"" %>
+		<br>
+        <label>
+            场地地址:
+        </label>
+        <%= text_field_tag :address,"" %>
+        <br>
+        <label>
+            场地电话1:
+        </label>
+        <%= text_field_tag :tel1,"" %>
+        <br>
+        <label>
+            场地电话2:
+        </label>
+        <%= text_field_tag :tel2,"" %>
+        <br>
+		<label>
+            传真:
+        </label>
+        <%= text_field_tag :fax,"" %>
+        <br>
+        <label>
+            人制:
+        </label>
+        <%= text_field_tag :personNum,"" %>
+        <br>
+        <label>
+            营业时间:
+        </label>
+        <%= text_field_tag :openTime,"" %>
+        <br>
+        <label>
+            时段价格1:
+        </label>
+        <%= text_field_tag :intervalPrice1,"" %>
+        <br>
+        <label>
+            时段价格2:
+        </label>
+        <%= text_field_tag :intervalPrice2,"" %>
+        <br>
+        <label>
+            时段价格3:
+        </label>
+        <%= text_field_tag :intervalPrice3,"" %>
+        <br>
+        <label>
+            时段价格4:
+        </label>
+        <%= text_field_tag :intervalPrice4,"" %>
+        <br>
+        <label>
+            周一至周五:
+        </label>
+        <%= text_field_tag :monToFri,"" %>
+        <br>
+        <label>
+            周末:
+        </label>
+        <%= text_field_tag :weekend,"" %>
+        <br>
+        <label>
+            有无会员:
+        </label>
+        <%= check_box_tag("member", "yes", false) %>
+        <br>
+        <label>
+            会员价格:
+        </label>
+        <%= text_field_tag :member_price,"" %>
+    </div>
+    <%=submit_tag "提交"%>
+    <%end %>
+<div id="info1">
 </div>
