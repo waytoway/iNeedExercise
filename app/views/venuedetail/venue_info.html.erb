@@ -1,0 +1,50 @@
+<div style="width:100%">
+    导航
+</div>
+<table border=1px>
+    <tr>
+        <td style="width:200px">
+            <div>
+                <p>
+                    ><%=@venue[:VENUE_NAME] %>
+                </p>
+                <ul>
+                    <%if @venue[:BUSSINESS_TIMEI]!=nil %>
+                    <li>
+                        营业时间：<%=@venue[:BUSSINESS_TIMEI] %>
+                    </li>
+                    <%end %>
+                    <li>
+                        电话预订：<%if @venue[:PHONE1]!=nil %>
+                        <%=@venue[:PHONE1] %>
+                        <%end %>
+						<br>
+                        <%if @venue[:PHONE2]!=nil %>
+                        <%=@venue[:PHONE2] %>
+                        <%end %>
+                    </li>
+                    <%if @venue[:ADRESS]!=nil %>
+                    <li>
+                        地址：<%=@venue[:ADRESS] %>
+                    </li>
+                    <%end %>
+                </ul>
+                <hr>
+            </div>
+        </td>
+        <td style="width:500px">
+            <b><%=@venue[:VENUE_NAME] %>
+            </b>
+            <br>
+            <div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <%=link_to "返回查询结果", :action=>"return_to_results" %>
+        </td>
+        <td style="width:150px">
+            我来推荐
+        </td>
+    </tr>
+</table>
