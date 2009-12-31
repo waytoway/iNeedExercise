@@ -1,8 +1,10 @@
-<div style="border:1px solid;background-color:white;position:absolute;left:405px;top:335px;width:300px;height:300px">
+<div style="border:1px solid;background-color:white;position:absolute;left:40px;top:20px;width:300px;height:300px;z-index:100">
+	<div id = "text_for_venue" style="foreground-color:white">
 	<% for @venue_name in @venue_names%>
-		<%= link_to_remote @venue_name, :update => "venue_edit_box", :url => {:action => "save_selected_venue", :name => @venue_name}%>
+			<%= link_to_remote @venue_name, :update => "z34", :url => {:action => "save_selected_venue", :name => @venue_name}%>
 		<br/>
 	<% end %>
 	<%= link_to_remote "关闭窗口", :update => "all_venues", :url => {:action => "quit_without_save"}%>
+	</div>
 </div>
 

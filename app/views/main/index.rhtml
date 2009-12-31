@@ -111,6 +111,14 @@ div.getElementsByTagName("div")[i].style.display="none"
 		width:80px;
 		}
 	
+	#text_for_venue{
+		position:relative;
+		}
+	
+	#text_for_venue a{
+		color: black;
+		}
+	
 </style>
 
 <div id="zzz1">
@@ -151,7 +159,7 @@ div.getElementsByTagName("div")[i].style.display="none"
 </div>
 <div id="z35">
 	<%= link_to_remote "查看该地域所有运动场馆", :update =>"all_venues",
-                    :url => { :action => "show_all_venues"} %>
+                    :url => { :action => "show_all_venues"}%>
                 <div id = "cur_venue">
                 </div>
 				<div id = "all_venues">
