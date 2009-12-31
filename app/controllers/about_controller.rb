@@ -5,7 +5,6 @@ class AboutController < ApplicationController
   before_filter :get_page_title
   
   def index
-    
   end
   
   def details

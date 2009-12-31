@@ -134,11 +134,21 @@ class PayController < ApplicationController
     @card.size > 0
   end
   
+  #取消订单
+  def cancel_order
+    return unless request.post?
+    if TFieldOrder.not_paid?params[:order_id]
+      TFieldOrder.cancel_order(params[:order_id])
+      redirect_to :controller=>"user",:action=>"index"
+    else
+      #通知管理员，请求取消订单并还款      
+    end
+  end
+  
   #充值
   def supplement
     @card_number=params[:card_number]
     @amount=params[:amount]
-    
   end
   
   def supplement_commit

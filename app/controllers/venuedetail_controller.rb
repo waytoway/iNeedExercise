@@ -5,8 +5,14 @@ class VenuedetailController < ApplicationController
   before_filter :login_from_cookie
   before_filter :find_types
   
+  #显示协议场馆
   def index
     @venue = TVenueInfo.find(params[:venue_id])
+  end
+  
+  #显示未协议场馆信息
+  def venue_info
+    @venue=TVenueMemberInfo.find(:first, :conditions =>["ID=?", params[:ID]])
   end
   
   def signup
