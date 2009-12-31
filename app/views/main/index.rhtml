@@ -87,6 +87,12 @@ div.getElementsByTagName("div")[i].style.display="none"
 		width:156px;
 		height:20px;
 		}
+		
+	#region_name
+	{
+		width:156px;
+		height:20px;
+		}
 	
 	#sport_name
 	{
@@ -135,7 +141,7 @@ div.getElementsByTagName("div")[i].style.display="none"
                 :with => "'city_name=' + value",
                 :url => { :controller => :main, :action => :get_sub_items}) %>
 </div>
-<div id="z23">　　选择区域</div>
+<div id="z21">　　选择区域</div>
 <div id="z24">
 <div id="sub_items">
                     <%= select :region, :name, initial_regions, { :include_blank => false, :selected => "选择区域" }, :onchange => remote_function(:update => "jump_for_sub_item",
